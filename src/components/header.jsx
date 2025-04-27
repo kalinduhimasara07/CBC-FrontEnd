@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Header() {
   return (
     <header className="bg-gradient-to-r from-blue-600 via-teal-500 to-cyan-400 shadow-md">
@@ -9,16 +11,11 @@ export default function Header() {
 
         {/* Navigation Links */}
         <nav className="hidden md:flex space-x-8">
-          {["Home", "About", "Services", "Contact"].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className="text-white text-lg font-semibold relative group transition-all"
-            >
-              {item}
-              <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-yellow-300 transition-all group-hover:w-full"></span>
-            </a>
-          ))}
+          
+          <Link to="/" className="text-white text-lg font-semibold">Home</Link>
+          <Link to="/login" className="text-white text-lg font-semibold">Login</Link>
+          <Link to="/signup" className="text-white text-lg font-semibold">Sign Up</Link>
+
         </nav>
 
         {/* Mobile Icon */}

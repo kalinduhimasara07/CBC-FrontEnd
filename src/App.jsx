@@ -5,6 +5,7 @@ import HomePage from "./pages/home";
 
 import Signup from "./pages/signup";
 import Login from "./pages/login";
+import AdminPage from "./pages/adminPage";
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/admin/*" element={<AdminPage />} />
+          <Route path="/*" element={<h1>404 Not Found</h1>} />
         </Routes>
       </BrowserRouter>
     </>
