@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
-    <header className="bg-gradient-to-r from-blue-600 via-teal-500 to-cyan-400 shadow-md">
+    <header className="bg-gradient-to-r from-blue-600 via-teal-500 to-cyan-400 shadow-md h-[80px]">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
         {/* Logo */}
         <div className="text-3xl font-bold text-white tracking-wider">
