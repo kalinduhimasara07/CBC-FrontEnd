@@ -11,10 +11,13 @@ export default function Login() {
     console.log("Email:", email);
     console.log("Password:", password);
     try {
-      const response = await axios.post("http://localhost:3000/users/login", {
-        email: email,
-        password: password,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/api/users/login",
+        {
+          email: email,
+          password: password,
+        }
+      );
       toast.success("Login successful!");
       console.log(response.data);
     } catch (error) {
