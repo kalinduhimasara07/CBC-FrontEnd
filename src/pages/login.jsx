@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import Header from "../components/header";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   async function handleLogin() {
     console.log("Email:", email);
@@ -20,6 +22,23 @@ export default function Login() {
       );
       toast.success("Login successful!");
       console.log(response.data);
+      localStorage.setItem("token", response.data.token);
+      if (response.data.role === "admin") {
+        navigate("/admin");
+        // window.location.href = "/admin";
+        // Redirect to admin page after successful login
+        // Optionally, you can also use a router to navigate to the admin page
+        // e.g., navigate("/admin") if using react-router-dom
+      } else {
+        // window.location.href = "/";
+        navigate("/");
+      }
+
+      // Optionally, you can also use a router to navigate to the admin page
+      // e.g., navigate("/admin") if using react-router-dom
+
+      //get the token from the response and store it in local storage
+      //const token = localStorage.getItem("token");
     } catch (error) {
       console.error(error.response?.data?.message || "Login failed");
       toast.error(error.response?.data?.message || "Login failed");
@@ -63,7 +82,12 @@ export default function Login() {
 
             <p className="text-sm text-white/80">
               Don't have an account?{" "}
-              <span className="underline cursor-pointer">Sign up</span>
+              <span
+                className="underline cursor-pointer"
+                onClick={() => navigate("/signup")}
+              >
+                Sign up
+              </span>
             </p>
           </div>
         </div>
