@@ -5,7 +5,7 @@ import HomePage from "./pages/home";
 
 import Signup from "./pages/signup";
 import Login from "./pages/login";
-import AdminPage from "./pages/adminPage";
+import AdminPage from "./pages/admin/adminPage";
 import TestPage from "./pages/testPage";
 import { Toaster } from "react-hot-toast";
 

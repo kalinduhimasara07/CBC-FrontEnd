@@ -1,0 +1,58 @@
+export const sampleProduct = [
+  {
+    _id: "67f3e45b290724755ca31b80",
+    productId: "COSM001",
+    name: "Radiant Glow Foundation",
+    altNames: ["GlowBase", "RadiantSkin"],
+    description:
+      "A lightweight liquid foundation that provides medium coverage and a radiant finish.",
+    images: ["https://example.com/images/foundation1.jpg"],
+    labeledPrice: 45,
+    price: 39.99,
+    stock: 120,
+    isAvailable: true,
+    __v: 0,
+  },
+  {
+    _id: "67f3e527290724755ca31b82",
+    productId: "COSM002",
+    name: "Velvet Matte Lipstick",
+    altNames: ["VelvetLips", "MatteKiss"],
+    description:
+      "Long-lasting matte lipstick with a rich color payoff and moisturizing formula.",
+    images: ["https://example.com/images/lipstick1.jpg"],
+    labeledPrice: 20,
+    price: 15.49,
+    stock: 200,
+    isAvailable: true,
+    __v: 0,
+  },
+  {
+    _id: "67f3e532290724755ca31b84",
+    productId: "COSM003",
+    name: "Hydrating Facial Mist",
+    altNames: ["DewMist", "HydroSpray"],
+    description:
+      "A refreshing facial mist that hydrates and revitalizes skin instantly.",
+    images: ["https://example.com/images/mist1.jpg"],
+    labeledPrice: 18,
+    price: 14.99,
+    stock: 80,
+    isAvailable: true,
+    __v: 0,
+  },
+  {
+    _id: "67f3e53c290724755ca31b86",
+    productId: "COSM004",
+    name: "Nourishing Night Creamzzz",
+    altNames: ["BeautySleep Creamzz", "NightRepairzz"],
+    description:
+      "Rich night cream formulated with peptides and vitamins to support overnight skin repair.zz",
+    images: ["https://example.com/images/nightcream1.jpgzz"],
+    labeledPrice: 50,
+    price: 44.95,
+    stock: 60,
+    isAvailable: false,
+    __v: 0,
+  },
+];
