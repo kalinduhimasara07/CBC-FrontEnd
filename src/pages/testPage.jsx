@@ -1,20 +1,36 @@
 import { useState } from "react";
+import mediaUpload from "../utils/mediaUpload";
+
 export default function TestPage() {
-  
-  const [count, setCount] = useState(0);
+  const [image, setImage] = useState(null);
+
+  function handleImageUpload(event) {
+    mediaUpload(image)
+      .then((url) => {
+        console.log("Image uploaded successfully:", url);
+        alert("Image uploaded successfully");
+      })
+      .catch((error) => {
+        console.error("Error uploading image:", error);
+        alert("Error uploading image");
+      }); 
+  }
   return (
-    <div className="w-full h-screen  flex justify-center items-center">
-      <div className="w-[450px] h-[250px] shadow flex justify-center items-center">
-        <button className="bg-blue-600 text-white font-bold w-[50px] h-[60px] text-5xl cursor-pointer"
-        onClick={() => setCount(count - 1)}>
-          -
-        </button>
-        <span className="text-5xl mx-5">{count}</span>
-        <button className="bg-blue-600 text-white font-bold w-[50px] h-[60px] text-5xl cursor-pointer "
-        onClick={() => setCount(count + 1)}>
-          +
-        </button>
-      </div>
+    <div className="container flex flex-col items-center justify-center min-h-screen p-4">
+      <input
+        type="file"
+        className="mb-4"
+        onChange={(e) => {
+          console.log(e.target.files[0]);
+          setImage(e.target.files[0]);
+        }}
+      />
+      <button
+        className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+        onClick={handleImageUpload}
+      >
+        Upload
+      </button>
     </div>
   );
 }

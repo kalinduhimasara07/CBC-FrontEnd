@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { sampleProduct } from "../../assets/sample.js";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminProductPage() {
   const [products, setProducts] = useState(sampleProduct);
+  const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get(import.meta.env.VITE_BACKEND_URL + "/api/product")
@@ -17,36 +20,58 @@ export default function AdminProductPage() {
   }, []);
 
   return (
-    <div className="w-full h-full bg-red-400 max-h-full overflow-y-scroll">
-      <table className="w-full table-auto border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-            <th className="py-3 px-6 text-left">Product ID</th>
-            <th className="py-3 px-6 text-left">Name</th>
-            <th className="py-3 px-6 text-left">Image</th>
-            <th className="py-3 px-6 text-left">Price</th>
-            <th className="py-3 px-6 text-left">Stock</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((item, index) => {
-            return (
+    <div className="w-full min-h-screen bg-gray-100 p-6 relative overflow-y-auto">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6">Product List</h2>
+
+      <button
+        className="fixed bottom-6 right-6 bg-green-600 text-white px-5 py-3 rounded-full shadow-lg hover:bg-green-700 transition"
+        onClick={() => {
+          navigate("/admin/add-product");
+        }}
+      >
+        + Add Product
+      </button>
+
+      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+        <table className="min-w-full table-auto border-collapse">
+          <thead>
+            <tr className="bg-gray-200 text-gray-700 text-sm uppercase tracking-wider">
+              <th className="py-3 px-6 text-left">Product ID</th>
+              <th className="py-3 px-6 text-left">Name</th>
+              <th className="py-3 px-6 text-left">Image</th>
+              <th className="py-3 px-6 text-left">Price</th>
+              <th className="py-3 px-6 text-left">Stock</th>
+              <th className="py-3 px-6 text-left">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((item, index) => (
               <tr
                 key={index}
-                className="border-b border-gray-200 hover:bg-gray-100"
+                className="border-b border-gray-200 hover:bg-gray-50 transition"
               >
-                <td className="py-3 px-6 text-left">{item.productId}</td>
-                <td className="py-3 px-6 text-left">{item.name}</td>
-                <td className="py-3 px-6 text-left">
-                  <img src={item.images[0]} className="w-16 h-16" />
+                <td className="py-3 px-6 text-left font-medium text-gray-800">
+                  {item.productId}
                 </td>
-                <td className="py-3 px-6 text-left">${item.price}</td>
+                <td className="py-3 px-6 text-left text-gray-700">
+                  {item.name}
+                </td>
+                <td className="py-3 px-6 text-left">
+                  <img
+                    src={item.images[0]}
+                    className="w-16 h-16 rounded object-cover border border-gray-300"
+                    alt={item.name}
+                  />
+                </td>
+                <td className="py-3 px-6 text-left text-green-700 font-semibold">
+                  LKR {item.price.toFixed(2)}
+                </td>
                 <td className="py-3 px-6 text-left">{item.stock}</td>
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
