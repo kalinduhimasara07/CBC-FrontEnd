@@ -3,6 +3,7 @@ import { sampleProduct } from "../../assets/sample.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 export default function AdminProductPage() {
   const [products, setProducts] = useState(sampleProduct);
@@ -10,17 +11,19 @@ export default function AdminProductPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(import.meta.env.VITE_BACKEND_URL + "/api/product")
-      .then((res) => {
-        console.log(res.data);
-        setProducts(res.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    if (isLoading == true) {
+      axios
+        .get(import.meta.env.VITE_BACKEND_URL + "/api/product")
+        .then((res) => {
+          console.log(res.data);
+          setProducts(res.data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [isLoading]);
 
   function deleteProduct(productId) {
     const token = localStorage.getItem("token");
@@ -38,10 +41,44 @@ export default function AdminProductPage() {
         console.log(res.data);
         // setProducts(products.filter((item) => item.productId !== productId));
         toast.success("Product deleted successfully");
-      }).catch((err) => {
+        setIsLoading(true);
+      })
+      .catch((err) => {
         console.log(err);
         toast.error("Error deleting product");
       });
+  }
+
+  //additional function to conform delete Product using chatgpt
+  // Add inside your component (before return)
+  function confirmDelete(productId) {
+    toast(
+      (t) => (
+        <span className="flex flex-col gap-2">
+          <strong>Are you sure you want to delete?</strong>
+          <div className="flex gap-2 justify-end">
+            <button
+              onClick={() => {
+                deleteProduct(productId);
+                toast.dismiss(t.id);
+              }}
+              className="bg-red-600 text-white px-3 py-1 rounded"
+            >
+              Yes
+            </button>
+            <button
+              onClick={() => toast.dismiss(t.id)}
+              className="bg-gray-300 text-black px-3 py-1 rounded"
+            >
+              No
+            </button>
+          </div>
+        </span>
+      ),
+      {
+        duration: 10000,
+      }
+    );
   }
 
   return (
@@ -99,13 +136,15 @@ export default function AdminProductPage() {
                     <FaEdit
                       onClick={() => {
                         navigate("/admin/edit-product/", {
-                          state: item
+                          state: item,
                         });
                       }}
                       className="text-blue-600 cursor-pointer"
                     />
                     <FaTrash
-                      onClick={() => {deleteProduct(item.productId)}}
+                      onClick={() => {
+                        confirmDelete(item.productId);
+                      }}
                       className="text-red-600 cursor-pointer"
                     />
                   </div>
