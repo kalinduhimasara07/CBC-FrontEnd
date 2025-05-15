@@ -2,7 +2,7 @@ import { use, useState } from "react";
 import Header from "../components/header";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -23,7 +23,8 @@ export default function Login() {
       toast.success("Login successful!");
       console.log(response.data);
       localStorage.setItem("token", response.data.token);
-      if (response.data.role === "admin") {
+      console.log(response.data.role);
+      if (response.data.role == "admin") {
         navigate("/admin");
         // window.location.href = "/admin";
         // Redirect to admin page after successful login
