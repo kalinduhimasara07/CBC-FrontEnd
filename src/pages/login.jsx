@@ -49,14 +49,16 @@ export default function Login() {
   return (
     <>
       <Header />
-      <div className="flex items-center justify-center h-[calc(100vh-80px)] bg-[url('/login-background.png')] bg-cover bg-center">
+      <div className="flex items-center justify-center h-[calc(100vh-80px)] bg-[url('/login-background.jpg')] bg-cover bg-center">
         {/* Left Side */}
         <div className="w-[50%] h-full hidden md:block"></div>
 
         {/* Right Side - Form */}
         <div className="w-full md:w-[50%] h-full flex items-center justify-center p-4">
           <div className="w-full max-w-md h-[600px] backdrop-blur-md rounded-2xl shadow-2xl flex flex-col items-center justify-center gap-6 bg-white/30 p-8">
-            <h1 className="text-4xl font-bold text-white drop-shadow">Login</h1>
+            <h1 className="text-4xl font-bold text-white px-6 py-3 rounded-2xl bg-[#1c1f2a]/70 shadow-xl">
+              Login
+            </h1>
 
             <input
               onChange={(e) => setEmail(e.target.value)}
@@ -76,15 +78,15 @@ export default function Login() {
 
             <button
               onClick={handleLogin}
-              className="w-[300px] h-[50px] rounded-2xl bg-[#6a927f] hover:bg-[#5c816f] text-white font-bold transition duration-300"
+              className="w-[300px] h-[50px] rounded-2xl bg-[#bfa77a] hover:bg-[#a68f5f] text-white font-bold shadow-lg transition duration-300"
             >
               Login
             </button>
 
-            <p className="text-sm text-white/80">
-              Don't have an account?{" "}
+            <p className="text-sm text-white font-medium px-4 py-2 bg-black/60 rounded-xl backdrop-blur-sm shadow-md">
+              Don&apos;t have an account?{" "}
               <span
-                className="underline cursor-pointer"
+                className="underline cursor-pointer text-white hover:text-[#d4c2a2] transition font-semibold"
                 onClick={() => navigate("/signup")}
               >
                 Sign up

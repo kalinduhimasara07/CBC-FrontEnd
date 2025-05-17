@@ -11,7 +11,7 @@ export default function AdminProductPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoading == true) {
+    if (isLoading === true) {
       axios
         .get(import.meta.env.VITE_BACKEND_URL + "/api/product")
         .then((res) => {
@@ -39,7 +39,6 @@ export default function AdminProductPage() {
       })
       .then((res) => {
         console.log(res.data);
-        // setProducts(products.filter((item) => item.productId !== productId));
         toast.success("Product deleted successfully");
         setIsLoading(true);
       })
@@ -49,8 +48,6 @@ export default function AdminProductPage() {
       });
   }
 
-  //additional function to conform delete Product using chatgpt
-  // Add inside your component (before return)
   function confirmDelete(productId) {
     toast(
       (t) => (
@@ -82,7 +79,7 @@ export default function AdminProductPage() {
   }
 
   return (
-    <div className="w-full min-h-screen bg-gray-100 p-6 relative overflow-y-auto">
+    <div className="w-full min-h-screen bg-gray-100 p-6 relative">
       <h2 className="text-2xl font-semibold text-gray-800 mb-6">
         Product List
       </h2>
@@ -96,10 +93,11 @@ export default function AdminProductPage() {
         + Add Product
       </button>
 
-      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-        <table className="min-w-full table-auto border-collapse">
-          <thead>
-            <tr className="bg-gray-300 text-gray-700 text-sm uppercase tracking-wider">
+      <div className="bg-white shadow-md rounded-lg">
+        {/* Table Header */}
+        <table className="min-w-full table-fixed border-collapse">
+          <thead className="bg-gray-300 text-gray-700 text-sm uppercase tracking-wider sticky top-0 z-10">
+            <tr>
               <th className="py-3 px-6 text-left">Product ID</th>
               <th className="py-3 px-6 text-left">Name</th>
               <th className="py-3 px-6 text-left">Image</th>
@@ -108,51 +106,63 @@ export default function AdminProductPage() {
               <th className="py-3 px-6 text-center">Action</th>
             </tr>
           </thead>
-          <tbody>
-            {products.map((item, index) => (
-              <tr
-                key={index}
-                className="border-b border-gray-200 hover:bg-gray-200 transition hover:shadow-lg "
-              >
-                <td className="py-3 px-6 text-left font-medium text-gray-800">
-                  {item.productId}
-                </td>
-                <td className="py-3 px-6 text-left text-gray-700 ">
-                  {item.name}
-                </td>
-                <td className="py-3 px-6 text-left">
-                  <img
-                    src={item.images[0]}
-                    className="w-16 h-16 rounded object-cover border border-gray-300"
-                    alt={item.name}
-                  />
-                </td>
-                <td className="py-3 px-6 text-left text-green-700 font-semibold">
-                  LKR {item.price.toFixed(2)}
-                </td>
-                <td className="py-3 px-6 text-left ">{item.stock}</td>
-                <td className="">
-                  <div className="py-3 px-6 flex gap-4 items-center justify-center text-2xl">
-                    <FaEdit
-                      onClick={() => {
-                        navigate("/admin/edit-product/", {
-                          state: item,
-                        });
-                      }}
-                      className="text-blue-600 cursor-pointer"
-                    />
-                    <FaTrash
-                      onClick={() => {
-                        confirmDelete(item.productId);
-                      }}
-                      className="text-red-600 cursor-pointer"
-                    />
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
         </table>
+
+        {/* Scrollable Table Body */}
+        <div className="max-h-[calc(100vh-200px)] overflow-y-auto">
+          {isLoading ? (
+            <div className="flex items-center justify-center h-[200px]">
+              <div className="w-[80px] h-[80px] bg-amber-50 border-5 border-blue-300 rounded-full border-t-blue-600 animate-spin"></div>
+            </div>
+          ) : (
+            <table className="min-w-full table-fixed border-collapse">
+              <tbody>
+                {products.map((item, index) => (
+                  <tr
+                    key={index}
+                    className="border-b border-gray-200 hover:bg-gray-200 transition hover:shadow-lg"
+                  >
+                    <td className="py-3 px-6 text-left font-medium text-gray-800">
+                      {item.productId}
+                    </td>
+                    <td className="py-3 px-6 text-left text-gray-700">
+                      {item.name}
+                    </td>
+                    <td className="py-3 px-6 text-left">
+                      <img
+                        src={item.images[0]}
+                        className="w-16 h-16 rounded object-cover border border-gray-300"
+                        alt={item.name}
+                      />
+                    </td>
+                    <td className="py-3 px-6 text-left text-green-700 font-semibold">
+                      LKR {item.price.toFixed(2)}
+                    </td>
+                    <td className="py-3 px-6 text-left">{item.stock}</td>
+                    <td>
+                      <div className="py-3 px-6 flex gap-4 items-center justify-center text-2xl">
+                        <FaEdit
+                          onClick={() => {
+                            navigate("/admin/edit-product/", {
+                              state: item,
+                            });
+                          }}
+                          className="text-blue-600 cursor-pointer"
+                        />
+                        <FaTrash
+                          onClick={() => {
+                            confirmDelete(item.productId);
+                          }}
+                          className="text-red-600 cursor-pointer"
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
       </div>
     </div>
   );

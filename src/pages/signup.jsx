@@ -34,14 +34,16 @@ export default function Signup() {
   return (
     <>
       <Header />
-      <div className="flex items-center justify-center h-[calc(100vh-80px)] bg-[url('/login-background.png')] bg-cover bg-center">
+      <div className="flex items-center justify-center h-[calc(100vh-80px)] bg-[url('/signup-background.png')] bg-cover bg-center">
         {/* Left Side */}
         <div className="w-[50%] h-full hidden md:block"></div>
 
         {/* Right Side - Form */}
         <div className="w-full md:w-[50%] h-full flex items-center justify-center p-4">
           <div className="w-full max-w-md h-auto backdrop-blur-md rounded-2xl shadow-2xl flex flex-col items-center justify-center gap-6 bg-white/30 p-8 py-10">
-            <h1 className="text-4xl font-bold text-white drop-shadow">Sign Up</h1>
+            <h1 className="text-4xl font-bold text-white drop-shadow-lg tracking-wide">
+              Create Account
+            </h1>
 
             <input
               onChange={(e) => setFirstName(e.target.value)}
@@ -77,19 +79,39 @@ export default function Signup() {
 
             <button
               onClick={handleSignup}
-              className="w-[300px] h-[50px] rounded-2xl bg-[#6a927f] hover:bg-[#5c816f] text-white font-bold transition duration-300"
+              className="w-[300px] h-[50px] rounded-2xl bg-[#74a7cf] hover:bg-[#5e92bc] text-white font-bold shadow-md transition duration-300"
             >
               Sign Up
             </button>
 
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-[#f0f4f8] p-2 bg-black/60 rounded-xl backdrop-blur-sm shadow-md">
               Already have an account?{" "}
               <span
-                className="underline cursor-pointer"
+                className="underline cursor-pointer text-white font-medium hover:text-[#cde4f7] transition duration-200"
                 onClick={() => navigate("/login")}
               >
                 Login
               </span>
+            </p>
+            
+            <p className="text-sm  drop-shadow-sm max-w-md mx-auto leading-relaxed">
+              By signing up, you agree to our{" "}
+              <span
+                className="underline cursor-pointer text-white font-semibold hover:text-[#a8d0ff] transition-colors duration-300"
+                role="link"
+                tabIndex={0}
+              >
+                Terms of Service
+              </span>{" "}
+              and{" "}
+              <span
+                className="underline cursor-pointer text-white font-semibold hover:text-[#a8d0ff] transition-colors duration-300"
+                role="link"
+                tabIndex={0}
+              >
+                Privacy Policy
+              </span>
+              .
             </p>
           </div>
         </div>

@@ -70,8 +70,8 @@ export default function EditProductPage() {
   }
 
   return (
-    <div className="container flex flex-col items-center justify-center min-h-screen px-4 py-8 bg-gray-50">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+    <div className="container flex flex-col items-center justify-center min-h-screen px-4 py-1 bg-gray-50">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
         Edit Product
       </h2>
 
@@ -79,54 +79,54 @@ export default function EditProductPage() {
         type="text"
         disabled
         placeholder="Product ID"
-        className="mb-4 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="mb-3 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={productId}
         onChange={(e) => setProductId(e.target.value)}
       />
       <input
         type="text"
         placeholder="Name"
-        className="mb-4 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="mb-3 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
       <input
         type="text"
         placeholder="Alt Names (comma separated)"
-        className="mb-4 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="mb-3 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={altNames}
         onChange={(e) => setAltNames(e.target.value.split(","))}
       />
       <textarea
         placeholder="Description"
-        className="mb-4 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="mb-3 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
       <input
         type="file"
         multiple
-        className="mb-4 p-2 border border-gray-300 rounded-lg w-[300px] bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="mb-3 p-2 border border-gray-300 rounded-lg w-[300px] bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         onChange={(e) => setImages(e.target.files)}
       />
       <input
         type="number"
         placeholder="Labeled Price"
-        className="mb-4 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="mb-3 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={labeledPrice}
         onChange={(e) => setLabeledPrice(e.target.value)}
       />
       <input
         type="number"
         placeholder="Price"
-        className="mb-4 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="mb-3 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={price}
         onChange={(e) => setPrice(e.target.value)}
       />
       <input
         type="number"
         placeholder="Stock"
-        className="mb-4 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="mb-3 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={stock}
         onChange={(e) => setStock(e.target.value)}
       />
