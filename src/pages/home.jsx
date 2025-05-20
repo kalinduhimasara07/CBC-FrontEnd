@@ -3,6 +3,7 @@ import Header from "../components/header";
 import ProductPage from "../client/productPage";
 import NotFoundPage from "./notFoundPage";
 import ProductOverViewPage from "../client/productOverViewPage";
+import AboutUs from "../client/aboutUs";
 
 export default function HomePage() {
   return (
@@ -11,7 +12,7 @@ export default function HomePage() {
       <div className="w-full h-[calc(100vh-80px)] flex flex-col items-center">
         <Routes path="/">
           <Route path="/" element={<h1>Home</h1>} />
-          <Route path="/about" element={<h1>About</h1>} />
+          <Route path="/about" element={<AboutUs/>} />
           <Route path="/contact" element={<h1>Contact</h1>} />
           <Route path="/products" element={<ProductPage />} />
           <Route path="/overview/:id" element={<ProductOverViewPage />} />
