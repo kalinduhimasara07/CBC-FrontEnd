@@ -32,7 +32,8 @@ export default function Signup() {
   }
 
   return (
-    <>
+    <div className="pt-[80px]">
+      <>
       <Header />
       <div className="flex items-center justify-center h-[calc(100vh-80px)] bg-[url('/signup-background.png')] bg-cover bg-center">
         {/* Left Side */}
@@ -117,5 +118,6 @@ export default function Signup() {
         </div>
       </div>
     </>
+    </div>
   );
 }

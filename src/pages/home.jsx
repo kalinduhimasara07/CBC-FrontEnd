@@ -4,6 +4,9 @@ import ProductPage from "../client/productPage";
 import NotFoundPage from "./notFoundPage";
 import ProductOverViewPage from "../client/productOverViewPage";
 import AboutUs from "../client/aboutUs";
+import ContactUsPage from "../client/contactus";
+import Homepage from "../client/homePage";
+import Cart from "../client/cart";
 
 export default function HomePage() {
   return (
@@ -11,11 +14,12 @@ export default function HomePage() {
       <Header />
       <div className="w-full h-[calc(100vh-80px)] flex flex-col items-center">
         <Routes path="/">
-          <Route path="/" element={<h1>Home</h1>} />
-          <Route path="/about" element={<AboutUs/>} />
-          <Route path="/contact" element={<h1>Contact</h1>} />
+          <Route path="/" element={<Homepage/>} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/contact" element={<ContactUsPage/>} />
           <Route path="/products" element={<ProductPage />} />
           <Route path="/overview/:id" element={<ProductOverViewPage />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       </div>

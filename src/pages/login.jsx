@@ -47,7 +47,7 @@ export default function Login() {
   }
 
   return (
-    <>
+    <div className="pt-[80px]">
       <Header />
       <div className="flex items-center justify-center h-[calc(100vh-80px)] bg-[url('/login-background.jpg')] bg-cover bg-center">
         {/* Left Side */}
@@ -95,7 +95,7 @@ export default function Login() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

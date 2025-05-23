@@ -4,7 +4,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   return (
-    <header className="w-full h-[80px] shadow-lg flex items-center justify-between px-6 bg-white">
+    <header className="fixed top-0 left-0 w-full h-[80px] shadow-lg flex items-center justify-between px-6 bg-white z-50">
       {/* Logo */}
       <div className="flex items-center gap-3">
         <img
@@ -47,6 +47,18 @@ export default function Header() {
         >
           Contact
         </Link>
+        <Link
+          to="/login"
+          className="text-lg font-semibold text-gray-700 hover:text-amber-600 transition-colors"
+        >
+          Login
+        </Link>
+        <Link
+          to="/signup"
+          className="text-lg font-semibold text-gray-700 hover:text-amber-600 transition-colors"
+        >
+          Signup
+        </Link>
       </nav>
 
       {/* User Profile (Placeholder) */}
@@ -63,7 +75,6 @@ export default function Header() {
     </header>
   );
 }
-
 
 // import { Link } from "react-router-dom";
 
