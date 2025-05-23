@@ -7,12 +7,14 @@ import AboutUs from "../client/aboutUs";
 import ContactUsPage from "../client/contactus";
 import Homepage from "../client/homePage";
 import Cart from "../client/cart";
+import ScrollToTop from "../utils/scrolltotop";
 
 export default function HomePage() {
   return (
     <>
       <Header />
       <div className="w-full h-[calc(100vh-80px)] flex flex-col items-center">
+        <ScrollToTop/>
         <Routes path="/">
           <Route path="/" element={<Homepage/>} />
           <Route path="/about" element={<AboutUs />} />

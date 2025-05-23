@@ -3,11 +3,12 @@ import Footer from "../components/footer";
 import axios from "axios";
 import { AddToCart } from "../utils/cart";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Homepage() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
   useEffect(() => {
     if (isLoading) {
       axios
@@ -24,7 +25,6 @@ export default function Homepage() {
     }
   }, [isLoading]);
 
-  const [activeProduct, setActiveProduct] = useState(0);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [emailSignup, setEmailSignup] = useState("");
   const [signupSuccess, setSignupSuccess] = useState(false);
@@ -316,12 +316,8 @@ export default function Homepage() {
             {featuredProducts.map((product, index) => (
               <div
                 key={index}
-                onClick={() => setActiveProduct(index)}
-                className={`bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50 cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-105 ${
-                  activeProduct === index
-                    ? "ring-2 ring-amber-500 bg-amber-50/80"
-                    : ""
-                }`}
+                
+                className={`bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50 cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-105 hover:ring-2 hover:ring-amber-500  `}
               >
                 <Link to={"/overview/" + product.productId} path>
                   <div className="text-center">
@@ -381,6 +377,12 @@ export default function Homepage() {
               </div>
             ))}
           </div>
+          <div className="flex justify-center mt-8">
+  <button onClick={() => navigate("/products")} className="bg-blue-600 text-white font-semibold px-6 py-2 rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg transition duration-300 ease-in-out">
+    See more Products
+  </button>
+</div>
+
         </div>
       </div>
 
