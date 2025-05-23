@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ImageSlider from "../components/imageSlider";
 import { AddToCart, getCart } from "../utils/cart";
+import toast from "react-hot-toast";
 
 // Loading Component
 function Loading() {
@@ -28,11 +29,12 @@ export default function ProductOverViewPage() {
   const handleAddToCart = (product) => {
     // This is where you'd call a cart API or update local/global state
     // alert(`Added ${quantity} x ${product.name} to cart!`);
-    console.log("Old Cart");
-    console.log(getCart());
+    // console.log("Old Cart");
+    // console.log(getCart());
     AddToCart(product, quantity);
-    console.log("New Cart");
-    console.log(getCart());
+    toast.success(`Added ${quantity} x ${product.name} to cart!`);
+    // console.log("New Cart");
+    // console.log(getCart());
   };
 
   const handleBuyNow = (product) => {

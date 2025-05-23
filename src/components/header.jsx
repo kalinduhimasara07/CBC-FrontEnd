@@ -1,3 +1,4 @@
+import { FaShoppingCart } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Header() {
@@ -62,7 +63,8 @@ export default function Header() {
       </nav>
 
       {/* User Profile (Placeholder) */}
-      <div className="relative">
+      <div className="flex ">
+        <div className="flex items-center justify-center font-bold text-3xl hover:scale-110 transition-transform mx-6"><Link to="/cart"><FaShoppingCart className="text-[#e17100] cursor-pointer"/></Link></div>
         <div className="w-[50px] h-[50px] bg-amber-600 rounded-full cursor-pointer flex items-center justify-center text-white font-bold text-xl shadow-md hover:scale-105 transition-transform">
           U
         </div>

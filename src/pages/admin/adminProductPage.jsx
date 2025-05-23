@@ -93,34 +93,33 @@ export default function AdminProductPage() {
         + Add Product
       </button>
 
-      <div className="bg-white shadow-md rounded-lg">
-        {/* Table Header */}
-        <table className="min-w-full table-fixed border-collapse">
-          <thead className="bg-gray-300 text-gray-700 text-sm uppercase tracking-wider sticky top-0 z-10">
-            <tr>
-              <th className="py-3 px-6 text-left">Product ID</th>
-              <th className="py-3 px-6 text-left">Name</th>
-              <th className="py-3 px-6 text-left">Image</th>
-              <th className="py-3 px-6 text-left">Price</th>
-              <th className="py-3 px-6 text-left">Stock</th>
-              <th className="py-3 px-6 text-center">Action</th>
-            </tr>
-          </thead>
-        </table>
-
-        {/* Scrollable Table Body */}
-        <div className="max-h-[calc(100vh-200px)] overflow-y-auto">
-          {isLoading ? (
-            <div className="flex items-center justify-center h-[200px]">
-              <div className="w-[80px] h-[80px] bg-amber-50 border-5 border-blue-300 rounded-full border-t-blue-600 animate-spin"></div>
-            </div>
-          ) : (
-            <table className="min-w-full table-fixed border-collapse">
-              <tbody>
-                {products.map((item, index) => (
+      <div className="bg-white shadow-md rounded-lg overflow-hidden">
+        <div className="overflow-y-auto max-h-[calc(100vh-250px)]">
+          <table className="min-w-full table-fixed border-collapse">
+            <thead className="bg-gray-300 text-gray-700 text-sm uppercase tracking-wider sticky top-0 z-10">
+              <tr>
+                <th className="py-3 px-6 text-left w-[15%]">Product ID</th>
+                <th className="py-3 px-6 text-left w-[20%]">Name</th>
+                <th className="py-3 px-6 text-left w-[15%]">Image</th>
+                <th className="py-3 px-6 text-left w-[15%]">Price</th>
+                <th className="py-3 px-6 text-left w-[15%]">Stock</th>
+                <th className="py-3 px-6 text-center w-[20%]">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {isLoading ? (
+                <tr>
+                  <td colSpan="6">
+                    <div className="flex items-center justify-center h-[200px]">
+                      <div className="w-[80px] h-[80px] bg-amber-50 border-5 border-blue-300 rounded-full border-t-blue-600 animate-spin"></div>
+                    </div>
+                  </td>
+                </tr>
+              ) : (
+                products.map((item, index) => (
                   <tr
                     key={index}
-                    className="border-b border-gray-200 hover:bg-gray-200 transition hover:shadow-lg"
+                    className="border-b border-gray-200 hover:bg-gray-200 transition hover:shadow-sm"
                   >
                     <td className="py-3 px-6 text-left font-medium text-gray-800">
                       {item.productId}
@@ -142,26 +141,22 @@ export default function AdminProductPage() {
                     <td>
                       <div className="py-3 px-6 flex gap-4 items-center justify-center text-2xl">
                         <FaEdit
-                          onClick={() => {
-                            navigate("/admin/edit-product/", {
-                              state: item,
-                            });
-                          }}
+                          onClick={() =>
+                            navigate("/admin/edit-product/", { state: item })
+                          }
                           className="text-blue-600 cursor-pointer"
                         />
                         <FaTrash
-                          onClick={() => {
-                            confirmDelete(item.productId);
-                          }}
+                          onClick={() => confirmDelete(item.productId)}
                           className="text-red-600 cursor-pointer"
                         />
                       </div>
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
