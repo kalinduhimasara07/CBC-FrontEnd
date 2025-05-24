@@ -64,11 +64,11 @@ export default function Footer() {
               <h4 className="text-lg font-bold text-amber-400 mb-4">About</h4>
               <ul className="space-y-3 text-gray-300">
                 <li><Link to="/about" className="hover:text-amber-400 transition-colors">Our Story</Link></li>
+                <li><Link to="/privacy" className="hover:text-amber-400 transition-colors">Privacy Policy</Link></li>
+                <li><Link to="/terms" className="hover:text-amber-400 transition-colors">Terms Of Services</Link></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Ingredients</a></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Sustainability</a></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Reviews</a></li>
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Press</a></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Affiliate Program</a></li>
               </ul>
             </div>
@@ -124,8 +124,8 @@ export default function Footer() {
               </div>
               <div className="flex flex-wrap gap-6 text-sm text-gray-400">
                 <Link to="/privacy" className="hover:text-amber-400 transition-colors">Privacy Policy</Link>
-                <a href="#" className="hover:text-amber-400 transition-colors">Terms of Service</a>
-                <a href="#" className="hover:text-amber-400 transition-colors">Cookie Policy</a>
+                <Link to="/terms" className="hover:text-amber-400 transition-colors">Terms of Service</Link>
+                <Link to="/privacy" className="hover:text-amber-400 transition-colors">Cookie Policy</Link>
                 <a href="#" className="hover:text-amber-400 transition-colors">Accessibility</a>
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-400">

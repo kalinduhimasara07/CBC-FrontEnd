@@ -10,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 import LumineeFAQ from "./client/faq";
 import ScrollToTop from "./utils/scrolltotop";
 import LumineePrivacyPolicy from "./client/privacyPolicy";
+import TermsOfService from "./client/termsOfServices";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/*" element={<HomePage />} />
           <Route path="/faq" element={<LumineeFAQ/>} />
           <Route path="/privacy" element={<LumineePrivacyPolicy/>} />
+          <Route path="/terms" element={<TermsOfService/>} />
         </Routes>
       </BrowserRouter>
     </>
