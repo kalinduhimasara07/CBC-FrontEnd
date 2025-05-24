@@ -123,7 +123,7 @@ export default function Footer() {
                 © 2025 Lumineé. All rights reserved.
               </div>
               <div className="flex flex-wrap gap-6 text-sm text-gray-400">
-                <a href="#" className="hover:text-amber-400 transition-colors">Privacy Policy</a>
+                <Link to="/privacy" className="hover:text-amber-400 transition-colors">Privacy Policy</Link>
                 <a href="#" className="hover:text-amber-400 transition-colors">Terms of Service</a>
                 <a href="#" className="hover:text-amber-400 transition-colors">Cookie Policy</a>
                 <a href="#" className="hover:text-amber-400 transition-colors">Accessibility</a>

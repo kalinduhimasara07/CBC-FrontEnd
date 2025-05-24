@@ -2,7 +2,7 @@ import { useState } from "react";
 import Header from "../components/header";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
@@ -96,6 +96,16 @@ export default function Login() {
               >
                 Sign up
               </span>
+            </p>
+            <p className="text-xs text-gray-500 text-center max-w-sm leading-relaxed">
+              By signing up, you agree to our{" "}
+              <span className="underline cursor-pointer hover:text-[#e17100]">
+                <Link to="/terms">Terms of Service</Link>
+              </span>{" "}
+              and{" "}
+              <span className="underline cursor-pointer hover:text-[#e17100]">
+                <Link to="/privacy">Privacy Policy</Link>
+              </span>.
             </p>
           </div>
         </div>

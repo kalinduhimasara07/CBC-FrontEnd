@@ -9,6 +9,7 @@ import TestPage from "./pages/testPage";
 import { Toaster } from "react-hot-toast";
 import LumineeFAQ from "./client/faq";
 import ScrollToTop from "./utils/scrolltotop";
+import LumineePrivacyPolicy from "./client/privacyPolicy";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="testing" element={<TestPage />} />
           <Route path="/*" element={<HomePage />} />
           <Route path="/faq" element={<LumineeFAQ/>} />
+          <Route path="/privacy" element={<LumineePrivacyPolicy/>} />
         </Routes>
       </BrowserRouter>
     </>
