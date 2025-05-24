@@ -54,7 +54,7 @@ export default function Footer() {
                 <li><Link to="/contact" className="hover:text-amber-400 transition-colors">Contact Us</Link></li>
                 <li><Link to="/faq" className="hover:text-amber-400 transition-colors">FAQ</Link></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Shipping Info</a></li>
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Returns</a></li>
+                <li><Link to="/return" className="hover:text-amber-400 transition-colors">Return</Link></li>
                 <li><a onClick={()=>{toast("This feature is still under maintenance 🚧 Stay tuned! ✨", {icon: "⚠️",});}} className="hover:text-amber-400 transition-colors">Track Order</a></li>
               </ul>
             </div>
@@ -66,7 +66,7 @@ export default function Footer() {
                 <li><Link to="/about" className="hover:text-amber-400 transition-colors">Our Story</Link></li>
                 <li><Link to="/privacy" className="hover:text-amber-400 transition-colors">Privacy Policy</Link></li>
                 <li><Link to="/terms" className="hover:text-amber-400 transition-colors">Terms Of Services</Link></li>
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Ingredients</a></li>
+                <li><Link to="/return" className="hover:text-amber-400 transition-colors">Return Policy</Link></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Sustainability</a></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Reviews</a></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Affiliate Program</a></li>
