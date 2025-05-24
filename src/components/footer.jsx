@@ -1,3 +1,6 @@
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+
 export default function Footer() {
   return (
     <div>
@@ -32,7 +35,7 @@ export default function Footer() {
             <div>
               <h4 className="text-lg font-bold text-amber-400 mb-4">Shop</h4>
               <ul className="space-y-3 text-gray-300">
-                <li><a href="#" className="hover:text-amber-400 transition-colors">All Products</a></li>
+                <li><Link to="/products" className="hover:text-amber-400 transition-colors">All Products</Link></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Cleansers</a></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Serums</a></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Moisturizers</a></li>
@@ -46,13 +49,13 @@ export default function Footer() {
             <div>
               <h4 className="text-lg font-bold text-amber-400 mb-4">Support</h4>
               <ul className="space-y-3 text-gray-300">
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Skin Quiz</a></li>
+                <li><Link to="/faq" className="hover:text-amber-400 transition-colors">Skin Quiz</Link></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Skincare Guide</a></li>
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Contact Us</a></li>
-                <li><a href="#" className="hover:text-amber-400 transition-colors">FAQ</a></li>
+                <li><Link to="/contact" className="hover:text-amber-400 transition-colors">Contact Us</Link></li>
+                <li><Link to="/faq" className="hover:text-amber-400 transition-colors">FAQ</Link></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Shipping Info</a></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Returns</a></li>
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Track Order</a></li>
+                <li><a onClick={()=>{toast("This feature is still under maintenance 🚧 Stay tuned! ✨", {icon: "⚠️",});}} className="hover:text-amber-400 transition-colors">Track Order</a></li>
               </ul>
             </div>
 
@@ -60,7 +63,7 @@ export default function Footer() {
             <div>
               <h4 className="text-lg font-bold text-amber-400 mb-4">About</h4>
               <ul className="space-y-3 text-gray-300">
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Our Story</a></li>
+                <li><Link to="/about" className="hover:text-amber-400 transition-colors">Our Story</Link></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Ingredients</a></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Sustainability</a></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Reviews</a></li>
