@@ -8,6 +8,9 @@ import ContactUsPage from "../client/contactus";
 import Homepage from "../client/homePage";
 import Cart from "../client/cart";
 import ScrollToTop from "../utils/scrolltotop";
+import Signup from "./signup";
+import Login from "./login";
+import LumineeFAQ from "../client/faq";
 
 export default function HomePage() {
   return (
@@ -22,6 +25,9 @@ export default function HomePage() {
           <Route path="/products" element={<ProductPage />} />
           <Route path="/overview/:id" element={<ProductOverViewPage />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup/> } />
+          
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       </div>

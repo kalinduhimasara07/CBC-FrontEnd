@@ -1,8 +1,9 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import Header from "../components/header";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -10,62 +11,50 @@ export default function Login() {
   const navigate = useNavigate();
 
   async function handleLogin() {
-    console.log("Email:", email);
-    console.log("Password:", password);
     try {
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/users/login",
-        {
-          email,
-          password,
-        }
+        { email, password }
       );
-      toast.success("Login successful!");
-      console.log(response.data);
+      toast.success("Welcome back to Lumineé!");
       localStorage.setItem("token", response.data.token);
-      console.log(response.data.role);
-      if (response.data.role == "admin") {
-        navigate("/admin");
-        // window.location.href = "/admin";
-        // Redirect to admin page after successful login
-        // Optionally, you can also use a router to navigate to the admin page
-        // e.g., navigate("/admin") if using react-router-dom
-      } else {
-        // window.location.href = "/";
-        navigate("/");
-      }
-
-      // Optionally, you can also use a router to navigate to the admin page
-      // e.g., navigate("/admin") if using react-router-dom
-
-      //get the token from the response and store it in local storage
-      //const token = localStorage.getItem("token");
+      navigate(response.data.role === "admin" ? "/admin" : "/");
     } catch (error) {
-      console.error(error.response?.data?.message || "Login failed");
       toast.error(error.response?.data?.message || "Login failed");
     }
   }
 
+  const handleGoogleLogin = () => {
+    toast("Google login coming soon!", { icon: "⚠️" });
+  };
+
   return (
     <div className="pt-[80px]">
       <Header />
-      <div className="flex items-center justify-center h-[calc(100vh-80px)] bg-[url('/login-background.jpg')] bg-cover bg-center">
-        {/* Left Side */}
-        <div className="w-[50%] h-full hidden md:block"></div>
+      <div className="flex items-center justify-center h-[calc(100vh-80px)] bg-gradient-to-br from-[#fff3e6] via-white to-[#fff0e0] relative overflow-hidden">
 
-        {/* Right Side - Form */}
-        <div className="w-full md:w-[50%] h-full flex items-center justify-center p-4">
-          <div className="w-full max-w-md h-[600px] backdrop-blur-md rounded-2xl shadow-2xl flex flex-col items-center justify-center gap-6 bg-white/30 p-8">
-            <h1 className="text-4xl font-bold text-white px-6 py-3 rounded-2xl bg-[#1c1f2a]/70 shadow-xl">
-              Login
+        {/* Glowing background circles */}
+        <div className="absolute w-96 h-96 bg-[#e17100]/20 rounded-full top-10 left-10 blur-[100px] z-0"></div>
+        <div className="absolute w-80 h-80 bg-[#e17100]/30 rounded-full bottom-10 right-10 blur-[120px] z-0"></div>
+
+        {/* Login Card */}
+        <div className="relative z-10 w-full md:w-[50%] flex items-center justify-center p-4">
+          <div className="w-full max-w-md backdrop-blur-md rounded-2xl shadow-2xl flex flex-col items-center justify-center gap-6 bg-white/30 p-10 border border-white/20">
+
+            {/* Title */}
+            <h1 className="text-5xl font-bold text-[#e17100] tracking-wide text-center drop-shadow-md">
+              Lumineé
             </h1>
+            <p className="text-md text-gray-700 font-medium -mt-4 mb-2">
+              Beauty begins with confidence ✨
+            </p>
 
             <input
               onChange={(e) => setEmail(e.target.value)}
               type="email"
               value={email}
               placeholder="Email"
-              className="w-[300px] h-[50px] px-4 rounded-2xl border border-[#6a927f] bg-white/80 focus:outline-none focus:ring-2 focus:ring-[#6a927f]"
+              className="w-[300px] h-[50px] px-4 rounded-2xl border border-[#e17100]/50 bg-white/90 focus:outline-none focus:ring-2 focus:ring-[#e17100]"
             />
 
             <input
@@ -73,20 +62,36 @@ export default function Login() {
               type="password"
               value={password}
               placeholder="Password"
-              className="w-[300px] h-[50px] px-4 rounded-2xl border border-[#6a927f] bg-white/80 focus:outline-none focus:ring-2 focus:ring-[#6a927f]"
+              className="w-[300px] h-[50px] px-4 rounded-2xl border border-[#e17100]/50 bg-white/90 focus:outline-none focus:ring-2 focus:ring-[#e17100]"
             />
 
             <button
               onClick={handleLogin}
-              className="w-[300px] h-[50px] rounded-2xl bg-[#bfa77a] hover:bg-[#a68f5f] text-white font-bold shadow-lg transition duration-300"
+              className="w-[300px] h-[50px] rounded-2xl bg-[#e17100] hover:bg-[#c96100] text-white font-bold shadow-lg transition duration-300"
             >
               Login
             </button>
 
-            <p className="text-sm text-white font-medium px-4 py-2 bg-black/60 rounded-xl backdrop-blur-sm shadow-md">
+            {/* Divider */}
+            <div className="flex items-center w-full max-w-[300px] gap-2 text-sm text-gray-600">
+              <div className="flex-grow h-[1px] bg-gray-300"></div>
+              or
+              <div className="flex-grow h-[1px] bg-gray-300"></div>
+            </div>
+
+            <button
+              onClick={handleGoogleLogin}
+              className="w-[300px] h-[50px] flex items-center justify-center gap-3 rounded-2xl bg-white text-[#333] font-semibold shadow-md hover:shadow-lg transition duration-300 border border-gray-300"
+            >
+              <FcGoogle size={22} />
+              Sign in with Google
+            </button>
+
+            {/* Footer */}
+            <p className="text-sm text-gray-700 text-center font-medium">
               Don&apos;t have an account?{" "}
               <span
-                className="underline cursor-pointer text-white hover:text-[#d4c2a2] transition font-semibold"
+                className="text-[#e17100] font-semibold underline cursor-pointer hover:text-[#c96100]"
                 onClick={() => navigate("/signup")}
               >
                 Sign up
@@ -98,6 +103,8 @@ export default function Login() {
     </div>
   );
 }
+
+
 
 // import { useState, useEffect } from "react";
 // import Header from "../components/header";
