@@ -50,7 +50,7 @@ export default function Footer() {
               <h4 className="text-lg font-bold text-amber-400 mb-4">Support</h4>
               <ul className="space-y-3 text-gray-300">
                 <li><Link to="/faq" className="hover:text-amber-400 transition-colors">Skin Quiz</Link></li>
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Skincare Guide</a></li>
+                <li><Link to="/skincare" className="hover:text-amber-400 transition-colors">SkinCare Guides</Link></li>
                 <li><Link to="/contact" className="hover:text-amber-400 transition-colors">Contact Us</Link></li>
                 <li><Link to="/faq" className="hover:text-amber-400 transition-colors">FAQ</Link></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Shipping Info</a></li>
@@ -67,7 +67,7 @@ export default function Footer() {
                 <li><Link to="/privacy" className="hover:text-amber-400 transition-colors">Privacy Policy</Link></li>
                 <li><Link to="/terms" className="hover:text-amber-400 transition-colors">Terms Of Services</Link></li>
                 <li><Link to="/return" className="hover:text-amber-400 transition-colors">Return Policy</Link></li>
-                <li><a href="#" className="hover:text-amber-400 transition-colors">Sustainability</a></li>
+                <li><Link to="/contact" className="hover:text-amber-400 transition-colors">Contact Us</Link></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Reviews</a></li>
                 <li><a href="#" className="hover:text-amber-400 transition-colors">Affiliate Program</a></li>
               </ul>

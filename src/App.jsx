@@ -12,6 +12,7 @@ import ScrollToTop from "./utils/scrolltotop";
 import LumineePrivacyPolicy from "./client/privacyPolicy";
 import TermsOfService from "./client/termsOfServices";
 import ReturnPolicy from "./client/returnPolicy";
+import SkincareGuide from "./client/skincareGuide";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/privacy" element={<LumineePrivacyPolicy/>} />
           <Route path="/terms" element={<TermsOfService/>} />
           <Route path="/return" element={<ReturnPolicy/>} />
+          <Route path="/skincare" element={<SkincareGuide/>} />
         </Routes>
       </BrowserRouter>
     </>
