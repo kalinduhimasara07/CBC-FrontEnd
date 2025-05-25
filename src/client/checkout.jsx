@@ -12,6 +12,7 @@ import Footer from "../components/footer";
 import { useLocation } from "react-router-dom";
 import { FcMinus, FcPlus } from "react-icons/fc";
 import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
+import FloatingNotice from "../components/floatingNotice";
 
 export default function Checkout() {
   const location = useLocation();
@@ -177,11 +178,19 @@ export default function Checkout() {
     );
   }
 
+  const token = localStorage.getItem("token");
+      
+
   return (
     <div className="w-full flex flex-col justify-center items-center bg-gray-50 ">
+        {!token && (
+      <FloatingNotice message="Before placing an order, please login first." />
+    )}
       <div className="mt-[100px] w-[95%] lg:w-[90%] max-w-7xl mb-[100px] flex flex-col lg:flex-row gap-6 lg:gap-8">
         {/* Checkout Form - Left Side */}
         <div className="flex-1 bg-white rounded-lg shadow-lg p-4 lg:p-6">
+
+            
           {/* Progress Steps */}
           <div className="flex items-center justify-between mb-6 lg:mb-8">
             {[1, 2, 3].map((stepNum) => (
