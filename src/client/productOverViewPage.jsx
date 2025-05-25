@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ImageSlider from "../components/imageSlider";
 import { AddToCart, getCart } from "../utils/cart";
 import toast from "react-hot-toast";
@@ -25,6 +25,7 @@ export default function ProductOverViewPage() {
   const [status, setStatus] = useState("loading");
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate();
 
   const handleAddToCart = (product) => {
     // This is where you'd call a cart API or update local/global state
@@ -39,7 +40,22 @@ export default function ProductOverViewPage() {
 
   const handleBuyNow = (product) => {
     // This would ideally redirect to a checkout page
-    alert(`Proceeding to buy ${quantity} x ${product.name}`);
+    navigate("/checkout", {
+      state: {
+        cart: [
+          {
+            productId: product.productId,
+            name: product.name,
+            images: product.images[0],
+            labeledPrice: product.labeledPrice,
+            price: product.price,
+            qty: quantity,
+          },
+        ],
+      },
+    });
+    //
+    toast.success(`Buying ${quantity} x ${product.name} now!`);
     // e.g., navigate("/checkout", { state: { product } });
   };
 

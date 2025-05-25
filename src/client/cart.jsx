@@ -3,9 +3,11 @@ import { AddToCart, getCart, RemoveFromCart } from "../utils/cart";
 import { FaRegTrashAlt } from "react-icons/fa";
 import toast from "react-hot-toast";
 import Footer from "../components/footer";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
   const [cart, setCart] = useState(getCart());
+  const navigate = useNavigate();
   
   // Calculate totals
   const subtotal = cart.reduce((total, item) => total + (item.price * item.qty), 0);
@@ -146,7 +148,7 @@ export default function Cart() {
               <span>${subtotal.toFixed(2)}</span>
             </div>
             
-            <button className="w-full bg-[#e17100] hover:bg-[#c5610a] text-white font-semibold py-2 lg:py-3 px-4 rounded-lg transition-colors text-sm lg:text-base">
+            <button onClick={()=>{navigate('/checkout', { state: { cart:cart } })}} className="w-full bg-[#e17100] hover:bg-[#c5610a] text-white font-semibold py-2 lg:py-3 px-4 rounded-lg transition-colors text-sm lg:text-base">
               Proceed to Checkout
             </button>
             
