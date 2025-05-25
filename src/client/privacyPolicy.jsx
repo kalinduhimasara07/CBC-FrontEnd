@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Shield, Eye, Lock, Users, Mail, Phone, MapPin, Calendar } from 'lucide-react';
 import Header from '../components/header';
 import Footer from '../components/footer';
+import FloatingNotice from '../components/floatingNotice';
 
 const LumineePrivacyPolicy = () => {
   const [activeSection, setActiveSection] = useState('');
@@ -48,6 +49,7 @@ const LumineePrivacyPolicy = () => {
   return (
     <div>
         <Header/>
+        <FloatingNotice message="Before placing an order, please login first." />
         <div className="min-h-screen mt-[80px] bg-gradient-to-br from-orange-50 to-amber-50 relative overflow-hidden">
       {/* Floating Background Elements */}
       <div className="fixed inset-0 pointer-events-none">
