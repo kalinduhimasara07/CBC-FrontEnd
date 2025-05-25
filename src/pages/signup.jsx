@@ -2,7 +2,7 @@ import { useState } from "react";
 import Header from "../components/header";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 
 export default function Signup() {
@@ -11,6 +11,9 @@ export default function Signup() {
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "No previous page";
+  const cart = location.state?.cart || [];
 
   async function handleSignup() {
     try {
@@ -24,7 +27,7 @@ export default function Signup() {
         }
       );
       toast.success("Welcome to Lumineé!");
-      navigate("/login");
+      navigate("/login", { state: { from, cart } });
     } catch (error) {
       toast.error(error.response?.data?.message || "Signup failed");
     }

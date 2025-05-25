@@ -184,7 +184,7 @@ export default function Checkout() {
   return (
     <div className="w-full flex flex-col justify-center items-center bg-gray-50 ">
         {!token && (
-      <FloatingNotice message="Before placing an order, please login first." />
+      <FloatingNotice cart={cart} />
     )}
       <div className="mt-[100px] w-[95%] lg:w-[90%] max-w-7xl mb-[100px] flex flex-col lg:flex-row gap-6 lg:gap-8">
         {/* Checkout Form - Left Side */}

@@ -151,7 +151,7 @@ export default function Homepage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
                 <div className="text-center mb-6 flex flex-col justify-center items-center">
                   <div className="bg-white mb-4 w-50 h-50 flex justify-center items-center">
-                    <img src={featuredProducts[0].image} alt="" srcset="" />
+                    <img src={featuredProducts[0].image} alt=""  />
                   </div>
                   <h3 className="text-2xl font-bold mb-2">
                     {featuredProducts[0].name}

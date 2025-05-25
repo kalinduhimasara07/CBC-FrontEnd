@@ -1,8 +1,25 @@
-import { User,} from "lucide-react";
+import { User } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-export default function FloatingNotice({
-  message = "Before placing an order, please login first.",
-}) {
+export default function FloatingNotice({ cart }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const Cart = cart || [];
+
+  console.log("FloatingNotice cart:", cart);
+
+  function handleLogin() {
+    navigate("/login", { state: { from: "checkout", cart: Cart } });
+  }
+
+  function handleCreateAccount() {
+    navigate("/signup", { state: { from: "checkout", cart: Cart } });
+  }
+
+  function handleContinueShopping() {
+    navigate("/products");
+  }
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[10px]">
       <div className="bg-white/90 border border-white/30 rounded-2xl px-6 py-4 shadow-lg text-center max-w-md w-full mx-4">
@@ -23,11 +40,17 @@ export default function FloatingNotice({
 
         {/* Action Buttons */}
         <div className="space-y-3">
-          <button className="w-full bg-[#e17100] hover:bg-[#c5610a] text-white py-3 px-6 rounded-lg font-semibold transition-colors">
+          <button
+            onClick={handleLogin}
+            className="w-full bg-[#e17100] hover:bg-[#c5610a] text-white py-3 px-6 rounded-lg font-semibold transition-colors"
+          >
             Login to Account
           </button>
 
-          <button className="w-full bg-white/80 hover:bg-white border border-gray-300 text-gray-700 py-3 px-6 rounded-lg font-semibold transition-colors">
+          <button
+            onClick={handleCreateAccount}
+            className="w-full bg-white/80 hover:bg-white border border-gray-300 text-gray-700 py-3 px-6 rounded-lg font-semibold transition-colors"
+          >
             Create New Account
           </button>
 

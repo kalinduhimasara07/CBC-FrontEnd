@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import Header from "../components/header";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/";
+  const cart = location.state?.cart || [];
 
   async function handleLogin() {
     try {
@@ -19,6 +22,12 @@ export default function Login() {
       toast.success("Welcome back to Lumineé!");
       localStorage.setItem("token", response.data.token);
       navigate(response.data.role === "admin" ? "/admin" : "/");
+      // If the user was redirected from a specific page, navigate there
+      if (from === "checkout") {
+        navigate("/checkout", { state: { cart } });
+      }else{
+        navigate("/products");
+      }
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
     }
