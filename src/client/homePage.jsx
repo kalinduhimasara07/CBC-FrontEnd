@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import Footer from "../components/footer";
 import axios from "axios";
-import { AddToCart } from "../utils/cart";
-import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
+import CardCarousel from "./cardCarousel";
 
 export default function Homepage() {
   const [products, setProducts] = useState([]);
@@ -29,7 +28,6 @@ export default function Homepage() {
   const [emailSignup, setEmailSignup] = useState("");
   const [signupSuccess, setSignupSuccess] = useState(false);
 
-  // console.log(products[0].productId);
 
   const featuredProducts = [
     {
@@ -47,43 +45,7 @@ export default function Homepage() {
       //   "Reduces fine lines",
       //   "Hydrates deeply",
       // ],
-    },
-    {
-      name: products[4]?.name,
-      price: products[4]?.price,
-      image: products[4]?.images[0],
-      productId: products[4]?.productId,
-      qty: 1,
-      labeledPrice: products[4]?.labeledPrice,
-      description: products[4]?.description.slice(0, 100) + "...",
-      isAvailable: products[4]?.isAvailable,
-      stock: products[4]?.stock,
-      // benefits: ["Removes makeup", "Balances pH", "Soothes irritation"],
-    },
-    {
-      name: products[2]?.name,
-      price: products[2]?.price,
-      productId: products[2]?.productId,
-      qty: 1,
-      labeledPrice: products[2]?.labeledPrice,
-      image: products[2]?.images[0],
-      description: products[2]?.description.slice(0, 100) + "...",
-      isAvailable: products[2]?.isAvailable,
-      stock: products[2]?.stock,
-      // benefits: ["Repairs overnight", "Firms skin", "Reduces wrinkles"],
-    },
-    {
-      name: products[5]?.name.slice(0, 30) + "...",
-      price: products[5]?.price,
-      productId: products[5]?.productId,
-      qty: 1,
-      labeledPrice: products[5]?.labeledPrice,
-      image: products[5]?.images[0],
-      description: products[5]?.description.slice(0, 100) + "...",
-      isAvailable: products[5]?.isAvailable,
-      stock: products[5]?.stock,
-      // benefits: ["SPF 30 protection", "Antioxidant rich", "Non-greasy formula"],
-    },
+    }
   ];
 
   const discountPercentage = Math.round(
@@ -223,16 +185,17 @@ export default function Homepage() {
                 </div>
                 <button
                   onClick={() => {
-                    AddToCart(featuredProducts[0], 1);
-                    toast.success(
-                      `Added ${1} x ${featuredProducts[0].name} to cart!`,
-                      {
-                        duration: 3000,
-                        style: {
-                          fontSize: "18px",
-                        },
-                      }
-                    );
+                    navigate("/overview/" + featuredProducts[0].productId);
+                    // AddToCart(featuredProducts[0], 1);
+                    // toast.success(
+                    //   `Added ${1} x ${featuredProducts[0].name} to cart!`,
+                    //   {
+                    //     duration: 3000,
+                    //     style: {
+                    //       fontSize: "18px",
+                    //     },
+                    //   }
+                    // );
                   }}
                   className="w-full bg-yellow-400 text-amber-800 font-bold py-3 px-6 rounded-xl hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105"
                 >
@@ -300,7 +263,7 @@ export default function Homepage() {
       </div>
 
       {/* Featured Products Section */}
-      <div className="py-16 lg:py-20 bg-white/30">
+      {/* <div className="py-16 lg:py-20 bg-white/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
@@ -330,18 +293,6 @@ export default function Homepage() {
                     <p className="text-gray-600 mb-4 text-sm leading-relaxed line-clamp-2">
                       {product.description}
                     </p>
-
-                    {/* <div className="space-y-2 mb-4">
-                    {product.benefits.map((benefit, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center justify-center gap-2 text-sm text-gray-600"
-                      >
-                        <div className="w-1.5 h-1.5 bg-amber-500 rounded-full"></div>
-                        {benefit}
-                      </div>
-                    ))}
-                  </div> */}
 
                     <div className="text-2xl font-bold text-amber-600 mb-4">
                       ${product.price}
@@ -384,7 +335,9 @@ export default function Homepage() {
 </div>
 
         </div>
-      </div>
+      </div> */}
+
+      <CardCarousel/>
 
       {/* Testimonials Section */}
       <div className="py-16 lg:py-20">

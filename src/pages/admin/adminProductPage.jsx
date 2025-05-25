@@ -6,7 +6,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import toast from "react-hot-toast";
 
 export default function AdminProductPage() {
-  const [products, setProducts] = useState(sampleProduct);
+  const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 

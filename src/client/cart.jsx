@@ -1,18 +1,11 @@
 import { useEffect, useState } from "react";
-import { getCart, RemoveFromCart } from "../utils/cart";
+import { AddToCart, getCart, RemoveFromCart } from "../utils/cart";
 import { FaRegTrashAlt } from "react-icons/fa";
 import toast from "react-hot-toast";
 import Footer from "../components/footer";
 
 export default function Cart() {
   const [cart, setCart] = useState(getCart());
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    if (isLoading == true) {
-      setCart(getCart());
-      setIsLoading(false);
-    }
-  }, [isLoading]);
   return (
     <div className="w-full  flex flex-col justify-center items-center">
       <div className="mt-[100px] w-[75%] h-full min-h-[400px] mb-[100px]  flex flex-col items-center">
@@ -46,13 +39,25 @@ export default function Cart() {
                 </div>
               </div>
               <div className="flex items-center">
-                <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-l">
+                <button
+                  onClick={() => {
+                    AddToCart(item, -1);
+                    setCart(getCart());
+                  }}
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-l"
+                >
                   -
                 </button>
                 <span className="bg-gray-200 text-gray-800 font-semibold py-2 px-4">
                   {item.qty}
                 </span>
-                <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-r">
+                <button
+                  onClick={() => {
+                    AddToCart(item, 1);
+                    setCart(getCart());
+                  }}
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-r"
+                >
                   +
                 </button>
               </div>
@@ -68,7 +73,7 @@ export default function Cart() {
                   className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded cursor-pointer"
                   onClick={() => {
                     RemoveFromCart(item.productId);
-                    setIsLoading(true);
+                    setCart(getCart());
                     toast.success("Product removed from cart");
                   }}
                 >

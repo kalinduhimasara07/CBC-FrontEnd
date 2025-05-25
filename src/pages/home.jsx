@@ -11,6 +11,7 @@ import ScrollToTop from "../utils/scrolltotop";
 import Signup from "./signup";
 import Login from "./login";
 import LumineeFAQ from "../client/faq";
+import CardCarousel from "../client/cardCarousel";
 
 export default function HomePage() {
   return (
@@ -27,6 +28,7 @@ export default function HomePage() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup/> } />
+          <Route path="/card" element={<CardCarousel/>} />
           
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>
