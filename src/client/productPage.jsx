@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ProductCard from "../components/productCard";
 import Footer from "../components/footer";
 import Loading from "../components/loading";
+import LumineeFilterSidebar from "../components/filterSideBar";
 
 export default function ProductPage() {
   const [products, setProducts] = useState([]);
@@ -25,15 +26,24 @@ export default function ProductPage() {
 
   return (
     <div>
-      {isLoading ? (
-        <Loading/>
-      ):(
-        <div className="w-full h-auto pt-[80px] bg-gray-200 flex flex-wrap justify-center items-center overflow-y-scroll">
-          {products.map((product) => {
-            return <ProductCard key={product.productId} product={product} />;
-          })}
+      <div className="flex">
+        <div>
+          <LumineeFilterSidebar />
         </div>
-      )}
+        <div>
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <div className="w-full h-auto pt-[80px] pb-8 bg-gray-200 flex flex-wrap justify-center items-center overflow-y-scroll">
+              {products.map((product) => {
+                return (
+                  <ProductCard key={product.productId} product={product} />
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </div>
       <Footer />
     </div>
   );

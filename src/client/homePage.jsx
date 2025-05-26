@@ -425,8 +425,8 @@ export default function Homepage() {
                 </div>
               </div>
 
-              <button className="bg-white text-purple-600 font-bold py-4 px-8 rounded-2xl hover:bg-purple-50 transition-all duration-300 hover:scale-105 shadow-lg text-lg">
-                Start Your Skin Quiz
+              <button onClick={()=>{navigate('/faq')}} className="bg-white text-purple-600 font-bold py-4 px-8 rounded-2xl hover:bg-purple-50 transition-all duration-300 hover:scale-105 shadow-lg text-lg">
+                Find Your Skin Quiz
               </button>
             </div>
           </div>
@@ -502,7 +502,7 @@ export default function Homepage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-amber-600 font-bold py-4 px-8 rounded-2xl hover:bg-amber-50 transition-all duration-300 hover:scale-105 shadow-lg text-lg">
+              <button onClick={()=>{navigate('/products')}} className="bg-white text-amber-600 font-bold py-4 px-8 rounded-2xl hover:bg-amber-50 transition-all duration-300 hover:scale-105 shadow-lg text-lg">
                 Shop All Products
               </button>
               <button className="bg-white/20 backdrop-blur-sm text-white font-bold py-4 px-8 rounded-2xl border-2 border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105 text-lg">
