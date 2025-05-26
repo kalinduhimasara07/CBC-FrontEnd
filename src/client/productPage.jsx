@@ -30,7 +30,7 @@ export default function ProductPage() {
         <div>
           <LumineeFilterSidebar />
         </div>
-        <div>
+        <div className="w-full flex">
           {isLoading ? (
             <Loading />
           ) : (

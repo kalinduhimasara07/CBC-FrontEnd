@@ -1,4 +1,5 @@
 import toast from "react-hot-toast";
+import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
@@ -18,14 +19,14 @@ export default function Footer() {
                   Discover your natural glow with science-backed skincare that celebrates your unique beauty.
                 </p>
                 <div className="flex gap-4">
-                  <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center hover:bg-amber-400 transition-colors cursor-pointer">
-                    <span className="text-sm">f</span>
+                  <div className="w-10 h-10  rounded-full flex items-center justify-center hover:text-7xl transition-colors cursor-pointer">
+                    <span className="text-4xl hover:text-5xl duration-200"><a href="http://facebook.com" target="_blank"><FaFacebook /></a></span>
                   </div>
-                  <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center hover:bg-amber-400 transition-colors cursor-pointer">
-                    <span className="text-sm">@</span>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center transition-colors cursor-pointer">
+                    <span className="text-4xl hover:text-5xl duration-200"><a href="http://instagram.com" target="_blank"><FaInstagram /></a></span>
                   </div>
-                  <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center hover:bg-amber-400 transition-colors cursor-pointer">
-                    <span className="text-sm">in</span>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center  transition-colors cursor-pointer">
+                    <span className="text-4xl hover:text-5xl duration-200"><a href="http://youtube.com" target="_blank"><FaYoutube /></a></span>
                   </div>
                 </div>
               </div>

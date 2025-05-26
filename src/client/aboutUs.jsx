@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import Footer from "../components/footer";
+import { useNavigate } from "react-router-dom";
 
 export default function AboutUs() {
   const [activeValue, setActiveValue] = useState(0);
+  const navigate = useNavigate();
 
   const values = [
     {
@@ -324,12 +326,12 @@ export default function AboutUs() {
               with personalized recommendations.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-amber-600 font-bold py-4 px-8 rounded-xl hover:bg-amber-50 transition-all duration-300 hover:scale-105 shadow-lg">
+              <button onClick={() => navigate("/products")} className="bg-white text-amber-600 font-bold py-4 px-8 rounded-xl hover:bg-amber-50 transition-all duration-300 hover:scale-105 shadow-lg">
                 Shop Our Products
               </button>
-              <button className="bg-white/20 backdrop-blur-sm text-white font-bold py-4 px-8 rounded-xl border-2 border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105">
+              {/* <button className="bg-white/20 backdrop-blur-sm text-white font-bold py-4 px-8 rounded-xl border-2 border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105">
                 Book Free Consultation
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
