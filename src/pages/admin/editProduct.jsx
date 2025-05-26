@@ -17,6 +17,7 @@ export default function EditProductPage() {
   const [labeledPrice, setLabeledPrice] = useState(location.state.labeledPrice);
   const [price, setPrice] = useState(location.state.price);
   const [stock, setStock] = useState(location.state.stock);
+  const [category, setCategory] = useState(location.state.category || "");
 
   async function EditProduct(e) {
     const token = localStorage.getItem("token");
@@ -47,6 +48,7 @@ export default function EditProductPage() {
         labeledPrice,
         price,
         stock,
+        category, 
       };
 
       await axios.put(
@@ -79,54 +81,67 @@ export default function EditProductPage() {
         type="text"
         disabled
         placeholder="Product ID"
-        className="mb-3 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="mb-2 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={productId}
         onChange={(e) => setProductId(e.target.value)}
       />
       <input
         type="text"
         placeholder="Name"
-        className="mb-3 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="mb-2 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
       <input
         type="text"
         placeholder="Alt Names (comma separated)"
-        className="mb-3 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="mb-2 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={altNames}
         onChange={(e) => setAltNames(e.target.value.split(","))}
       />
+      <select
+  className="mb-2 p-3 border border-gray-300 rounded-lg w-[300px] bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+  value={category}
+  onChange={(e) => setCategory(e.target.value)}
+>
+  <option value="">Select Category</option>
+  <option value="electronics">Electronics</option>
+  <option value="fashion">Fashion</option>
+  <option value="beauty">Beauty</option>
+  <option value="home">Home</option>
+  <option value="sports">Sports</option>
+</select>
+
       <textarea
         placeholder="Description"
-        className="mb-3 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="mb-2 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
       <input
         type="file"
         multiple
-        className="mb-3 p-2 border border-gray-300 rounded-lg w-[300px] bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="mb-2 p-2 border border-gray-300 rounded-lg w-[300px] bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         onChange={(e) => setImages(e.target.files)}
       />
       <input
         type="number"
         placeholder="Labeled Price"
-        className="mb-3 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="mb-2 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={labeledPrice}
         onChange={(e) => setLabeledPrice(e.target.value)}
       />
       <input
         type="number"
         placeholder="Price"
-        className="mb-3 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="mb-2 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={price}
         onChange={(e) => setPrice(e.target.value)}
       />
       <input
         type="number"
         placeholder="Stock"
-        className="mb-3 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="mb-2 p-3 border border-gray-300 rounded-lg w-[300px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         value={stock}
         onChange={(e) => setStock(e.target.value)}
       />

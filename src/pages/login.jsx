@@ -21,11 +21,14 @@ export default function Login() {
       );
       toast.success("Welcome back to Lumineé!");
       localStorage.setItem("token", response.data.token);
-      navigate(response.data.role === "admin" ? "/admin" : "/");
+      // navigate(response.data.role == "admin" ? "/admin" : "/");
       // If the user was redirected from a specific page, navigate there
       if (from === "checkout") {
         navigate("/checkout", { state: { cart } });
-      }else{
+      }else if(response.data.role == "admin"){
+        navigate("/admin");
+      }
+      else{
         navigate("/products");
       }
     } catch (error) {
