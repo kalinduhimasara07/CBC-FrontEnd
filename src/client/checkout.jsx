@@ -2,7 +2,7 @@ import { use, useState } from "react";
 import { getCart } from "../utils/cart";
 import {
   FaCreditCard,
-  FaPaypal,
+  FaTruck,
   FaApplePay,
   FaGooglePay,
   FaLock,
@@ -16,9 +16,10 @@ import FloatingNotice from "../components/floatingNotice";
 
 export default function Checkout() {
   const location = useLocation();
-  const [cart,setCart] = useState(location.state?.cart || []);
+  const [cart, setCart] = useState(location.state?.cart || []);
   const [step, setStep] = useState(1); // 1: Shipping, 2: Payment, 3: Review
-  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [paymentMethod, setPaymentMethod] = useState("cash");
+  const token = localStorage.getItem("token");
 
   console.log("Checkout location:", location);
 
@@ -53,7 +54,7 @@ export default function Checkout() {
     country: "United States",
   });
 
-    // Remove item from cart
+  // Remove item from cart
   function removeItem(productId) {
     const updatedCart = cart.filter((item) => item.productId !== productId);
     setCart(updatedCart);
@@ -61,27 +62,26 @@ export default function Checkout() {
 
   // Change item quantity and remove if quantity is 0
   function changeQuantity(productId, action) {
-    const updatedCart = cart.map((item) => {
-      if (item.productId === productId) {
-        if (action === "increment") {
-          return { ...item, qty: item.qty + 1 };
-        } else if (action === "decrement") {
-          const newQty = item.qty - 1;
-          if (newQty <= 0) {
-            removeItem(productId);
-            return null; // Remove item from cart
+    const updatedCart = cart
+      .map((item) => {
+        if (item.productId === productId) {
+          if (action === "increment") {
+            return { ...item, qty: item.qty + 1 };
+          } else if (action === "decrement") {
+            const newQty = item.qty - 1;
+            if (newQty <= 0) {
+              removeItem(productId);
+              return null; // Remove item from cart
+            }
+            return { ...item, qty: newQty };
           }
-          return { ...item, qty: newQty };
         }
-      }
-      return item;
-    }).filter(item => item !== null); // Filter out null items
+        return item;
+      })
+      .filter((item) => item !== null); // Filter out null items
 
     setCart(updatedCart);
   }
-  
-
-
 
   // Calculate totals
   const subtotal = cart.reduce(
@@ -96,7 +96,7 @@ export default function Checkout() {
     return total;
   }, 0);
   const shipping = subtotal >= 50 ? 0 : 9.99;
-  const tax = subtotal * 0.08; // 8% tax
+  const tax = subtotal * 0.01; // 8% tax
   const grandTotal = subtotal + shipping + tax;
 
   const handleShippingSubmit = (e) => {
@@ -115,6 +115,12 @@ export default function Checkout() {
 
   const handleFinalSubmit = (e) => {
     e.preventDefault();
+    if (!validateShipping() || !validatePayment()) {
+      return; // Stop if validation fails
+    }
+    const orderInformation = {
+      
+    }
     // Process order
     toast.success("Order placed successfully!");
     // Redirect to confirmation page or clear cart
@@ -178,19 +184,14 @@ export default function Checkout() {
     );
   }
 
-  const token = localStorage.getItem("token");
-      
+  
 
   return (
     <div className="w-full flex flex-col justify-center items-center bg-gray-50 ">
-        {!token && (
-      <FloatingNotice cart={cart} />
-    )}
+      {!token && <FloatingNotice cart={cart} />}
       <div className="mt-[100px] w-[95%] lg:w-[90%] max-w-7xl mb-[100px] flex flex-col lg:flex-row gap-6 lg:gap-8">
         {/* Checkout Form - Left Side */}
         <div className="flex-1 bg-white rounded-lg shadow-lg p-4 lg:p-6">
-
-            
           {/* Progress Steps */}
           <div className="flex items-center justify-between mb-6 lg:mb-8">
             {[1, 2, 3].map((stepNum) => (
@@ -244,7 +245,7 @@ export default function Checkout() {
                       })
                     }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
-                    required
+                    // required
                   />
                 </div>
                 <div>
@@ -261,7 +262,7 @@ export default function Checkout() {
                       })
                     }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
-                    required
+                    // required
                   />
                 </div>
               </div>
@@ -281,7 +282,7 @@ export default function Checkout() {
                       })
                     }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
-                    required
+                    // required
                   />
                 </div>
                 <div>
@@ -316,7 +317,7 @@ export default function Checkout() {
                     })
                   }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
-                  required
+                  // required
                 />
               </div>
 
@@ -349,7 +350,7 @@ export default function Checkout() {
                       setShippingInfo({ ...shippingInfo, city: e.target.value })
                     }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
-                    required
+                    // required
                   />
                 </div>
                 <div>
@@ -366,7 +367,7 @@ export default function Checkout() {
                       })
                     }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
-                    required
+                    // required
                   />
                 </div>
                 <div>
@@ -383,7 +384,7 @@ export default function Checkout() {
                       })
                     }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
-                    required
+                    // required
                   />
                 </div>
               </div>
@@ -420,8 +421,8 @@ export default function Checkout() {
                 </label>
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                   {[
+                    { id: "cash", icon: FaTruck, label: "Cash on Delivery" },
                     { id: "card", icon: FaCreditCard, label: "Credit Card" },
-                    { id: "paypal", icon: FaPaypal, label: "PayPal" },
                     { id: "apple", icon: FaApplePay, label: "Apple Pay" },
                     { id: "google", icon: FaGooglePay, label: "Google Pay" },
                   ].map((method) => (
@@ -448,12 +449,16 @@ export default function Checkout() {
               {paymentMethod === "card" && (
                 <>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <span className=" font-bold p-2 text-white bg-red-600">
+                      This option is not available at the moment. Comming soon!
+                    </span>
+                    <label className="block text-sm font-medium text-gray-700 my-2">
                       Card Number *
                     </label>
                     <input
                       type="text"
                       value={paymentInfo.cardNumber}
+                      disabled
                       onChange={(e) =>
                         setPaymentInfo({
                           ...paymentInfo,
@@ -461,7 +466,7 @@ export default function Checkout() {
                         })
                       }
                       placeholder="1234 5678 9012 3456"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100] cursor-not-allowed"
                       required
                     />
                   </div>
@@ -474,6 +479,7 @@ export default function Checkout() {
                       <input
                         type="text"
                         value={paymentInfo.expiryDate}
+                        disabled
                         onChange={(e) =>
                           setPaymentInfo({
                             ...paymentInfo,
@@ -481,7 +487,7 @@ export default function Checkout() {
                           })
                         }
                         placeholder="MM/YY"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100] cursor-not-allowed"
                         required
                       />
                     </div>
@@ -492,6 +498,7 @@ export default function Checkout() {
                       <input
                         type="text"
                         value={paymentInfo.cvv}
+                        disabled
                         onChange={(e) =>
                           setPaymentInfo({
                             ...paymentInfo,
@@ -499,7 +506,7 @@ export default function Checkout() {
                           })
                         }
                         placeholder="123"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100] cursor-not-allowed"
                         required
                       />
                     </div>
@@ -512,13 +519,14 @@ export default function Checkout() {
                     <input
                       type="text"
                       value={paymentInfo.nameOnCard}
+                      disabled
                       onChange={(e) =>
                         setPaymentInfo({
                           ...paymentInfo,
                           nameOnCard: e.target.value,
                         })
                       }
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100] cursor-not-allowed"
                       required
                     />
                   </div>
@@ -528,6 +536,7 @@ export default function Checkout() {
                       <input
                         type="checkbox"
                         checked={paymentInfo.billingAddressSame}
+                        disabled
                         onChange={(e) =>
                           setPaymentInfo({
                             ...paymentInfo,
@@ -544,12 +553,58 @@ export default function Checkout() {
                 </>
               )}
 
-              <button
+              {(!paymentMethod || paymentMethod === "cash") && (
+                // pay cash after delivery
+                <div className="mb-6">
+                  <p className="text-sm text-gray-600 mt-2">
+                    You will pay cash to the delivery person when your order
+                    arrives.
+                  </p>
+                </div>
+              )}
+
+              {/* Apple Pay and Google Pay */}
+              {(paymentMethod === "apple" || paymentMethod === "google") && (
+                <>
+                  <div className="mb-3">
+                    <span className=" font-bold p-2 text-white bg-red-600">
+                      This option is not available at the moment. Comming soon!
+                    </span>
+                  </div>
+                  <div className="mb-6">
+                    <p className="text-sm text-gray-600">
+                      You will be redirected to your {paymentMethod} app to
+                      complete the payment.
+                    </p>
+                  </div>
+                </>
+              )}
+
+              {paymentMethod == "card" ||
+              paymentMethod == "apple" ||
+              paymentMethod == "google" ? (
+                <button
+                  type="submit"
+                  disabled
+                  className="w-full bg-[#e17100] text-white font-semibold py-3 px-4 rounded-lg transition-colors cursor-not-allowed"
+                >
+                  Review Order
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="w-full bg-[#e17100] hover:bg-[#c5610a] text-white font-semibold py-3 px-4 rounded-lg transition-colors cursor-pointer"
+                >
+                  Review Order
+                </button>
+              )}
+
+              {/* <button
                 type="submit"
                 className="w-full bg-[#e17100] hover:bg-[#c5610a] text-white font-semibold py-3 px-4 rounded-lg transition-colors"
               >
                 Review Order
-              </button>
+              </button> */}
             </form>
           )}
 
@@ -704,10 +759,16 @@ export default function Checkout() {
                 </div>
 
                 <div className="flex items-center gap-2 text-xl">
-                  <button onClick={() => changeQuantity(item.productId, "increment")} className="text-green-500 ">
+                  <button
+                    onClick={() => changeQuantity(item.productId, "increment")}
+                    className="text-green-500 "
+                  >
                     <FiPlusCircle />
                   </button>
-                  <button onClick={() => changeQuantity(item.productId, "decrement")} className="text-red-500">
+                  <button
+                    onClick={() => changeQuantity(item.productId, "decrement")}
+                    className="text-red-500"
+                  >
                     <FiMinusCircle />
                   </button>
                   <span className="text-gray-600">×{item.qty}</span>
