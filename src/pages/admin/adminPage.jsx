@@ -1,4 +1,4 @@
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { FaBoxOpen, FaUsers, FaClipboardList, FaTags } from "react-icons/fa";
 
 import AdminProductPage from "./adminProductPage";
@@ -8,8 +8,18 @@ import AdminHome from "./adminHome";
 import { IoHome } from "react-icons/io5";
 
 export default function AdminPage() {
-
   const navigate = useNavigate();
+  const location = useLocation();
+  const path = location.pathname;
+
+  function getClass(pathname) {
+    if (path.includes(pathname)) {
+      return 'text-black bg-gray-200 w-[200px] rounded-lg px-3 py-2 transition duration-300';
+    }else {
+      return 'text-white w-[200px] hover:text-black hover:bg-gray-200 rounded-lg px-3 py-2 transition duration-300';
+    }
+    
+  }
 
   const handleClick = () => {
     navigate('/admin');
@@ -24,16 +34,16 @@ export default function AdminPage() {
           >
             <IoHome />
           </button>
-          <Link to="/admin/product" className="flex items-center gap-3 mt-6">
+          <Link to="/admin/product" className={`flex items-center gap-3 mt-6 ${getClass("/admin/product")}`}>
             <FaBoxOpen /> Products
           </Link>
-          <Link to="/admin/user" className="flex items-center gap-3">
+          <Link to="/admin/user" className={`flex items-center gap-3 ${getClass("/admin/user")}`}>
             <FaUsers /> Users
           </Link>
-          <Link to="/admin/order" className="flex items-center gap-3">
+          <Link to="/admin/order" className={`flex items-center gap-3 ${getClass("/admin/order")}`}>
             <FaClipboardList /> Orders
           </Link>
-          <Link to="/admin/category" className="flex items-center gap-3">
+          <Link to="/admin/category" className={`flex items-center gap-3 ${getClass("/admin/category")}`}>
             <FaTags /> Categories
           </Link>
         </div>

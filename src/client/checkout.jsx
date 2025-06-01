@@ -353,7 +353,7 @@ export default function Checkout() {
                       })
                     }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
-                    // required
+                    required
                   />
                 </div>
                 <div>
@@ -370,7 +370,7 @@ export default function Checkout() {
                       })
                     }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
-                    // required
+                    required
                   />
                 </div>
               </div>
@@ -390,7 +390,7 @@ export default function Checkout() {
                       })
                     }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
-                    // required
+                    required
                   />
                 </div>
                 <div>
@@ -425,7 +425,7 @@ export default function Checkout() {
                     })
                   }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
-                  // required
+                  required
                 />
               </div>
 
@@ -458,7 +458,7 @@ export default function Checkout() {
                       setShippingInfo({ ...shippingInfo, city: e.target.value })
                     }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
-                    // required
+                    required
                   />
                 </div>
                 <div>
@@ -475,7 +475,7 @@ export default function Checkout() {
                       })
                     }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
-                    // required
+                    required
                   />
                 </div>
                 <div>
@@ -492,7 +492,7 @@ export default function Checkout() {
                       })
                     }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
-                    // required
+                    required
                   />
                 </div>
               </div>
@@ -869,13 +869,13 @@ export default function Checkout() {
                 <div className="flex items-center gap-2 text-xl">
                   <button
                     onClick={() => changeQuantity(item.productId, "increment")}
-                    className="text-green-500 "
+                    className="text-green-500 cursor-pointer hover:text-green-700"
                   >
                     <FiPlusCircle />
                   </button>
                   <button
                     onClick={() => changeQuantity(item.productId, "decrement")}
-                    className="text-red-500"
+                    className="text-red-500 cursor-pointer hover:text-red-800"
                   >
                     <FiMinusCircle />
                   </button>
