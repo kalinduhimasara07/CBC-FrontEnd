@@ -6,6 +6,8 @@ import AddProductPage from "./addProductPage";
 import EditProductPage from "./editProduct";
 import AdminHome from "./adminHome";
 import { IoHome } from "react-icons/io5";
+import AdminOrdersPage from "./adminOrdersPage";
+import AdminUsersPage from "./adminUsersPage";
 
 export default function AdminPage() {
   const navigate = useNavigate();
@@ -50,9 +52,9 @@ export default function AdminPage() {
         <div className="h-full w-[80%] bg-white">
           <Routes>
             <Route path="/product" element={<AdminProductPage />} />
-            <Route path="/user" element={<h1>User</h1>} />
+            <Route path="/user" element={<AdminUsersPage />} />
             <Route path="/" element={<AdminHome/>} />
-            <Route path="/order" element={<h1>Order</h1>} />
+            <Route path="/order" element={<AdminOrdersPage />} />
             <Route path="/category" element={<h1>Category</h1>} />
             <Route path="/add-product" element={<AddProductPage />} />
             <Route path="/edit-product/" element={<EditProductPage />} />
