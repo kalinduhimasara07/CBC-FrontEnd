@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { getCart } from "../utils/cart";
 import {
   FaCreditCard,
@@ -13,6 +13,8 @@ import { useLocation } from "react-router-dom";
 import { FcMinus, FcPlus } from "react-icons/fc";
 import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
 import FloatingNotice from "../components/floatingNotice";
+import axios from "axios";
+import { address } from "framer-motion/client";
 
 export default function Checkout() {
   const location = useLocation();
@@ -21,21 +23,28 @@ export default function Checkout() {
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const token = localStorage.getItem("token");
 
-  console.log("Checkout location:", location);
+  // console.log("Checkout location:", location);
 
   // Form states
   const [shippingInfo, setShippingInfo] = useState({
     firstName: "",
     lastName: "",
+    name: "",
     email: "",
     phone: "",
     address: "",
-    apartment: "",
     city: "",
     state: "",
     zipCode: "",
-    country: "United States",
+    country: "Sri Lanka",
   });
+
+  useEffect(() => {
+    setShippingInfo((prev) => ({
+      ...prev,
+      name: prev.firstName + " " + prev.lastName,
+    }));
+  }, [shippingInfo.firstName, shippingInfo.lastName]);
 
   const [paymentInfo, setPaymentInfo] = useState({
     cardNumber: "",
@@ -47,7 +56,7 @@ export default function Checkout() {
 
   const [billingInfo, setBillingInfo] = useState({
     address: "",
-    apartment: "",
+    // apartment: "",
     city: "",
     state: "",
     zipCode: "",
@@ -96,7 +105,7 @@ export default function Checkout() {
     return total;
   }, 0);
   const shipping = subtotal >= 50 ? 0 : 9.99;
-  const tax = subtotal * 0.01; // 8% tax
+  const tax = parseFloat((parseFloat(subtotal) * 0.01).toFixed(2));
   const grandTotal = subtotal + shipping + tax;
 
   const handleShippingSubmit = (e) => {
@@ -113,17 +122,117 @@ export default function Checkout() {
     }
   };
 
+  // const handleFinalSubmit = (e) => {
+  //   e.preventDefault();
+  //   setShippingInfo({
+  //     ...shippingInfo,
+  //     name: shippingInfo.firstName + " " + shippingInfo.lastName,
+  //   });
+  //   console.log(shippingInfo);
+  //   console.log("grandTotal: " + grandTotal);
+  //   console.log("tax: " + tax);
+  //   console.log("shipping: " + shipping);
+  //   console.log("subtotal: " + subtotal);
+  //   console.log(totalItems);
+  //   console.log(paymentMethod);
+  //   // if (!validateShipping() || !validatePayment()) {
+  //   //   return; // Stop if validation fails
+  //   // }
+  //   const orderInformation = {
+  //     products: [],
+  //     name: shippingInfo.name,
+  //     phone: shippingInfo.phone,
+  //     address: shippingInfo.address,
+  //     state: shippingInfo.state,
+  //     zip: shippingInfo.zipCode,
+  //     city: shippingInfo.city,
+  //     shipping,
+  //     tax,
+  //   };
+  //   for (let i = 0; i < cart.length; i++) {
+  //     const item = {
+  //       productId: cart[i].productId,
+  //       qty: cart[i].qty,
+  //     };
+  //     orderInformation.products.push(item);
+  //   }
+
+  //   axios
+  //     .post(
+  //       import.meta.env.VITE_BACKEND_URL + "/api/orders",
+  //       orderInformation,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       console.log("Order placed successfully:", res.data);
+  //       toast.success("Order placed successfully!");
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+
+  //   // Process order
+  //   // toast.success("Order placed successfully!");
+  //   // Redirect to confirmation page or clear cart
+  // };
+
   const handleFinalSubmit = (e) => {
     e.preventDefault();
-    if (!validateShipping() || !validatePayment()) {
-      return; // Stop if validation fails
-    }
+
+    console.log(shippingInfo);
+    console.log("grandTotal: " + grandTotal);
+    console.log("tax: " + tax);
+    console.log("shipping: " + shipping);
+    console.log("subtotal: " + subtotal);
+    console.log(totalItems);
+    console.log(paymentMethod);
+
+    // if (!validateShipping() || !validatePayment()) {
+    //   return; // Stop if validation fails
+    // }
+
     const orderInformation = {
-      
-    }
-    // Process order
-    toast.success("Order placed successfully!");
-    // Redirect to confirmation page or clear cart
+      products: cart.map((item) => ({
+        productId: item.productId,
+        quantity: item.qty, // "quantity", not "qty"
+      })),
+      name: shippingInfo.name,
+      phone: shippingInfo.phone,
+      address: shippingInfo.address,
+      state: shippingInfo.state,
+      zip: shippingInfo.zipCode, // Correct
+      city: shippingInfo.city,
+      shipping,
+      tax,
+    };
+
+    axios
+      .post(
+        import.meta.env.VITE_BACKEND_URL + "/api/orders",
+        orderInformation,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log("Order placed successfully:", res.data);
+        toast.success("Order placed successfully!", {
+      duration: 3000,
+      style: {
+        marginTop: "80px",
+        fontSize: "20px",
+      },
+    } );
+      })
+      .catch((err) => {
+        console.error("Order failed:", err);
+      });
   };
 
   const validateShipping = () => {
@@ -131,6 +240,7 @@ export default function Checkout() {
       "firstName",
       "lastName",
       "email",
+      "phone",
       "address",
       "city",
       "state",
@@ -183,8 +293,6 @@ export default function Checkout() {
       </div>
     );
   }
-
-  
 
   return (
     <div className="w-full flex flex-col justify-center items-center bg-gray-50 ">
@@ -321,7 +429,7 @@ export default function Checkout() {
                 />
               </div>
 
-              <div className="mb-4">
+              {/* <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Apartment, suite, etc.
                 </label>
@@ -336,7 +444,7 @@ export default function Checkout() {
                   }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
                 />
-              </div>
+              </div> */}
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
                 <div>
@@ -668,7 +776,7 @@ export default function Checkout() {
                   <br />
                   {shippingInfo.address}
                   <br />
-                  {shippingInfo.apartment && `${shippingInfo.apartment}, `}
+                  {/* {shippingInfo.apartment && `${shippingInfo.apartment}, `} */}
                   {shippingInfo.city}, {shippingInfo.state}{" "}
                   {shippingInfo.zipCode}
                 </p>
