@@ -183,7 +183,16 @@ export default function Checkout() {
   const handleFinalSubmit = (e) => {
     e.preventDefault();
 
-    console.log(shippingInfo);
+    const fullName = shippingInfo.firstName + " " + shippingInfo.lastName;
+
+  const updatedShippingInfo = {
+    ...shippingInfo,
+    name: fullName,
+  };
+
+  setShippingInfo(updatedShippingInfo);
+
+  console.log(updatedShippingInfo);
     console.log("grandTotal: " + grandTotal);
     console.log("tax: " + tax);
     console.log("shipping: " + shipping);
@@ -200,7 +209,7 @@ export default function Checkout() {
         productId: item.productId,
         quantity: item.qty, // "quantity", not "qty"
       })),
-      name: shippingInfo.name,
+      name: fullName,
       phone: shippingInfo.phone,
       address: shippingInfo.address,
       state: shippingInfo.state,
@@ -223,12 +232,12 @@ export default function Checkout() {
       .then((res) => {
         console.log("Order placed successfully:", res.data);
         toast.success("Order placed successfully!", {
-      duration: 3000,
-      style: {
-        marginTop: "80px",
-        fontSize: "20px",
-      },
-    } );
+          duration: 3000,
+          style: {
+            marginTop: "80px",
+            fontSize: "20px",
+          },
+        });
       })
       .catch((err) => {
         console.error("Order failed:", err);

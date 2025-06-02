@@ -3,6 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Loading from "../../components/loading";
 import Modal from "react-modal";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState([]);
@@ -57,7 +59,7 @@ export default function AdminOrdersPage() {
         <tbody>
           {orders.map((order) => (
             <React.Fragment key={order._id}>
-              <tr className="hover:bg-gray-50 cursor-pointer">
+              <tr className="hover:bg-gray-200 cursor-pointer">
                 <td
                   className="p-3 border"
                   onClick={() => {
@@ -132,16 +134,22 @@ export default function AdminOrdersPage() {
                 >
                   ${order.grandTotal.toFixed(2)}
                 </td>
-                <td className="p-3 border">
+                <td className="p-3 border space-y-1">
                   <button
                     onClick={() =>
                       setExpandedOrder(
                         expandedOrder === order._id ? null : order._id
                       )
                     }
-                    className="text-blue-600 hover:underline cursor-pointer"
+                    className="text-blue-600 hover:underline block"
                   >
                     {expandedOrder === order._id ? "Hide" : "View"}
+                  </button>
+                  <button
+                    onClick={() => generatePDF(order)}
+                    className="text-green-600 hover:underline block"
+                  >
+                    Download Bill
                   </button>
                 </td>
               </tr>
@@ -175,7 +183,10 @@ export default function AdminOrdersPage() {
                               Price: ${product.productInfo.price.toFixed(2)}
                             </p>
                             <p className="text-gray-500 text-xs mt-1">
-                              {product.productInfo.description.substring(0, 100)}
+                              {product.productInfo.description.substring(
+                                0,
+                                100
+                              )}
                               {product.productInfo.description.length > 100
                                 ? "..."
                                 : ""}
@@ -205,7 +216,7 @@ export default function AdminOrdersPage() {
                         <h4 className="font-semibold">Shipping Address:</h4>
                         <p>{order.address}</p>
                         <p>
-                          {order.city}, {order.state}, {order.zip}
+                          {order.city}, {order.state}, {order.zip}, Sri Lanka
                         </p>
                         <p>Phone: {order.phone}</p>
                       </div>
@@ -254,7 +265,9 @@ export default function AdminOrdersPage() {
                     className="w-16 h-16 rounded object-cover border"
                   />
                   <div className="flex-1">
-                    <p className="text-sm font-bold text-gray-500">{product.productInfo.productId}</p>
+                    <p className="text-sm font-bold text-gray-500">
+                      {product.productInfo.productId}
+                    </p>
                     <p className="font-medium">{product.productInfo.name}</p>
                     <p className="text-sm text-gray-600">
                       Quantity: {product.quantity}
@@ -285,7 +298,7 @@ export default function AdminOrdersPage() {
               </p>
               <p>
                 <span className="font-medium">Address:</span> {order.address},{" "}
-                {order.city}, {order.state}, {order.zip}
+                {order.city}, {order.state}, {order.zip}, Sri Lanka.
               </p>
             </div>
           </div>
@@ -293,6 +306,73 @@ export default function AdminOrdersPage() {
       </div>
     );
   }
+
+  const generatePDF = async (order) => {
+    const container = document.createElement("div");
+    container.style.width = "800px";
+    container.style.padding = "30px";
+    container.style.fontFamily = "Arial";
+    container.innerHTML = `
+    <div style="border: 1px solid #ccc; border-radius: 10px; padding: 20px;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h1 style="margin: 0;">🧾 Order Invoice</h1>
+        <small>${new Date(order.date).toLocaleString()}</small>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <h3>👤 Customer Information</h3>
+        <p><strong>Name:</strong> ${order.name}</p>
+        <p><strong>Email:</strong> ${order.email}</p>
+        <p><strong>Phone:</strong> ${order.phone}</p>
+        <p><strong>Address:</strong> ${order.address}, ${order.city}, ${
+      order.state
+    }, ${order.zip}, Sri Lanka</p>
+        <p><strong>Order ID:</strong> ${order.orderId}</p>
+      </div>
+
+      <div>
+        <h3>🛒 Ordered Products</h3>
+        ${order.products
+          .map(
+            (product) => `
+          <div style="border-bottom: 1px solid #eee; padding: 10px 0;">
+            <p><strong>${product.productInfo.name}</strong> (${
+              product.productInfo.productId
+            })</p>
+            <p>Quantity: ${product.quantity}</p>
+            <p>Price: $${product.productInfo.price.toFixed(2)}</p>
+          </div>
+        `
+          )
+          .join("")}
+      </div>
+
+      <div style="margin-top: 20px; font-size: 14px;">
+        <p><strong>Subtotal:</strong> $${order.total.toFixed(2)}</p>
+        <p><strong>Shipping:</strong> $${order.shipping.toFixed(2)}</p>
+        <p><strong>Tax:</strong> $${order.tax.toFixed(2)}</p>
+        <p style="font-weight: bold; font-size: 16px;">Grand Total: $${order.grandTotal.toFixed(
+          2
+        )}</p>
+      </div>
+    </div>
+  `;
+
+    document.body.appendChild(container);
+
+    const canvas = await html2canvas(container);
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF("p", "pt", "a4");
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save(`order_${order.orderId}.pdf`);
+
+    document.body.removeChild(container);
+  };
 
   return (
     <div className="h-full p-4 overflow-x-auto">
@@ -305,6 +385,10 @@ export default function AdminOrdersPage() {
         contentLabel="Order Details"
         ariaHideApp={false}
         style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)", // 👈 dark semi-transparent background
+            zIndex: 1000,
+          },
           content: {
             maxWidth: "700px",
             margin: "auto",
@@ -357,6 +441,7 @@ export default function AdminOrdersPage() {
               <p>
                 <strong>Address:</strong> {selectedOrder.address},{" "}
                 {selectedOrder.city}, {selectedOrder.state}, {selectedOrder.zip}
+                ,Sri Lanka
               </p>
               <p>
                 <strong>Status:</strong>{" "}
@@ -405,9 +490,9 @@ export default function AdminOrdersPage() {
                       </p>
                       <p style={{ fontSize: "0.9rem", color: "#666" }}>
                         {product.productInfo.description.substring(0, 60)}
-                              {product.productInfo.description.length > 60
-                                ? "..."
-                                : ""}
+                        {product.productInfo.description.length > 60
+                          ? "..."
+                          : ""}
                       </p>
                       <p>Quantity: {product.quantity}</p>
                       <p>Price: ${product.productInfo.price.toFixed(2)}</p>
@@ -437,6 +522,12 @@ export default function AdminOrdersPage() {
                 {selectedOrder.grandTotal.toFixed(2)}
               </p>
             </div>
+            <button
+              onClick={() => generatePDF(selectedOrder)}
+              className="text-green-600 hover:underline block"
+            >
+              Download Bill
+            </button>
           </div>
         ) : (
           <p>No order selected.</p>
