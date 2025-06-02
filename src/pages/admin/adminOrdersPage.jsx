@@ -191,12 +191,12 @@ export default function AdminOrdersPage() {
                   {new Date(order.date).toLocaleString()}
                 </td>
                 <td className="p-3 border">
-  <select
-    value={order.status}
-    onChange={(e) =>
-      handleStatusChange(order.orderId, e.target.value)
-    }
-    className={`
+                  <select
+                    value={order.status}
+                    onChange={(e) =>
+                      handleStatusChange(order.orderId, e.target.value)
+                    }
+                    className={`
       px-2 py-1 rounded border capitalize font-medium
       ${
         order.status === "pending"
@@ -210,13 +210,30 @@ export default function AdminOrdersPage() {
           : ""
       }
     `}
-  >
-    <option value="pending" className="text-yellow-700 font-bold">Pending</option>
-    <option value="shipped" className="text-blue-700 font-bold">Shipped</option>
-    <option value="delivered" className="text-green-700 font-bold">Delivered</option>
-    <option value="cancelled" className="text-red-700 font-bold">Cancelled</option>
-  </select>
-</td>
+                  >
+                    <option
+                      value="pending"
+                      className="text-yellow-700 font-bold"
+                    >
+                      Pending
+                    </option>
+                    <option value="shipped" className="text-blue-700 font-bold">
+                      Shipped
+                    </option>
+                    <option
+                      value="delivered"
+                      className="text-green-700 font-bold"
+                    >
+                      Delivered
+                    </option>
+                    <option
+                      value="cancelled"
+                      className="text-red-700 font-bold"
+                    >
+                      Cancelled
+                    </option>
+                  </select>
+                </td>
                 <td
                   className="p-3 border"
                   onClick={() => {
