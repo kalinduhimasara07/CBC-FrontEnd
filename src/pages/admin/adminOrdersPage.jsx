@@ -39,6 +39,22 @@ export default function AdminOrdersPage() {
       });
   }, [isLoading]);
 
+  const getOrderStats = () => {
+    return {
+      total: orders.length,
+      delivered: orders.filter((o) => o.status === "delivered").length,
+      pending: orders.filter((o) => o.status === "pending").length,
+      shipped: orders.filter((o) => o.status === "shipped").length,
+      confirmed: orders.filter((o) => o.status === "confirmed").length,
+      cancelled: orders.filter((o) => o.status === "cancelled").length,
+      totalSpent: orders
+        .filter((o) => o.status !== "cancelled")
+        .reduce((sum, order) => sum + order.grandTotal, 0),
+    };
+  };
+
+  const stats = getOrderStats();
+
   const generatePDF = async (order) => {
     const container = document.createElement("div");
     container.style.width = "800px";
@@ -201,6 +217,8 @@ export default function AdminOrdersPage() {
       ${
         order.status === "pending"
           ? "bg-yellow-100 text-yellow-700 border-yellow-300"
+          : order.status === "confirmed"
+          ? "bg-orange-100 text-orange-700 border-orange-300"
           : order.status === "shipped"
           ? "bg-blue-100 text-blue-700 border-blue-300"
           : order.status === "delivered"
@@ -216,6 +234,12 @@ export default function AdminOrdersPage() {
                       className="text-yellow-700 font-bold"
                     >
                       Pending
+                    </option>
+                    <option
+                      value="confirmed"
+                      className="text-orange-700 font-bold"
+                    >
+                      Confirmed
                     </option>
                     <option value="shipped" className="text-blue-700 font-bold">
                       Shipped
@@ -437,6 +461,50 @@ export default function AdminOrdersPage() {
   return (
     <div className="h-full p-4 overflow-x-auto">
       <h1 className="text-2xl font-bold mb-6">Admin Orders Page</h1>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 text-center mb-6">
+        <div className="bg-gray-50 rounded-lg p-3">
+          <div className="text-2xl font-bold text-gray-800">{stats.total}</div>
+          <div className="text-sm text-gray-600">Total Orders</div>
+        </div>
+        <div className="bg-green-50 rounded-lg p-3">
+          <div className="text-2xl font-bold text-green-600">
+            {stats.delivered}
+          </div>
+          <div className="text-sm text-gray-600">Delivered</div>
+        </div>
+        <div className="bg-yellow-50 rounded-lg p-3">
+          <div className="text-2xl font-bold text-yellow-600">
+            {stats.pending}
+          </div>
+          <div className="text-sm text-gray-600">Pending</div>
+        </div>
+        <div className="bg-red-50 rounded-lg p-3">
+          <div className="text-2xl font-bold text-red-600">
+            {stats.cancelled}
+          </div>
+          <div className="text-sm text-gray-600">Cancelled</div>
+        </div>
+
+        <div className="bg-blue-50 rounded-lg p-3">
+          <div className="text-2xl font-bold text-blue-600">
+            {stats.shipped}
+          </div>
+          <div className="text-sm text-gray-600">Shipped</div>
+        </div>
+
+        <div className="bg-blue-50 rounded-lg p-3">
+          <div className="text-xl text-gray-600">Total</div>
+          <div className="text-2xl font-bold text-blue-600">
+            ${stats.totalSpent.toFixed(2)}
+          </div>
+
+          <div className="text-[13px] text-red-600 font-semibold">
+            <p>(without cancelled orders)</p>
+          </div>
+        </div>
+      </div>
 
       <Modal
         isOpen={modalIsOpen}
