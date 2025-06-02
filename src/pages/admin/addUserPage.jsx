@@ -7,7 +7,10 @@ export default function AddUserPage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
-  const role = "admin"; // Default role for new user
+  const [showNotification, setShowNotification] = useState(false);
+  const [createdUser, setCreatedUser] = useState({});
+
+  const role = "admin";
 
   async function handleSignup() {
     const token = localStorage.getItem("token");
@@ -19,13 +22,17 @@ export default function AddUserPage() {
           firstName,
           lastName,
           password,
-          role, // Include the role in the request
+          role,
         },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
       toast.success("User added successfully!");
+      setCreatedUser({ firstName, lastName, email });
+      setShowNotification(true);
+
+      // Clear inputs
       setEmail("");
       setFirstName("");
       setLastName("");
@@ -47,8 +54,6 @@ export default function AddUserPage() {
             <h1 className="text-4xl font-bold text-[#e17100] tracking-wide text-center drop-shadow-md">
               Add Admin User
             </h1>
-
-            {/* Then reduce footer text to text-xs or sm */}
 
             {/* Inputs */}
             <input
@@ -83,22 +88,30 @@ export default function AddUserPage() {
               className="w-[300px] h-[50px] px-4 rounded-2xl border border-[#e17100]/40 bg-white/90 focus:outline-none focus:ring-2 focus:ring-[#e17100] shadow-sm"
             />
 
-            {/* Sign Up Button */}
             <button
               onClick={handleSignup}
               className="w-[300px] h-[50px] rounded-2xl bg-[#e17100] hover:bg-[#c96100] text-white font-semibold shadow-xl hover:shadow-2xl transition duration-300"
             >
               Add User
             </button>
-
-            {/* Divider */}
-            <div className="flex items-center w-full max-w-[300px] gap-2 text-sm text-gray-600">
-              <div className="flex-grow h-[1px] bg-gray-300"></div>
-
-              <div className="flex-grow h-[1px] bg-gray-300"></div>
-            </div>
           </div>
         </div>
+
+        {/* Floating Notification */}
+        {showNotification && (
+          <div className="absolute top-8 right-8 bg-white border border-[#e17100] rounded-xl shadow-lg p-4 z-50 w-80 animate-fade-in-down">
+            <h2 className="text-xl font-semibold text-[#e17100] mb-2">User Added</h2>
+            <p><strong>First Name:</strong> {createdUser.firstName}</p>
+            <p><strong>Last Name:</strong> {createdUser.lastName}</p>
+            <p><strong>Email:</strong> {createdUser.email}</p>
+            <button
+              onClick={() => setShowNotification(false)}
+              className="mt-4 w-full bg-[#e17100] hover:bg-[#c96100] text-white py-2 px-4 rounded-xl transition duration-300"
+            >
+              OK
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
