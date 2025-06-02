@@ -1,3 +1,5 @@
+//before running this code, make sure to install the required packages:
+
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -12,7 +14,6 @@ export default function AdminOrdersPage() {
   const [viewMode, setViewMode] = useState("table"); // or "card"
   const [modalIsOpen, setIsOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
-  // const [expandedOrder, setExpandedOrder] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -36,10 +37,103 @@ export default function AdminOrdersPage() {
         console.error("Error fetching orders:", err);
         setIsLoading(false);
       });
-  }, []);
+  }, [isLoading]);
+
+  const generatePDF = async (order) => {
+    const container = document.createElement("div");
+    container.style.width = "800px";
+    container.style.padding = "30px";
+    container.style.fontFamily = "Arial";
+    container.innerHTML = `
+    <div style="border: 1px solid #ccc; border-radius: 10px; padding: 20px;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h1 style="margin: 0;">🧾 Order Invoice</h1>
+        <small>${new Date(order.date).toLocaleString()}</small>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <h3>👤 Customer Information</h3>
+        <p><strong>Name:</strong> ${order.name}</p>
+        <p><strong>Email:</strong> ${order.email}</p>
+        <p><strong>Phone:</strong> ${order.phone}</p>
+        <p><strong>Address:</strong> ${order.address}, ${order.city}, ${
+      order.state
+    }, ${order.zip}, Sri Lanka</p>
+        <p><strong>Order ID:</strong> ${order.orderId}</p>
+      </div>
+
+      <div>
+        <h3>🛒 Ordered Products</h3>
+        ${order.products
+          .map(
+            (product) => `
+          <div style="border-bottom: 1px solid #eee; padding: 10px 0;">
+            <p><strong>${product.productInfo.name}</strong> (${
+              product.productInfo.productId
+            })</p>
+            <p>Quantity: ${product.quantity}</p>
+            <p>Price: $${product.productInfo.price.toFixed(2)}</p>
+          </div>
+        `
+          )
+          .join("")}
+      </div>
+
+      <div style="margin-top: 20px; font-size: 14px;">
+        <p><strong>Subtotal:</strong> $${order.total.toFixed(2)}</p>
+        <p><strong>Shipping:</strong> $${order.shipping.toFixed(2)}</p>
+        <p><strong>Tax:</strong> $${order.tax.toFixed(2)}</p>
+        <p style="font-weight: bold; font-size: 16px;">Grand Total: $${order.grandTotal.toFixed(
+          2
+        )}</p>
+      </div>
+    </div>
+  `;
+
+    document.body.appendChild(container);
+
+    const canvas = await html2canvas(container);
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF("p", "pt", "a4");
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save(`order_${order.orderId}.pdf`);
+
+    document.body.removeChild(container);
+  };
 
   function TableView({ orders }) {
     const [expandedOrder, setExpandedOrder] = useState(null);
+
+    const handleStatusChange = async (orderId, newStatus) => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("You are not logged in. Please log in to access this page.");
+        window.location.href = "/login";
+        return;
+      }
+
+      try {
+        await axios.put(
+          `${import.meta.env.VITE_BACKEND_URL}/api/orders`,
+          { orderId, status: newStatus },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        // Refresh the orders list after successful update
+        setIsLoading(true);
+      } catch (error) {
+        console.error("Error updating order status:", error);
+        alert("Failed to update order status. Please try again.");
+      }
+    };
 
     return (
       <table className="min-w-full bg-white border rounded-xl shadow-sm text-sm">
@@ -96,17 +190,33 @@ export default function AdminOrdersPage() {
                 >
                   {new Date(order.date).toLocaleString()}
                 </td>
-                <td
-                  className="p-3 border capitalize"
-                  onClick={() => {
-                    setSelectedOrder(order);
-                    setIsOpen(true);
-                  }}
-                >
-                  <span className="px-2 py-1 rounded bg-yellow-100 text-yellow-700">
-                    {order.status}
-                  </span>
-                </td>
+                <td className="p-3 border">
+  <select
+    value={order.status}
+    onChange={(e) =>
+      handleStatusChange(order.orderId, e.target.value)
+    }
+    className={`
+      px-2 py-1 rounded border capitalize font-medium
+      ${
+        order.status === "pending"
+          ? "bg-yellow-100 text-yellow-700 border-yellow-300"
+          : order.status === "shipped"
+          ? "bg-blue-100 text-blue-700 border-blue-300"
+          : order.status === "delivered"
+          ? "bg-green-100 text-green-700 border-green-300"
+          : order.status === "cancelled"
+          ? "bg-red-100 text-red-700 border-red-300"
+          : ""
+      }
+    `}
+  >
+    <option value="pending" className="text-yellow-700 font-bold">Pending</option>
+    <option value="shipped" className="text-blue-700 font-bold">Shipped</option>
+    <option value="delivered" className="text-green-700 font-bold">Delivered</option>
+    <option value="cancelled" className="text-red-700 font-bold">Cancelled</option>
+  </select>
+</td>
                 <td
                   className="p-3 border"
                   onClick={() => {
@@ -307,73 +417,6 @@ export default function AdminOrdersPage() {
     );
   }
 
-  const generatePDF = async (order) => {
-    const container = document.createElement("div");
-    container.style.width = "800px";
-    container.style.padding = "30px";
-    container.style.fontFamily = "Arial";
-    container.innerHTML = `
-    <div style="border: 1px solid #ccc; border-radius: 10px; padding: 20px;">
-      <div style="text-align: center; margin-bottom: 20px;">
-        <h1 style="margin: 0;">🧾 Order Invoice</h1>
-        <small>${new Date(order.date).toLocaleString()}</small>
-      </div>
-
-      <div style="margin-bottom: 20px;">
-        <h3>👤 Customer Information</h3>
-        <p><strong>Name:</strong> ${order.name}</p>
-        <p><strong>Email:</strong> ${order.email}</p>
-        <p><strong>Phone:</strong> ${order.phone}</p>
-        <p><strong>Address:</strong> ${order.address}, ${order.city}, ${
-      order.state
-    }, ${order.zip}, Sri Lanka</p>
-        <p><strong>Order ID:</strong> ${order.orderId}</p>
-      </div>
-
-      <div>
-        <h3>🛒 Ordered Products</h3>
-        ${order.products
-          .map(
-            (product) => `
-          <div style="border-bottom: 1px solid #eee; padding: 10px 0;">
-            <p><strong>${product.productInfo.name}</strong> (${
-              product.productInfo.productId
-            })</p>
-            <p>Quantity: ${product.quantity}</p>
-            <p>Price: $${product.productInfo.price.toFixed(2)}</p>
-          </div>
-        `
-          )
-          .join("")}
-      </div>
-
-      <div style="margin-top: 20px; font-size: 14px;">
-        <p><strong>Subtotal:</strong> $${order.total.toFixed(2)}</p>
-        <p><strong>Shipping:</strong> $${order.shipping.toFixed(2)}</p>
-        <p><strong>Tax:</strong> $${order.tax.toFixed(2)}</p>
-        <p style="font-weight: bold; font-size: 16px;">Grand Total: $${order.grandTotal.toFixed(
-          2
-        )}</p>
-      </div>
-    </div>
-  `;
-
-    document.body.appendChild(container);
-
-    const canvas = await html2canvas(container);
-    const imgData = canvas.toDataURL("image/png");
-
-    const pdf = new jsPDF("p", "pt", "a4");
-    const imgProps = pdf.getImageProperties(imgData);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-    pdf.save(`order_${order.orderId}.pdf`);
-
-    document.body.removeChild(container);
-  };
-
   return (
     <div className="h-full p-4 overflow-x-auto">
       <h1 className="text-2xl font-bold mb-6">Admin Orders Page</h1>
@@ -386,7 +429,7 @@ export default function AdminOrdersPage() {
         ariaHideApp={false}
         style={{
           overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.5)", // 👈 dark semi-transparent background
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
             zIndex: 1000,
           },
           content: {
