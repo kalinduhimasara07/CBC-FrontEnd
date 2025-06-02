@@ -21,6 +21,7 @@ import { IoHome } from "react-icons/io5";
 import AdminOrdersPage from "./adminOrdersPage";
 import AdminUsersPage from "./adminUsersPage";
 import { MdOutlineRateReview } from "react-icons/md";
+import AddUserPage from "./addUserPage";
 
 export default function AdminPage() {
   const navigate = useNavigate();
@@ -114,6 +115,7 @@ export default function AdminPage() {
             <Route path="/category" element={<h1>Reviews</h1>} />
             <Route path="/add-product" element={<AddProductPage />} />
             <Route path="/edit-product/" element={<EditProductPage />} />
+            <Route path="/adduser" element={<AddUserPage/>} />
           </Routes>
         </div>
       </div>
