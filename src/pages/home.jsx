@@ -13,6 +13,8 @@ import Login from "./login";
 import LumineeFAQ from "../client/faq";
 import CardCarousel from "../client/cardCarousel";
 import Checkout from "../client/checkout";
+import OrderView from "../client/orderView";
+import AllOrdersView from "../client/orderView";
 
 export default function HomePage() {
   return (
@@ -30,6 +32,7 @@ export default function HomePage() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup/> } />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/orders" element={<AllOrdersView />} />
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       </div>
