@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 import toast from "react-hot-toast";
 import Footer from "../components/footer";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FcMinus, FcPlus } from "react-icons/fc";
 import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
 import FloatingNotice from "../components/floatingNotice";
@@ -22,6 +22,8 @@ export default function Checkout() {
   const [step, setStep] = useState(1); // 1: Shipping, 2: Payment, 3: Review
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const token = localStorage.getItem("token");
+  const [showSecondButton, setShowSecondButton] = useState(false);
+  const navigate = useNavigate();
 
   // console.log("Checkout location:", location);
 
@@ -185,14 +187,14 @@ export default function Checkout() {
 
     const fullName = shippingInfo.firstName + " " + shippingInfo.lastName;
 
-  const updatedShippingInfo = {
-    ...shippingInfo,
-    name: fullName,
-  };
+    const updatedShippingInfo = {
+      ...shippingInfo,
+      name: fullName,
+    };
 
-  setShippingInfo(updatedShippingInfo);
+    setShippingInfo(updatedShippingInfo);
 
-  console.log(updatedShippingInfo);
+    console.log(updatedShippingInfo);
     console.log("grandTotal: " + grandTotal);
     console.log("tax: " + tax);
     console.log("shipping: " + shipping);
@@ -231,6 +233,7 @@ export default function Checkout() {
       )
       .then((res) => {
         console.log("Order placed successfully:", res.data);
+        setShowSecondButton(true);
         toast.success("Order placed successfully!", {
           duration: 3000,
           style: {
@@ -350,7 +353,7 @@ export default function Checkout() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    First Name *
+                    First Name 
                   </label>
                   <input
                     type="text"
@@ -367,7 +370,7 @@ export default function Checkout() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name *
+                    Last Name 
                   </label>
                   <input
                     type="text"
@@ -387,7 +390,7 @@ export default function Checkout() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email *
+                    Email 
                   </label>
                   <input
                     type="email"
@@ -422,7 +425,7 @@ export default function Checkout() {
 
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Address *
+                  Address 
                 </label>
                 <input
                   type="text"
@@ -458,7 +461,7 @@ export default function Checkout() {
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    City *
+                    City 
                   </label>
                   <input
                     type="text"
@@ -472,7 +475,7 @@ export default function Checkout() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    State *
+                    State (Provinse)
                   </label>
                   <input
                     type="text"
@@ -489,7 +492,7 @@ export default function Checkout() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    ZIP Code *
+                    ZIP Code 
                   </label>
                   <input
                     type="text"
@@ -740,7 +743,13 @@ export default function Checkout() {
                   ← Back to Payment
                 </button>
               </div>
-
+              <div className="flex justify-center">
+                {showSecondButton && (
+                  <button onClick={() => {navigate("/orders")}} className="ml-4 bg-green-500 text-white px-4 py-2 rounded-3xl">
+                    View Your Order
+                  </button>
+                )}
+              </div>
               {/* Order Items */}
               <div className="mb-6">
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">
