@@ -6,17 +6,6 @@ import { useNavigate } from "react-router-dom";
 // Mock data based on your user schema
 
 // Mock icons
-const FaEdit = ({ className, onClick }) => (
-  <span className={`${className} select-none`} onClick={onClick}>
-    ✏️
-  </span>
-);
-
-const FaTrash = ({ className, onClick }) => (
-  <span className={`${className} select-none`} onClick={onClick}>
-    🗑️
-  </span>
-);
 
 const FaBan = ({ className, onClick }) => (
   <span className={`${className} select-none`} onClick={onClick}>
@@ -87,18 +76,32 @@ export default function AdminUsersPage() {
   //   }
   // }
 
-  function toggleBlockUser(userId) {
-    const user = users.find((u) => u._id === userId);
-    const action = user.isBlocked ? "unblock" : "block";
-
-    if (window.confirm(`Are you sure you want to ${action} this user?`)) {
-      setUsers(
-        users.map((u) =>
-          u._id === userId ? { ...u, isBlocked: !u.isBlocked } : u
-        )
-      );
-      alert(`User ${action}ed successfully`);
+  function toggleBlockUser(email, status) {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("You are not logged in. Please log in to access this action.");
+      window.location.href = "/login";
+      return;
     }
+
+    axios
+      .put(
+        import.meta.env.VITE_BACKEND_URL + `/api/users/`,
+        { email: email, status: status },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        setIsLoading(true);
+        toast.success(`User ${status ? "unblocked" : "blocked"} successfully`);
+      })
+      .catch((err) => {
+        console.error("Error updating user status:", err);
+        toast.error("Failed to update user status");
+      });
   }
 
   function handleRowClick(user, event) {
@@ -432,17 +435,23 @@ export default function AdminUsersPage() {
                     <td>
                       <div className="py-3 px-6 flex gap-3 items-center justify-center text-xl action-buttons">
                         {user.isBlocked ? (
-                          <FaCheck
-                            onClick={() => toggleBlockUser(user._id)}
-                            className="text-green-600 cursor-pointer hover:text-green-800 transition"
+                          <div
+                            onClick={() => toggleBlockUser(user.email, false)}
+                            className="flex items-center text-green-600 cursor-pointer hover:text-green-800 transition"
                             title="Unblock User"
-                          /> 
+                          >
+                            <FaCheck className="mr-1" />
+                            <span className="text-sm font-bold">Unblock</span>
+                          </div>
                         ) : (
-                          <FaBan
-                            onClick={() => toggleBlockUser(user._id)}
-                            className="text-yellow-600 cursor-pointer hover:text-yellow-800 transition"
+                          <div
+                            onClick={() => toggleBlockUser(user.email, true)}
+                            className="flex items-center text-yellow-600 cursor-pointer hover:text-yellow-800 transition"
                             title="Block User"
-                          />
+                          >
+                            <FaBan className="mr-1" />
+                            <span className="text-sm font-bold">Block</span>
+                          </div>
                         )}
                       </div>
                     </td>
@@ -563,10 +572,12 @@ export default function AdminUsersPage() {
 
               {/* Action Buttons in Modal */}
               <div className="mt-8 flex gap-4 justify-end border-t border-gray-200 pt-4">
-                
                 <button
                   onClick={() => {
-                    toggleBlockUser(selectedUser._id);
+                    toggleBlockUser(
+                      selectedUser.email,
+                      !selectedUser.isBlocked
+                    );
                     closeModal();
                   }}
                   className={`flex items-center gap-2 px-4 py-2 rounded transition ${
@@ -578,7 +589,6 @@ export default function AdminUsersPage() {
                   {selectedUser.isBlocked ? <FaCheck /> : <FaBan />}
                   {selectedUser.isBlocked ? "Unblock User" : "Block User"}
                 </button>
-                
               </div>
             </div>
           </div>
