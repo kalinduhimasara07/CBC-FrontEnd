@@ -22,6 +22,7 @@ import AdminOrdersPage from "./adminOrdersPage";
 import AdminUsersPage from "./adminUsersPage";
 import { MdOutlineRateReview } from "react-icons/md";
 import AddUserPage from "./addUserPage";
+import ReviewPage from "./reviewPage";
 
 export default function AdminPage() {
   const navigate = useNavigate();
@@ -112,7 +113,7 @@ export default function AdminPage() {
             <Route path="/users" element={<AdminUsersPage />} />
             <Route path="/" element={<AdminHome />} />
             <Route path="/order" element={<AdminOrdersPage />} />
-            <Route path="/category" element={<h1>Reviews</h1>} />
+            <Route path="/category" element={<ReviewPage />} />
             <Route path="/add-product" element={<AddProductPage />} />
             <Route path="/edit-product/" element={<EditProductPage />} />
             <Route path="/adduser" element={<AddUserPage/>} />
