@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../components/loading";
 
 // Mock data based on your user schema
 
@@ -33,7 +34,7 @@ const FaUserPlus = ({ className, onClick }) => (
 
 export default function AdminUsersPage() {
   const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -373,10 +374,8 @@ export default function AdminUsersPage() {
             <tbody>
               {isLoading ? (
                 <tr>
-                  <td colSpan="6">
-                    <div className="flex items-center justify-center h-[200px]">
-                      <div className="w-[80px] h-[80px] bg-amber-50 border-4 border-blue-300 rounded-full border-t-blue-600 animate-spin"></div>
-                    </div>
+                  <td colSpan="6" className="pt-8">
+                    <Loading/>
                   </td>
                 </tr>
               ) : filteredAndSortedUsers.length === 0 ? (

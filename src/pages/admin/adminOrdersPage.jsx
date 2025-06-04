@@ -674,7 +674,9 @@ export default function AdminOrdersPage() {
       </div>
 
       {isLoading ? (
-        <Loading />
+        <div className="w-full h-full flex  justify-center">
+          <div className="w-20 h-20 border-4 border-blue-200 rounded-full border-t-blue-700 animate-spin"></div>
+        </div>
       ) : orders.length === 0 ? (
         <p>No orders found.</p>
       ) : viewMode === "table" ? (

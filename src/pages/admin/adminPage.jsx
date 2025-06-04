@@ -16,13 +16,13 @@ import {
 import AdminProductPage from "./adminProductPage";
 import AddProductPage from "./addProductPage";
 import EditProductPage from "./editProduct";
-import AdminHome from "./adminHome";
 import { IoHome } from "react-icons/io5";
 import AdminOrdersPage from "./adminOrdersPage";
 import AdminUsersPage from "./adminUsersPage";
 import { MdOutlineRateReview } from "react-icons/md";
 import AddUserPage from "./addUserPage";
 import ReviewPage from "./reviewPage";
+import AdminHomePage from "./adminHome";
 
 export default function AdminPage() {
   const navigate = useNavigate();
@@ -111,7 +111,7 @@ export default function AdminPage() {
           <Routes>
             <Route path="/product" element={<AdminProductPage />} />
             <Route path="/users" element={<AdminUsersPage />} />
-            <Route path="/" element={<AdminHome />} />
+            <Route path="/" element={<AdminHomePage />} />
             <Route path="/order" element={<AdminOrdersPage />} />
             <Route path="/category" element={<ReviewPage />} />
             <Route path="/add-product" element={<AddProductPage />} />
