@@ -365,7 +365,9 @@ const AdminProductsPage = () => {
                         />
                         <div className="ml-4">
                           <div className="text-sm font-medium text-gray-900">
-                            {product.name}
+                            {product.name.length > 50
+                              ? `${product.name.slice(0, 30)}...`
+                                : product.name}
                           </div>
                           <div className="text-sm text-gray-500">
                             {product.productId}
@@ -421,23 +423,23 @@ const AdminProductsPage = () => {
                       <div className="flex items-center space-x-2">
                         <button
                           onClick={() => handleProductClick(product)}
-                          className="text-blue-600 hover:text-blue-900 p-1 rounded"
+                          className="text-blue-600 hover:text-blue-900 p-1 rounded cursor-pointer"
                         >
-                          <Eye size={16} />
+                          <Eye size={20} />
                         </button>
                         <button
-                          className="text-orange-600 hover:text-orange-900 p-1 rounded"
+                          className="text-orange-600 hover:text-orange-900 p-1 rounded cursor-pointer"
                           onClick={() =>
                             navigate("/admin/edit-product/", { state: product })
                           }
                         >
-                          <Edit size={16} />
+                          <Edit size={20} />
                         </button>
                         <button
                           onClick={() => confirmDelete(product.productId)}
-                          className="text-red-600 hover:text-red-900 p-1 rounded"
+                          className="text-red-600 hover:text-red-900 p-1 rounded cursor-pointer"
                         >
-                          <Trash2 size={16} />
+                          <Trash2 size={20} />
                         </button>
                       </div>
                     </td>
