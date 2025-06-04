@@ -31,7 +31,7 @@ export default function Login() {
       if (from === "checkout") {
         navigate("/checkout", { state: { cart } });
       }else if(response.data.role == "admin"){
-        navigate("/admin");
+        navigate("/admin/home");
       }
       else{
         navigate("/products");

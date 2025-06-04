@@ -23,6 +23,7 @@ import { MdOutlineRateReview } from "react-icons/md";
 import AddUserPage from "./addUserPage";
 import ReviewPage from "./reviewPage";
 import AdminHomePage from "./adminHome";
+import AdminProductsPage from "./testAdminProduct";
 
 export default function AdminPage() {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ export default function AdminPage() {
   }
 
   const handleClick = () => {
-    navigate("/admin");
+    navigate("/admin/home");
   };
   return (
     <>
@@ -109,9 +110,9 @@ export default function AdminPage() {
 
         <div className="h-full w-[80%] bg-white">
           <Routes>
-            <Route path="/product" element={<AdminProductPage />} />
+            <Route path="/product" element={<AdminProductsPage />} />
             <Route path="/users" element={<AdminUsersPage />} />
-            <Route path="/" element={<AdminHomePage />} />
+            <Route path="/home" element={<AdminHomePage />} />
             <Route path="/order" element={<AdminOrdersPage />} />
             <Route path="/category" element={<ReviewPage />} />
             <Route path="/add-product" element={<AddProductPage />} />
