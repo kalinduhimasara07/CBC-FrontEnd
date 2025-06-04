@@ -148,7 +148,7 @@ export default function AdminUsersPage() {
         </span>
       ),
       {
-        duration: 10000,
+        duration: 6000,
       }
     );
     // In real implementation: navigate("/admin/add-user");

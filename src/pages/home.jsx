@@ -10,8 +10,6 @@ import Cart from "../client/cart";
 import ScrollToTop from "../utils/scrolltotop";
 import Signup from "./signup";
 import Login from "./login";
-import LumineeFAQ from "../client/faq";
-import CardCarousel from "../client/cardCarousel";
 import Checkout from "../client/checkout";
 import OrderView from "../client/orderView";
 import AllOrdersView from "../client/orderView";

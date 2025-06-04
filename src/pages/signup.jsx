@@ -26,15 +26,24 @@ export default function Signup() {
           password,
         }
       );
-      toast.success("Welcome to Lumineé!");
+      toast.success("Welcome to Lumineé!" , {
+        icon: "🎉",
+        duration: 6000,
+        position: "top-right",
+        style: { background: "white", color: "#e17100", fontSize: "18px", marginTop: "80px" }
+      });
       navigate("/login", { state: { from, cart } });
     } catch (error) {
-      toast.error(error.response?.data?.message || "Signup failed");
+      toast.error(error.response?.data?.message || "Signup failed",{
+        icon: "❌",
+        duration: 6000,
+        style: { background: "white", color: "#e17100", fontSize: "18px", marginTop: "80px" }
+      });
     }
   }
 
   const handleGoogleSignup = () => {
-    toast("Google signup coming soon ✨", { icon: "⚠️" });
+    toast("Google signup coming soon ✨", { icon: "⚠️", duration: 5000, style: { background: "white", color: "#e17100", fontSize: "18px", marginTop: "80px" } });
   };
 
   return (

@@ -19,7 +19,12 @@ export default function Login() {
         import.meta.env.VITE_BACKEND_URL + "/api/users/login",
         { email, password }
       );
-      toast.success("Welcome back to Lumineé!");
+      toast.success("Welcome back to Lumineé!", {
+        icon: "🎉",
+        duration: 6000,
+        position: "top-right",
+        style: { background: "white", color: "#e17100", fontSize: "18px", marginTop: "80px" }
+      });
       localStorage.setItem("token", response.data.token);
       // navigate(response.data.role == "admin" ? "/admin" : "/");
       // If the user was redirected from a specific page, navigate there
@@ -32,12 +37,16 @@ export default function Login() {
         navigate("/products");
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Login failed");
+      toast.error(error.response?.data?.message || "Login failed" , {
+        icon: "❌",
+        duration: 6000,
+        style: { background: "white", color: "#e17100", fontSize: "18px", marginTop: "80px" }
+      });
     }
   }
 
   const handleGoogleLogin = () => {
-    toast("Google login coming soon!", { icon: "⚠️" });
+    toast("Google login coming soon!", { icon: "⚠️", duration: 5000, style: { background: "white", color: "#e17100", fontSize: "18px", marginTop: "80px" } });
   };
 
   return (
@@ -66,6 +75,7 @@ export default function Login() {
               type="email"
               value={email}
               placeholder="Email"
+              required
               className="w-[300px] h-[50px] px-4 rounded-2xl border border-[#e17100]/50 bg-white/90 focus:outline-none focus:ring-2 focus:ring-[#e17100]"
             />
 
@@ -73,6 +83,7 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               value={password}
+              required
               placeholder="Password"
               className="w-[300px] h-[50px] px-4 rounded-2xl border border-[#e17100]/50 bg-white/90 focus:outline-none focus:ring-2 focus:ring-[#e17100]"
             />
