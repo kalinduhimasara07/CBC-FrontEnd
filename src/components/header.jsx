@@ -6,7 +6,6 @@ import {
   User,
   Settings,
   LogOut,
-  Heart,
   PackageSearch,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +19,7 @@ export default function Header() {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const [loadingUser, setLoadingUser] = useState(true);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -51,12 +51,27 @@ export default function Header() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setUser(res.data);
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoadingUser(false);
       });
+  }, [token]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const handleNavigation = (path) => {
@@ -115,18 +130,22 @@ export default function Header() {
           >
             Contact
           </button>
-          <button
-            onClick={() => handleNavigation("/login")}
-            className="text-lg font-semibold text-gray-700 hover:text-amber-600 transition-colors cursor-pointer"
-          >
-            Login
-          </button>
-          <button
-            onClick={() => handleNavigation("/signup")}
-            className="text-lg font-semibold text-gray-700 hover:text-amber-600 transition-colors cursor-pointer"
-          >
-            Signup
-          </button>
+          {!token && (
+            <>
+              <button
+                onClick={() => handleNavigation("/login")}
+                className="text-lg font-semibold text-gray-700 hover:text-amber-600 transition-colors cursor-pointer"
+              >
+                Login
+              </button>
+              <button
+                onClick={() => handleNavigation("/signup")}
+                className="text-lg font-semibold text-gray-700 hover:text-amber-600 transition-colors cursor-pointer"
+              >
+                Signup
+              </button>
+            </>
+          )}
         </nav>
 
         {/* Right Side - Cart and User Profile */}
@@ -154,7 +173,15 @@ export default function Header() {
                 onClick={toggleDropdown}
               >
                 {/* <User className="w-4 h-4 md:w-5 md:h-5" /> */}
-                <img src={user?.img} alt="" />
+                {user?.img ? (
+                  <img
+                    src={user.img}
+                    alt="User"
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                ) : (
+                  <User className="w-4 h-4 md:w-5 md:h-5" />
+                )}
               </div>
             )}
 
@@ -196,8 +223,10 @@ export default function Header() {
 
                 <button
                   onClick={() => {
-                    console.log("Logging out...");
+                    localStorage.removeItem("token");
+                    setUser(null);
                     closeDropdown();
+                    // navigate("/login");
                   }}
                   className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
                 >
@@ -262,18 +291,22 @@ export default function Header() {
           >
             Contact
           </button>
-          <button
-            onClick={() => handleNavigation("/login")}
-            className="text-lg font-semibold text-gray-700 hover:text-amber-600 transition-colors py-2 border-b border-gray-100 text-left"
-          >
-            Login
-          </button>
-          <button
-            onClick={() => handleNavigation("/signup")}
-            className="text-lg font-semibold text-gray-700 hover:text-amber-600 transition-colors py-2 text-left"
-          >
-            Signup
-          </button>
+          {!token && (
+            <>
+              <button
+                onClick={() => handleNavigation("/login")}
+                className="text-lg font-semibold text-gray-700 hover:text-amber-600 transition-colors py-2 border-b border-gray-100 text-left"
+              >
+                Login
+              </button>
+              <button
+                onClick={() => handleNavigation("/signup")}
+                className="text-lg font-semibold text-gray-700 hover:text-amber-600 transition-colors py-2 border-b border-gray-100 text-left"
+              >
+                Signup
+              </button>
+            </>
+          )}
         </div>
       </nav>
     </>
