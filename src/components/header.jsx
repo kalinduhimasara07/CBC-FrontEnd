@@ -226,7 +226,7 @@ export default function Header() {
                     localStorage.removeItem("token");
                     setUser(null);
                     closeDropdown();
-                    // navigate("/login");
+                    window.location.reload(); // Refresh the page to reset all state
                   }}
                   className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
                 >
