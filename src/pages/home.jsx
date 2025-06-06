@@ -13,6 +13,7 @@ import Login from "./login";
 import Checkout from "../client/checkout";
 import OrderView from "../client/orderView";
 import AllOrdersView from "../client/orderView";
+import ProfilePage from "../client/profilePage";
 
 export default function HomePage() {
   return (
@@ -31,6 +32,7 @@ export default function HomePage() {
           <Route path="/signup" element={<Signup/> } />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<AllOrdersView />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       </div>
