@@ -1,12 +1,25 @@
 import { useState, useRef, useEffect } from "react";
-import { ShoppingCart, Menu, X, User, Settings, LogOut, Heart } from "lucide-react";
+import {
+  ShoppingCart,
+  Menu,
+  X,
+  User,
+  Settings,
+  LogOut,
+  Heart,
+  PackageSearch,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { tr } from "framer-motion/client";
+import axios from "axios";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -17,26 +30,34 @@ export default function Header() {
   };
 
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+    // setIsDropdownOpen(!isDropdownOpen);
+    if (token) {
+      setIsDropdownOpen(!isDropdownOpen);
+    } else {
+      navigate("/login");
+      setIsDropdownOpen(false);
+    }
   };
 
   const closeDropdown = () => {
     setIsDropdownOpen(false);
   };
 
-  // Close dropdown when clicking outside
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-  //       setIsDropdownOpen(false);
-  //     }
-  //   };
-
-  //   document.addEventListener('mousedown', handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(import.meta.env.VITE_BACKEND_URL + "/api/users/user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -54,11 +75,11 @@ export default function Header() {
             className="w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full cursor-pointer shadow-md transition-transform hover:scale-105 flex items-center justify-center text-white font-bold text-lg"
           >
             <img
-          onClick={() => navigate("/")}
-          src="/logo.png"
-          alt="Logo"
-          className="w-[60px] h-[60px] object-cover cursor-pointer rounded-full shadow-md transition-transform hover:scale-105"
-        />
+              onClick={() => navigate("/")}
+              src="/logo.png"
+              alt="Logo"
+              className="w-[60px] h-[60px] object-cover cursor-pointer rounded-full shadow-md transition-transform hover:scale-105"
+            />
           </div>
           <span
             onClick={() => handleNavigation("/")}
@@ -113,53 +134,66 @@ export default function Header() {
           {/* Shopping Cart */}
           <div className="flex items-center justify-center font-bold text-2xl md:text-3xl hover:scale-110 transition-transform">
             <button onClick={() => handleNavigation("/cart")}>
-              <ShoppingCart className="text-[#e17100] cursor-pointer w-6 h-6 md:w-7 md:h-7"/>
+              <ShoppingCart className="text-[#e17100] cursor-pointer w-6 h-6 md:w-7 md:h-7" />
             </button>
           </div>
-          
+
           {/* User Profile with Dropdown */}
           <div className="relative" ref={dropdownRef}>
-            <div 
-              className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-amber-600 rounded-full cursor-pointer flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-md hover:scale-105 transition-transform"
-              onClick={toggleDropdown}
-            >
-              U
-            </div>
+            {!token ? (
+              <div
+                className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-amber-600 rounded-full cursor-pointer flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-md hover:scale-105 transition-transform"
+                onClick={toggleDropdown}
+              >
+                <User className="w-4 h-4 md:w-5 md:h-5" />
+                {/* <img src={user?.img} alt="" /> */}
+              </div>
+            ) : (
+              <div
+                className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-amber-600 rounded-full cursor-pointer flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-md hover:scale-105 transition-transform"
+                onClick={toggleDropdown}
+              >
+                {/* <User className="w-4 h-4 md:w-5 md:h-5" /> */}
+                <img src={user?.img} alt="" />
+              </div>
+            )}
 
             {/* Dropdown Menu */}
             {isDropdownOpen && (
               <div className="absolute right-0 top-[55px] md:top-[65px] w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
                 <div className="px-4 py-2 border-b border-gray-100">
-                  <p className="text-sm font-medium text-gray-900">John Doe</p>
-                  <p className="text-xs text-gray-500">john@example.com</p>
+                  <p className="text-sm font-medium text-gray-900">
+                    {user.firstName + " " + user.lastName}
+                  </p>
+                  <p className="text-xs text-gray-500">{user.email}</p>
                 </div>
-                
+
                 <button
                   onClick={() => handleNavigation("/profile")}
-                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
                 >
                   <User className="w-4 h-4" />
                   My Profile
                 </button>
-                
+
                 <button
-                  onClick={() => handleNavigation("/wishlist")}
-                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                  onClick={() => handleNavigation("/orders")}
+                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
                 >
-                  <Heart className="w-4 h-4" />
-                  Wishlist
+                  <PackageSearch className="w-4 h-4" />
+                  Order History
                 </button>
-                
+
                 <button
                   onClick={() => handleNavigation("/settings")}
-                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
                 >
                   <Settings className="w-4 h-4" />
                   Settings
                 </button>
-                
+
                 <hr className="my-1" />
-                
+
                 <button
                   onClick={() => {
                     console.log("Logging out...");
@@ -191,13 +225,18 @@ export default function Header() {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden" onClick={closeMobileMenu} />
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={closeMobileMenu}
+        />
       )}
 
       {/* Mobile Navigation Menu */}
-      <nav className={`fixed top-[80px] right-0 w-64 h-[calc(100vh-80px)] bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-40 lg:hidden ${
-        isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-      }`}>
+      <nav
+        className={`fixed top-[80px] right-0 w-64 h-[calc(100vh-80px)] bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-40 lg:hidden ${
+          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
         <div className="flex flex-col py-6 px-4 space-y-4">
           <button
             onClick={() => handleNavigation("/")}
@@ -237,77 +276,6 @@ export default function Header() {
           </button>
         </div>
       </nav>
-
-      {/* Demo Content to show scrolling behavior */}
-      {/* <div className="pt-[80px] min-h-screen bg-gray-50 p-8">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6">Mobile Responsive Header Demo</h1>
-          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 className="text-xl font-semibold mb-4">Features:</h2>
-            <ul className="space-y-2 text-gray-700">
-              <li>• Fixed 80px height maintained across all screen sizes</li>
-              <li>• Logo and brand name scale appropriately on mobile</li>
-              <li>• Desktop navigation hidden on screens below lg (1024px)</li>
-              <li>• Hamburger menu appears on mobile/tablet</li>
-              <li>• Slide-out mobile menu with overlay</li>
-              <li>• Shopping cart and user profile icons remain visible</li>
-              <li>• Smooth transitions and hover effects</li>
-            </ul>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-semibold mb-4">Try it out:</h2>
-            <p className="text-gray-700 mb-4">
-              Resize your browser window or test on different devices to see the responsive behavior. 
-              The hamburger menu will appear when the screen width is below 1024px.
-            </p>
-            <p className="text-gray-700">
-              Click on navigation items to see console logs (in a real app, these would be your router navigation calls).
-            </p>
-          </div>
-        </div>
-      </div> */}
     </>
   );
 }
-// import { Link } from "react-router-dom";
-
-// export default function Header() {
-//   return (
-//     <header className="bg-gradient-to-r from-blue-600 via-teal-500 to-cyan-400 shadow-md h-[80px]">
-//       <div className="container mx-auto flex items-center justify-between py-4 px-6">
-//         {/* Logo */}
-//         <div className="text-3xl font-bold text-white tracking-wider">
-//           MyLogo
-//         </div>
-
-//         {/* Navigation Links */}
-//         <nav className="hidden md:flex space-x-8">
-
-//           <Link to="/" className="text-white text-lg font-semibold">Home</Link>
-//           <Link to="/login" className="text-white text-lg font-semibold">Login</Link>
-//           <Link to="/signup" className="text-white text-lg font-semibold">Sign Up</Link>
-
-//         </nav>
-
-//         {/* Mobile Icon */}
-//         <div className="md:hidden">
-//           <button className="text-white bg-white bg-opacity-20 p-2 rounded-lg hover:bg-opacity-30 transition">
-//             <svg
-//               className="w-6 h-6"
-//               fill="none"
-//               stroke="currentColor"
-//               strokeWidth="2"
-//               viewBox="0 0 24 24"
-//             >
-//               <path
-//                 strokeLinecap="round"
-//                 strokeLinejoin="round"
-//                 d="M4 6h16M4 12h16M4 18h16"
-//               />
-//             </svg>
-//           </button>
-//         </div>
-//       </div>
-//     </header>
-//   );
-// }
