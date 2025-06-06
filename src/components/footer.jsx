@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div>
+    <div className="w-full">
       {/* Footer */}
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12 lg:py-16">
@@ -82,15 +82,19 @@ export default function Footer() {
                 <h4 className="text-xl font-bold text-amber-400 mb-2">Stay Beautiful</h4>
                 <p className="text-gray-300">Get exclusive tips, early access, and special offers delivered to your inbox.</p>
               </div>
-              <div className="flex gap-3">
-                <input
+              <div className="flex flex-col gap-3 md:flex-row">
+                <div>
+                  <input
                   type="email"
                   placeholder="Your email address"
-                  className="flex-1 px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 text-white placeholder-gray-400 focus:border-amber-500 focus:outline-none transition-colors"
+                  className="flex-1 xl:w-100 px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 text-white placeholder-gray-400 focus:border-amber-500 focus:outline-none transition-colors"
                 />
-                <button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105">
+                </div>
+                <div>
+                  <button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105">
                   Subscribe
                 </button>
+                </div>
               </div>
             </div>
           </div>

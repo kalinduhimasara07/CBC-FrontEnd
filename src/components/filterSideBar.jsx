@@ -86,7 +86,7 @@ export default function LumineeFilterSidebar() {
   }
 
   return (
-    <div className="w-80 h-auto bg-white shadow-lg flex flex-col overflow-hidden">
+    <div className="xl:w-80 h-auto bg-white shadow-lg flex flex-col overflow-hidden">
       {/* Header */}
       <div className="p-6 border-b border-gray-200" style={{ borderBottomColor: '#e17100' }}>
         <div className="flex items-center justify-between">

@@ -26,7 +26,7 @@ export default function ProductPage() {
 
   return (
     <div>
-      <div className="flex">
+      <div className="md:flex">
         <div>
           <LumineeFilterSidebar />
         </div>
