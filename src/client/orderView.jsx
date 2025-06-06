@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import Loading from "../components/loading";
 import Modal from "react-modal";
+import Footer from "../components/footer";
 
 // Mock orders data - replace with actual API call
 
@@ -142,7 +143,8 @@ export default function AllOrdersView() {
   const filteredOrders = filteredAndSortedOrders();
 
   return (
-    <div className="w-full flex flex-col justify-center items-center bg-gray-50">
+    <div className="w-full">
+      <div className="w-full flex flex-col justify-center items-center bg-gray-50">
       <div className="mt-[100px] w-[95%] lg:w-[90%] max-w-7xl mb-[100px]">
         {/* Header */}
         <div className="bg-white rounded-lg shadow-lg p-4 lg:p-6 mb-6">
@@ -567,6 +569,8 @@ export default function AllOrdersView() {
           </div>
         )}
       </div>
+    </div>
+    <Footer/>
     </div>
   );
 }

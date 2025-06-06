@@ -18,7 +18,7 @@ export default function HomePage() {
   return (
     <>
       <Header />
-      <div className="w-full h-[calc(100vh-80px)] flex flex-col items-center">
+      <div className="w-full h-[calc(100vh-80px)] flex flex-col items-center ">
         <ScrollToTop/>
         <Routes path="/">
           <Route path="/" element={<Homepage/>} />

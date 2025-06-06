@@ -79,7 +79,7 @@ export default function ContactUsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
+    <div className="min-h-screen w-full bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
       {/* Hero Section */}
       <div className="relative overflow-hidden bg-gradient-to-r from-amber-600 to-orange-600 text-white">
         <div className="absolute inset-0 bg-black/10"></div>

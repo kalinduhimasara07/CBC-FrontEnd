@@ -49,7 +49,7 @@ const LumineePrivacyPolicy = () => {
   return (
     <div>
         <Header/>
-        <FloatingNotice message="Before placing an order, please login first." />
+        
         <div className="min-h-screen mt-[80px] bg-gradient-to-br from-orange-50 to-amber-50 relative overflow-hidden">
       {/* Floating Background Elements */}
       <div className="fixed inset-0 pointer-events-none">

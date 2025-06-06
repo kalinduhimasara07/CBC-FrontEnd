@@ -4,6 +4,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import toast from "react-hot-toast";
 import Footer from "../components/footer";
 import { useNavigate } from "react-router-dom";
+import { div } from "framer-motion/client";
 
 export default function Cart() {
   const [cart, setCart] = useState(getCart());
@@ -20,7 +21,8 @@ export default function Cart() {
   }, 0);
 
   return (
-    <div className="w-full flex flex-col justify-center items-center">
+    <div className="w-full">
+      <div className="w-full flex flex-col justify-center items-center">
       <div className="mt-[100px] w-[95%] lg:w-[90%] h-full min-h-[400px] mb-[100px] flex flex-col lg:flex-row gap-4 lg:gap-8">
         {/* Cart Items - Left Side */}
         <div className="flex-1 flex flex-col">
@@ -158,7 +160,9 @@ export default function Cart() {
           </div>
         )}
       </div>
-      <Footer />
+      {/* <Footer /> */}
+    </div>
+    <Footer />
     </div>
   );
 }
