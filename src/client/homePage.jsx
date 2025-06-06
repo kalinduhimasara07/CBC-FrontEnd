@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Footer from "../components/footer";
 import axios from "axios";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CardCarousel from "./cardCarousel";
 
 export default function Homepage() {
@@ -28,7 +28,6 @@ export default function Homepage() {
   const [emailSignup, setEmailSignup] = useState("");
   const [signupSuccess, setSignupSuccess] = useState(false);
 
-
   const featuredProducts = [
     {
       name: products[0]?.name,
@@ -45,7 +44,7 @@ export default function Homepage() {
       //   "Reduces fine lines",
       //   "Hydrates deeply",
       // ],
-    }
+    },
   ];
 
   const discountPercentage = Math.round(
@@ -121,10 +120,16 @@ export default function Homepage() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-12">
-                <button onClick={() => navigate("/products")} className="bg-white text-amber-600 font-bold py-4 px-8 rounded-2xl hover:bg-amber-50 transition-all duration-300 hover:scale-105 shadow-lg text-lg">
+                <button
+                  onClick={() => navigate("/products")}
+                  className="bg-white text-amber-600 font-bold py-4 px-8 rounded-2xl hover:bg-amber-50 transition-all duration-300 hover:scale-105 shadow-lg text-lg"
+                >
                   Shop Now
                 </button>
-                <button onClick={() => navigate("/faq")} className="bg-white/20 backdrop-blur-sm text-white font-bold py-4 px-8 rounded-2xl border-2 border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105 text-lg">
+                <button
+                  onClick={() => navigate("/faq")}
+                  className="bg-white/20 backdrop-blur-sm text-white font-bold py-4 px-8 rounded-2xl border-2 border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105 text-lg"
+                >
                   Take Skin Quiz
                 </button>
               </div>
@@ -151,7 +156,7 @@ export default function Homepage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
                 <div className="text-center mb-6 flex flex-col justify-center items-center">
                   <div className="bg-white mb-4 w-50 h-50 flex justify-center items-center">
-                    <img src={featuredProducts[0].image} alt=""  />
+                    <img src={featuredProducts[0].image} alt="" />
                   </div>
                   <h3 className="text-2xl font-bold mb-2">
                     {featuredProducts[0].name}
@@ -337,7 +342,7 @@ export default function Homepage() {
         </div>
       </div> */}
 
-      <CardCarousel/>
+      <CardCarousel />
 
       {/* Testimonials Section */}
       <div className="py-16 lg:py-20">
@@ -425,7 +430,12 @@ export default function Homepage() {
                 </div>
               </div>
 
-              <button onClick={()=>{navigate('/faq')}} className="bg-white text-purple-600 font-bold py-4 px-8 rounded-2xl hover:bg-purple-50 transition-all duration-300 hover:scale-105 shadow-lg text-lg">
+              <button
+                onClick={() => {
+                  navigate("/faq");
+                }}
+                className="bg-white text-purple-600 font-bold py-4 px-8 rounded-2xl hover:bg-purple-50 transition-all duration-300 hover:scale-105 shadow-lg text-lg"
+              >
                 Find Your Skin Quiz
               </button>
             </div>
@@ -502,7 +512,12 @@ export default function Homepage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button onClick={()=>{navigate('/products')}} className="bg-white text-amber-600 font-bold py-4 px-8 rounded-2xl hover:bg-amber-50 transition-all duration-300 hover:scale-105 shadow-lg text-lg">
+              <button
+                onClick={() => {
+                  navigate("/products");
+                }}
+                className="bg-white text-amber-600 font-bold py-4 px-8 rounded-2xl hover:bg-amber-50 transition-all duration-300 hover:scale-105 shadow-lg text-lg"
+              >
                 Shop All Products
               </button>
               <button className="bg-white/20 backdrop-blur-sm text-white font-bold py-4 px-8 rounded-2xl border-2 border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105 text-lg">
