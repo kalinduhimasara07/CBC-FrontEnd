@@ -172,7 +172,7 @@ export default function Header() {
                 className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-amber-600 rounded-full cursor-pointer flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-md hover:scale-105 transition-transform"
                 onClick={toggleDropdown}
               >
-                {/* <User className="w-4 h-4 md:w-5 md:h-5" /> */}
+                <User className="w-4 h-4 md:w-5 md:h-5" />
                 {user?.img ? (
                   <img
                     src={user.img}
