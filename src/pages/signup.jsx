@@ -17,53 +17,53 @@ export default function Signup() {
   const cart = location.state?.cart || [];
 
   const googleLogin = useGoogleLogin({
-  onSuccess: (tokenResponse) => {
-    console.log(tokenResponse.access_token);
-    axios
-      .post(import.meta.env.VITE_BACKEND_URL + "/api/users/google", {
-        token: tokenResponse.access_token,
-      })
-      .then((res) => {
-        const isNewUser = res.data.message === "Account created successfully";
-        toast.success(
-          isNewUser
-            ? "Welcome to Lumineé! Your account was created 🎉"
-            : "Welcome back to Lumineé! 🎉",
-          {
+    onSuccess: (tokenResponse) => {
+      console.log(tokenResponse.access_token);
+      axios
+        .post(import.meta.env.VITE_BACKEND_URL + "/api/users/google", {
+          token: tokenResponse.access_token,
+        })
+        .then((res) => {
+          const isNewUser = res.data.message === "Account created successfully";
+          toast.success(
+            isNewUser
+              ? "Welcome to Lumineé! Your account was created 🎉"
+              : "Welcome back to Lumineé! 🎉",
+            {
+              duration: 6000,
+              position: "top-right",
+              icon: isNewUser ? "🆕" : "🎉",
+              style: {
+                background: "white",
+                color: "#e17100",
+                fontSize: "18px",
+                marginTop: "80px",
+              },
+            }
+          );
+          localStorage.setItem("token", res.data.token);
+          if (from === "checkout") {
+            navigate("/checkout", { state: { cart } });
+          } else if (res.data.role === "admin") {
+            navigate("/admin/home");
+          } else {
+            navigate("/products");
+          }
+        })
+        .catch((err) => {
+          toast.error(err.response?.data?.message || "Login failed", {
+            icon: "❌",
             duration: 6000,
-            position: "top-right",
-            icon: isNewUser ? "🆕" : "🎉",
             style: {
               background: "white",
               color: "#e17100",
               fontSize: "18px",
               marginTop: "80px",
             },
-          }
-        );
-        localStorage.setItem("token", res.data.token);
-        if (from === "checkout") {
-          navigate("/checkout", { state: { cart } });
-        } else if (res.data.role === "admin") {
-          navigate("/admin/home");
-        } else {
-          navigate("/products");
-        }
-      })
-      .catch((err) => {
-        toast.error(err.response?.data?.message || "Login failed", {
-          icon: "❌",
-          duration: 6000,
-          style: {
-            background: "white",
-            color: "#e17100",
-            fontSize: "18px",
-            marginTop: "80px",
-          },
+          });
         });
-      });
-  },
-});
+    },
+  });
 
   async function handleSignup() {
     try {
@@ -184,7 +184,7 @@ export default function Signup() {
             {/* Google Signup */}
             <button
               onClick={googleLogin}
-              className="w-[300px] h-[50px] flex items-center justify-center gap-3 rounded-2xl bg-white text-[#333] font-semibold shadow-md hover:shadow-lg transition duration-300 border border-gray-300"
+              className="w-[300px] h-[50px] flex items-center justify-center gap-3 rounded-2xl bg-white text-[#333] font-semibold shadow-md hover:shadow-lg transition duration-300 border border-gray-300 cursor-pointer"
             >
               <FcGoogle size={22} />
               Sign up with Google

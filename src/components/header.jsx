@@ -9,7 +9,6 @@ import {
   PackageSearch,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { tr } from "framer-motion/client";
 import axios from "axios";
 
 export default function Header() {
@@ -44,6 +43,8 @@ export default function Header() {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+  if (!token) return; // 🚫 Don't call API if not logged in
     axios
       .get(import.meta.env.VITE_BACKEND_URL + "/api/users/user", {
         headers: {
@@ -226,7 +227,7 @@ export default function Header() {
                     localStorage.removeItem("token");
                     setUser(null);
                     closeDropdown();
-                    window.location.reload(); // Refresh the page to reset all state
+                    navigate("/"); // Refresh the page to reset all state
                   }}
                   className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
                 >

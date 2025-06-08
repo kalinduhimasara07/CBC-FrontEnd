@@ -161,7 +161,7 @@ export default function Login() {
 
             <button
               onClick={googleLogin}
-              className="w-[300px] h-[50px] flex items-center justify-center gap-3 rounded-2xl bg-white text-[#333] font-semibold shadow-md hover:shadow-lg transition duration-300 border border-gray-300"
+              className="w-[300px] h-[50px] flex items-center justify-center gap-3 rounded-2xl bg-white text-[#333] font-semibold shadow-md hover:shadow-lg transition duration-300 border border-gray-300 cursor-pointer"
             >
               <FcGoogle size={22} />
               Sign in with Google
