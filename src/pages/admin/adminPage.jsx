@@ -123,6 +123,10 @@ export default function AdminPage() {
             <div className="text-sm text-white/80">👤 Admin</div>
             <button
               // Replace this with your logout logic
+              onClick={() => {
+                localStorage.removeItem("token");
+                navigate("/"); // Refresh the page to reset all state
+              }}
               className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-xl shadow-md transition duration-300"
             >
               Logout

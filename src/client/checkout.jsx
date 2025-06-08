@@ -755,7 +755,7 @@ export default function Checkout() {
                       onClick={() => {
                         navigate("/orders");
                       }}
-                      className="ml-4 bg-green-500 text-white px-4 py-2 rounded-3xl"
+                      className="ml-4 bg-green-500 text-white px-4 py-2 rounded-3xl cursor-pointer hover:bg-green-600 transition-colors"
                     >
                       View Your Order
                     </button>

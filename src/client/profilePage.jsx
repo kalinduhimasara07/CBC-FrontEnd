@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import mediaUpload from "../utils/mediaUpload";
 import {
   User,
   Mail,
@@ -16,15 +17,42 @@ import Footer from "../components/footer";
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
+    _id: "",
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
     address: " ",
-    dateOfBirth: "",
-    bio: "",
+    img: "",
   });
   const token = localStorage.getItem("token");
+
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const fileInputRef = useRef(null);
+
+  const handleCameraClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleImageSelect = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const imageUrl = URL.createObjectURL(file);
+
+    // If you're only sending a URL, you could upload this to a service like Cloudinary here,
+    // but for now, we'll use the local URL temporarily:
+    setFormData((prev) => ({
+      ...prev,
+      img: imageUrl, // Update preview
+    }));
+
+    // Optionally: store the file for uploading when user clicks "Save"
+    setSelectedImage(file);
+  };
 
   useEffect(() => {
     axios
@@ -35,7 +63,7 @@ export default function ProfilePage() {
       })
       .then((res) => {
         setFormData(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -50,10 +78,44 @@ export default function ProfilePage() {
     }));
   };
 
-  const handleSave = () => {
-    console.log("Saving profile data:", formData);
+  const handleSave = async () => {
+  if (!formData._id) {
+    console.error("User ID is missing");
+    return;
+  }
+
+  try {
+    let imageUrl = formData.img;
+
+    // Upload only if a new image was selected
+    if (selectedImage) {
+      imageUrl = await mediaUpload(selectedImage);
+    }
+
+    // Update user data
+    await axios.put(
+      `${import.meta.env.VITE_BACKEND_URL}/api/users/${formData._id}`,
+      { ...formData, img: imageUrl },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
     setIsEditing(false);
-  };
+    setSelectedImage(null);
+    setFormData((prev) => ({
+      ...prev,
+      img: imageUrl,
+    }));
+
+    // Optional: reload from server if you want fully fresh data
+    // Or just update state locally
+  } catch (err) {
+    console.error("Error during save:", err);
+  }
+};
 
   const handleCancel = () => {
     // Reset form data or fetch from server
@@ -65,59 +127,79 @@ export default function ProfilePage() {
       <div className="md:h-[calc(100vh-80px)] bg-gray-50 pt-[80px] flex items-center justify-center">
         <div className="max-w-6xl mx-auto p-4 md:p-6">
           {/* Profile Header */}
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-6">
-            <div className="relative h-32 md:h-48 ">
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-600 via-orange-500 to-yellow-400 bg-opacity-20"></div>
-            </div>
+          {/* Modern Profile Header */}
+          <div className="relative bg-gradient-to-br from-amber-600 to-yellow-400 h-48 md:h-64 rounded-2xl shadow-lg overflow-hidden mb-6">
+            {/* Cover Overlay */}
+            <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" />
 
-            <div className="relative px-6 pb-6">
-              {/* Profile Picture */}
-              <div className="flex flex-col md:flex-row md:items-end gap-4 -mt-16 md:-mt-20">
+            {/* Content Container */}
+            <div className="relative z-10 flex flex-col md:flex-row items-center md:items-end justify-between p-6 md:p-8 h-full">
+              {/* Avatar */}
+              <div className="flex items-center gap-4 -mt-16 md:-mt-20">
                 <div className="relative">
-                  <div className="w-24 h-24 md:w-32 md:h-32 rounded-full flex items-center justify-center text-white font-bold text-2xl md:text-4xl shadow-lg border-4 border-white">
-                    <img src={formData.img} alt="" />
-                  </div>
-                  <button className="absolute bottom-0 right-0 w-8 h-8 bg-amber-600 rounded-full flex items-center justify-center text-white hover:bg-amber-700 transition-colors shadow-lg">
-                    <Camera className="w-4 h-4" />
-                  </button>
-                </div>
+                  <img
+                    src={formData.img || "/default-avatar.png"}
+                    alt="Profile"
+                    className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white shadow-md object-cover"
+                  />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                    onChange={handleImageSelect}
+                  />
 
-                <div className="flex-1 md:mb-4">
-                  <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-                    {formData.firstName.toUpperCase()}{" "}
-                    {formData.lastName.toUpperCase()}
-                  </h1>
-                  <p className="text-gray-600 mt-1">{formData.email}</p>
-                </div>
-
-                <div className="flex gap-2">
-                  {!isEditing ? (
+                  {isEditing && (
                     <button
-                      onClick={() => setIsEditing(true)}
-                      className="flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors font-medium"
+                      type="button"
+                      onClick={handleCameraClick}
+                      className="absolute bottom-0 right-0 bg-white border border-gray-300 rounded-full p-1 hover:shadow transition cursor-pointer"
                     >
-                      <Edit3 className="w-4 h-4" />
-                      Edit Profile
+                      <Camera className="w-6 h-6 text-amber-600" />
                     </button>
-                  ) : (
-                    <>
-                      <button
-                        onClick={handleSave}
-                        className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
-                      >
-                        <Save className="w-4 h-4" />
-                        Save
-                      </button>
-                      <button
-                        onClick={handleCancel}
-                        className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-medium"
-                      >
-                        <X className="w-4 h-4" />
-                        Cancel
-                      </button>
-                    </>
                   )}
                 </div>
+
+                <div>
+                  <h1 className="text-white text-2xl md:text-3xl font-semibold drop-shadow">
+                    {formData.firstName?.toUpperCase()}{" "}
+                    {formData.lastName?.toUpperCase()}
+                  </h1>
+                  <p className="text-white/90 text-sm md:text-base">
+                    {formData.email}
+                  </p>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3 mt-4 md:mt-0">
+                {!isEditing ? (
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className="flex items-center gap-2 px-4 py-2 bg-white text-amber-600 rounded-full hover:bg-gray-100 shadow font-medium"
+                  >
+                    <Edit3 className="w-4 h-4" />
+                    Edit
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      onClick={handleSave}
+                      className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 shadow font-medium"
+                    >
+                      <Save className="w-4 h-4" />
+                      Save
+                    </button>
+                    <button
+                      onClick={handleCancel}
+                      className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-white rounded-full hover:bg-gray-800 shadow font-medium"
+                    >
+                      <X className="w-4 h-4" />
+                      Cancel
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -207,7 +289,7 @@ export default function ProfilePage() {
                     <div className="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-lg">
                       <Phone className="w-4 h-4 text-gray-500" />
                       {formData.phone ? (
-                        <span>formData.bio</span>
+                        <span>{formData.phone}</span>
                       ) : (
                         "No phone number"
                       )}
