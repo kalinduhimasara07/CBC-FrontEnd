@@ -15,6 +15,51 @@ export default function Signup() {
   const from = location.state?.from || "No previous page";
   const cart = location.state?.cart || [];
 
+  const googleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      console.log(tokenResponse);
+      axios
+        .get(import.meta.env.VITE_BACKEND_URL + "/api/users/google", {
+          token: tokenResponse.access_token,
+        })
+        .then((res) => {
+          toast.success("Welcome back to Lumineé!", {
+            icon: "🎉",
+            duration: 6000,
+            position: "top-right",
+            style: {
+              background: "white",
+              color: "#e17100",
+              fontSize: "18px",
+              marginTop: "80px",
+            },
+          });
+          localStorage.setItem("token", res.data.token);
+          if (from === "checkout") {
+            navigate("/checkout", { state: { cart } });
+          } else if (response.data.role == "admin") {
+            navigate("/admin/home");
+          } else {
+            navigate("/products");
+          }
+        })
+        .catch((err) => {
+          toast.error(err.response?.data?.message || "Login failed", {
+            icon: "❌",
+            duration: 6000,
+            style: {
+              background: "white",
+              color: "#e17100",
+              fontSize: "18px",
+              marginTop: "80px",
+            },
+          });
+        });
+      // localStorage.setItem("token", tokenResponse.access_token);
+      // navigate(from, { state: { cart } });
+    },
+  });
+
   async function handleSignup() {
     try {
       const response = await axios.post(
@@ -26,24 +71,43 @@ export default function Signup() {
           password,
         }
       );
-      toast.success("Welcome to Lumineé!" , {
+      toast.success("Welcome to Lumineé!", {
         icon: "🎉",
         duration: 6000,
         position: "top-right",
-        style: { background: "white", color: "#e17100", fontSize: "18px", marginTop: "80px" }
+        style: {
+          background: "white",
+          color: "#e17100",
+          fontSize: "18px",
+          marginTop: "80px",
+        },
       });
       navigate("/login", { state: { from, cart } });
     } catch (error) {
-      toast.error(error.response?.data?.message || "Signup failed",{
+      toast.error(error.response?.data?.message || "Signup failed", {
         icon: "❌",
         duration: 6000,
-        style: { background: "white", color: "#e17100", fontSize: "18px", marginTop: "80px" }
+        style: {
+          background: "white",
+          color: "#e17100",
+          fontSize: "18px",
+          marginTop: "80px",
+        },
       });
     }
   }
 
   const handleGoogleSignup = () => {
-    toast("Google signup coming soon ✨", { icon: "⚠️", duration: 5000, style: { background: "white", color: "#e17100", fontSize: "18px", marginTop: "80px" } });
+    toast("Google signup coming soon ✨", {
+      icon: "⚠️",
+      duration: 5000,
+      style: {
+        background: "white",
+        color: "#e17100",
+        fontSize: "18px",
+        marginTop: "80px",
+      },
+    });
   };
 
   return (
@@ -56,14 +120,13 @@ export default function Signup() {
 
         <div className="relative z-10 w-full md:w-[50%] h-full flex items-center justify-center p-4">
           <div className="w-full max-w-md h-auto backdrop-blur-md rounded-3xl shadow-2xl flex flex-col items-center justify-center gap-4 bg-white/40 p-6 border border-white/20">
-  <h1 className="text-4xl font-bold text-[#e17100] tracking-wide text-center drop-shadow-md">
-    Lumineé
-  </h1>
-  <p className="text-sm text-gray-700 font-medium -mt-2 mb-1">
-    Let your beauty shine ✨
-  </p>
-  {/* Then reduce footer text to text-xs or sm */}
-
+            <h1 className="text-4xl font-bold text-[#e17100] tracking-wide text-center drop-shadow-md">
+              Lumineé
+            </h1>
+            <p className="text-sm text-gray-700 font-medium -mt-2 mb-1">
+              Let your beauty shine ✨
+            </p>
+            {/* Then reduce footer text to text-xs or sm */}
 
             {/* Inputs */}
             <input
@@ -115,7 +178,7 @@ export default function Signup() {
 
             {/* Google Signup */}
             <button
-              onClick={handleGoogleSignup}
+              onClick={googleLogin()}
               className="w-[300px] h-[50px] flex items-center justify-center gap-3 rounded-2xl bg-white text-[#333] font-semibold shadow-md hover:shadow-lg transition duration-300 border border-gray-300"
             >
               <FcGoogle size={22} />
@@ -141,7 +204,8 @@ export default function Signup() {
               and{" "}
               <span className="underline cursor-pointer hover:text-[#e17100]">
                 <Link to="/privacy">Privacy Policy</Link>
-              </span>.
+              </span>
+              .
             </p>
           </div>
         </div>

@@ -13,6 +13,7 @@ import LumineePrivacyPolicy from "./client/privacyPolicy";
 import TermsOfService from "./client/termsOfServices";
 import ReturnPolicy from "./client/returnPolicy";
 import SkincareGuide from "./client/skincareGuide";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <BrowserRouter>
         <Toaster position="top-center" />
         <ScrollToTop/>
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
         <Routes path="/*">
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
@@ -32,6 +34,7 @@ function App() {
           <Route path="/return" element={<ReturnPolicy/>} />
           <Route path="/skincare" element={<SkincareGuide/>} />
         </Routes>
+        </GoogleOAuthProvider>
       </BrowserRouter>
     </>
   );

@@ -4,6 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { useGoogleLogin } from "@react-oauth/google";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -12,6 +13,55 @@ export default function Login() {
   const location = useLocation();
   const from = location.state?.from || "/";
   const cart = location.state?.cart || [];
+  const googleLogin = useGoogleLogin({
+  onSuccess: (tokenResponse) => {
+    console.log(tokenResponse.access_token);
+    axios
+      .post(import.meta.env.VITE_BACKEND_URL + "/api/users/google", {
+        token: tokenResponse.access_token,
+      })
+      .then((res) => {
+        const isNewUser = res.data.message === "Account created successfully";
+        toast.success(
+          isNewUser
+            ? "Welcome to Lumineé! Your account was created 🎉"
+            : "Welcome back to Lumineé! 🎉",
+          {
+            duration: 6000,
+            position: "top-right",
+            icon: isNewUser ? "🆕" : "🎉",
+            style: {
+              background: "white",
+              color: "#e17100",
+              fontSize: "18px",
+              marginTop: "80px",
+            },
+          }
+        );
+        localStorage.setItem("token", res.data.token);
+        if (from === "checkout") {
+          navigate("/checkout", { state: { cart } });
+        } else if (res.data.role === "admin") {
+          navigate("/admin/home");
+        } else {
+          navigate("/products");
+        }
+      })
+      .catch((err) => {
+        toast.error(err.response?.data?.message || "Login failed", {
+          icon: "❌",
+          duration: 6000,
+          style: {
+            background: "white",
+            color: "#e17100",
+            fontSize: "18px",
+            marginTop: "80px",
+          },
+        });
+      });
+  },
+});
+
 
   async function handleLogin() {
     try {
@@ -23,37 +73,46 @@ export default function Login() {
         icon: "🎉",
         duration: 6000,
         position: "top-right",
-        style: { background: "white", color: "#e17100", fontSize: "18px", marginTop: "80px" }
+        style: {
+          background: "white",
+          color: "#e17100",
+          fontSize: "18px",
+          marginTop: "80px",
+        },
       });
       localStorage.setItem("token", response.data.token);
       // navigate(response.data.role == "admin" ? "/admin" : "/");
       // If the user was redirected from a specific page, navigate there
       if (from === "checkout") {
         navigate("/checkout", { state: { cart } });
-      }else if(response.data.role == "admin"){
+      } else if (response.data.role == "admin") {
         navigate("/admin/home");
-      }
-      else{
+      } else {
         navigate("/products");
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Login failed" , {
+      toast.error(error.response?.data?.message || "Login failed", {
         icon: "❌",
         duration: 6000,
-        style: { background: "white", color: "#e17100", fontSize: "18px", marginTop: "80px" }
+        style: {
+          background: "white",
+          color: "#e17100",
+          fontSize: "18px",
+          marginTop: "80px",
+        },
       });
     }
   }
 
   const handleGoogleLogin = () => {
-    toast("Google login coming soon!", { icon: "⚠️", duration: 5000, style: { background: "white", color: "#e17100", fontSize: "18px", marginTop: "80px" } });
+    // toast("Google login coming soon!", { icon: "⚠️", duration: 5000, style: { background: "white", color: "#e17100", fontSize: "18px", marginTop: "80px" } });
+    // window.open(import.meta.env.VITE_BACKEND_URL + "/api/users/google", "_self");
   };
 
   return (
     <div className="pt-[80px]">
       <Header />
       <div className="flex items-center justify-center h-[calc(100vh-80px)] bg-gradient-to-br from-[#fff3e6] via-white to-[#fff0e0] relative overflow-hidden">
-
         {/* Glowing background circles */}
         <div className="absolute w-96 h-96 bg-[#e17100]/20 rounded-full top-10 left-10 blur-[100px] z-0"></div>
         <div className="absolute w-80 h-80 bg-[#e17100]/30 rounded-full bottom-10 right-10 blur-[120px] z-0"></div>
@@ -61,7 +120,6 @@ export default function Login() {
         {/* Login Card */}
         <div className="relative z-10 w-full md:w-[50%] flex items-center justify-center p-4">
           <div className="w-full max-w-md backdrop-blur-md rounded-2xl shadow-2xl flex flex-col items-center justify-center gap-6 bg-white/30 p-10 border border-white/20">
-
             {/* Title */}
             <h1 className="text-5xl font-bold text-[#e17100] tracking-wide text-center drop-shadow-md">
               Lumineé
@@ -103,7 +161,7 @@ export default function Login() {
             </div>
 
             <button
-              onClick={handleGoogleLogin}
+              onClick={googleLogin}
               className="w-[300px] h-[50px] flex items-center justify-center gap-3 rounded-2xl bg-white text-[#333] font-semibold shadow-md hover:shadow-lg transition duration-300 border border-gray-300"
             >
               <FcGoogle size={22} />
@@ -128,7 +186,8 @@ export default function Login() {
               and{" "}
               <span className="underline cursor-pointer hover:text-[#e17100]">
                 <Link to="/privacy">Privacy Policy</Link>
-              </span>.
+              </span>
+              .
             </p>
           </div>
         </div>
@@ -136,8 +195,6 @@ export default function Login() {
     </div>
   );
 }
-
-
 
 // import { useState, useEffect } from "react";
 // import Header from "../components/header";
