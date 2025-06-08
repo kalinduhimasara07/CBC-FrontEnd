@@ -11,6 +11,9 @@ export default function Signup() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
+  const [isSignupLoading, setIsSignupLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || "No previous page";
@@ -18,7 +21,6 @@ export default function Signup() {
 
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => {
-      console.log(tokenResponse.access_token);
       axios
         .post(import.meta.env.VITE_BACKEND_URL + "/api/users/google", {
           token: tokenResponse.access_token,
@@ -61,11 +63,15 @@ export default function Signup() {
               marginTop: "80px",
             },
           });
+        })
+        .finally(() => {
+          setIsGoogleLoading(false);
         });
     },
   });
 
   async function handleSignup() {
+    setIsSignupLoading(true);
     try {
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/users/",
@@ -99,6 +105,8 @@ export default function Signup() {
           marginTop: "80px",
         },
       });
+    } finally {
+      setIsSignupLoading(false);
     }
   }
 
@@ -169,9 +177,40 @@ export default function Signup() {
             {/* Sign Up Button */}
             <button
               onClick={handleSignup}
-              className="w-[300px] h-[50px] rounded-2xl bg-[#e17100] hover:bg-[#c96100] text-white font-semibold shadow-xl hover:shadow-2xl transition duration-300"
+              disabled={isSignupLoading}
+              className={`w-[300px] h-[50px] rounded-2xl font-semibold shadow-xl transition duration-300 ${
+                isSignupLoading
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-[#e17100] hover:bg-[#c96100] text-white"
+              }`}
             >
-              Sign Up
+              {isSignupLoading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <svg
+                    className="animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 01-8 8z"
+                    />
+                  </svg>
+                  Signing up...
+                </div>
+              ) : (
+                "Sign Up"
+              )}
             </button>
 
             {/* Divider */}
@@ -184,10 +223,43 @@ export default function Signup() {
             {/* Google Signup */}
             <button
               onClick={googleLogin}
-              className="w-[300px] h-[50px] flex items-center justify-center gap-3 rounded-2xl bg-white text-[#333] font-semibold shadow-md hover:shadow-lg transition duration-300 border border-gray-300 cursor-pointer"
+              disabled={isGoogleLoading}
+              className={`w-[300px] h-[50px] flex items-center justify-center gap-3 rounded-2xl font-semibold shadow-md transition duration-300 border ${
+                isGoogleLoading
+                  ? "bg-gray-200 text-gray-500 border-gray-300 cursor-not-allowed"
+                  : "bg-white text-[#333] hover:shadow-lg border-gray-300"
+              }`}
             >
-              <FcGoogle size={22} />
-              Sign up with Google
+              {isGoogleLoading ? (
+                <>
+                  <svg
+                    className="animate-spin h-5 w-5 text-[#e17100]"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 01-8 8z"
+                    />
+                  </svg>
+                  Signing up...
+                </>
+              ) : (
+                <>
+                  <FcGoogle size={22} />
+                  Sign up with Google
+                </>
+              )}
             </button>
 
             {/* Footer */}

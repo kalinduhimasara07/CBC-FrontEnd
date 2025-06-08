@@ -9,13 +9,14 @@ import { useGoogleLogin } from "@react-oauth/google";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || "/";
   const cart = location.state?.cart || [];
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => {
-      console.log(tokenResponse.access_token);
+      setIsLoading(true); // Start loading
       axios
         .post(import.meta.env.VITE_BACKEND_URL + "/api/users/google", {
           token: tokenResponse.access_token,
@@ -58,11 +59,15 @@ export default function Login() {
               marginTop: "80px",
             },
           });
+        })
+        .finally(() => {
+          setIsLoading(false); // Stop loading
         });
     },
   });
 
   async function handleLogin() {
+    setIsLoading(true);
     try {
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/users/login",
@@ -100,6 +105,8 @@ export default function Login() {
           marginTop: "80px",
         },
       });
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -147,9 +154,40 @@ export default function Login() {
 
             <button
               onClick={handleLogin}
-              className="w-[300px] h-[50px] rounded-2xl bg-[#e17100] hover:bg-[#c96100] text-white font-bold shadow-lg transition duration-300"
+              disabled={isLoading}
+              className={`w-[300px] h-[50px] rounded-2xl font-bold shadow-lg transition duration-300 ${
+                isLoading
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-[#e17100] hover:bg-[#c96100] text-white"
+              }`}
             >
-              Login
+              {isLoading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <svg
+                    className="animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 01-8 8z"
+                    />
+                  </svg>
+                  Logging in...
+                </div>
+              ) : (
+                "Login"
+              )}
             </button>
 
             {/* Divider */}
@@ -161,11 +199,46 @@ export default function Login() {
 
             <button
               onClick={googleLogin}
-              className="w-[300px] h-[50px] flex items-center justify-center gap-3 rounded-2xl bg-white text-[#333] font-semibold shadow-md hover:shadow-lg transition duration-300 border border-gray-300 cursor-pointer"
+              disabled={isLoading}
+              className={`w-[300px] h-[50px] flex items-center justify-center gap-3 rounded-2xl font-semibold transition duration-300 border border-gray-300 ${
+                isLoading
+                  ? "bg-gray-200 cursor-not-allowed text-gray-500"
+                  : "bg-white text-[#333] hover:shadow-lg shadow-md cursor-pointer"
+              }`}
             >
               <FcGoogle size={22} />
-              Sign in with Google
+              {isLoading ? "Please wait..." : "Sign in with Google"}
             </button>
+
+            {isLoading && (
+              <div className="fixed inset-0 bg-white/80 flex items-center justify-center z-50 backdrop-blur-sm">
+                <div className="flex flex-col items-center">
+                  <svg
+                    className="animate-spin h-10 w-10 text-[#e17100]"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 01-8 8z"
+                    />
+                  </svg>
+                  <p className="mt-4 text-[#e17100] font-semibold text-lg">
+                    Signing you in...
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* Footer */}
             <p className="text-sm text-gray-700 text-center font-medium">
