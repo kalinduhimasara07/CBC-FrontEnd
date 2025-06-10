@@ -10,6 +10,7 @@ import {
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
+import toast from "react-hot-toast";
 
 const AdminHomePage = () => {
   const currentDate = new Date().toLocaleDateString("en-US", {
@@ -28,7 +29,8 @@ const AdminHomePage = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("You are not logged in. Please log in to access this page.");
+      // alert("You are not logged in. Please log in to access this page.");
+      toast.error("You are not logged in. Please log in to access this page.");
       navigate("/login");
       return;
     }
@@ -53,17 +55,8 @@ const AdminHomePage = () => {
       .catch((err) => {
         console.error("Error fetching orders:", err);
       });
-  }, []);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("You are not logged in. Please log in to access this page.");
-      window.location.href = "/login";
-      return;
-    }
-
-    axios
+      axios
       .get(import.meta.env.VITE_BACKEND_URL + "/api/product", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -75,17 +68,8 @@ const AdminHomePage = () => {
       .catch((err) => {
         console.error("Error fetching orders:", err);
       });
-  }, []);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("You are not logged in. Please log in to access this page.");
-      window.location.href = "/login";
-      return;
-    }
-
-    axios
+      axios
       .get(import.meta.env.VITE_BACKEND_URL + "/api/users", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -97,7 +81,31 @@ const AdminHomePage = () => {
       .catch((err) => {
         console.error("Error fetching users:", err);
       });
+
+
   }, []);
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (!token) {
+  //     // alert("You are not logged in. Please log in to access this page.");
+  //     window.location.href = "/login";
+  //     return;
+  //   }
+
+    
+  // }, []);
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (!token) {
+  //     // alert("You are not logged in. Please log in to access this page.");
+  //     window.location.href = "/login";
+  //     return;
+  //   }
+
+    
+  // }, []);
 
   const stats = [
     {
@@ -107,7 +115,12 @@ const AdminHomePage = () => {
       change: "+12%",
     },
     { title: "Products", value: products.length, icon: Package, change: "+3%" },
-    { title: "Customers", value: users.filter((u) => u.role === "customer").length, icon: User, change: "+8%" },
+    {
+      title: "Customers",
+      value: users.filter((u) => u.role === "customer").length,
+      icon: User,
+      change: "+8%",
+    },
     {
       title: "Revenue",
       value:
@@ -250,18 +263,23 @@ const AdminHomePage = () => {
           <div className="space-y-4">
             {latestOrder && (
               <div className="flex items-center space-x-4 p-4 bg-orange-50 rounded-lg">
-              <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-              <div>
-                <p className="text-gray-900 font-medium">New order received</p>
-                <p className="text-gray-600 text-sm">
-              Order #{latestOrder.orderId} - ${latestOrder.grandTotal.toFixed(2)}
-            </p>
+                <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                <div>
+                  <p className="text-gray-900 font-medium">
+                    New order received
+                  </p>
+                  <p className="text-gray-600 text-sm">
+                    Order #{latestOrder.orderId} - $
+                    {latestOrder.grandTotal.toFixed(2)}
+                  </p>
+                </div>
+                <div className="ml-auto text-sm text-gray-500">
+                  {formatDistanceToNow(new Date(latestOrder.date), {
+                    addSuffix: true,
+                  })}
+                </div>
               </div>
-              <div className="ml-auto text-sm text-gray-500">
-            {formatDistanceToNow(new Date(latestOrder.date), { addSuffix: true })}
-          </div>
-            </div>
-              )}
+            )}
 
             {/* <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
               <div className="w-2 h-2 bg-gray-400 rounded-full"></div>

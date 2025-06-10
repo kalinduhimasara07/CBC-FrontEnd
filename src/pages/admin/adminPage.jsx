@@ -24,11 +24,45 @@ import AddUserPage from "./addUserPage";
 import ReviewPage from "./reviewPage";
 import AdminHomePage from "./adminHome";
 import AdminProductsPage from "./testAdminProduct";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Loading from "../../components/loading";
+import { div } from "framer-motion/client";
+import toast from "react-hot-toast";
 
 export default function AdminPage() {
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname;
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error("Please login first");
+      navigate("/login");
+    }
+    axios
+      .get(import.meta.env.VITE_BACKEND_URL + "/api/users/user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.role !== "admin") {
+          toast.error("You are not authorized to access this page");
+          navigate("/login");
+        } else {
+          setUser(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        // toast.error("Error fetching user details");
+        navigate("/login");
+      });
+  }, []);
 
   function getClass(pathname) {
     if (path.includes(pathname)) {
@@ -43,110 +77,116 @@ export default function AdminPage() {
   };
   return (
     <>
-      <div className="w-full h-screen flex">
-        <div className="h-full w-[20%] bg-[#e17100] flex flex-col justify-between pl-7 py-6 text-white text-lg font-semibold">
-          {/* Top section: Navigation */}
-          <div className="flex flex-col items-start gap-6">
-            <button
-              onClick={() => navigate(-1)}
-              className="inline-flex items-center px-5 py-2.5 bg-white text-gray-700 border border-gray-300 rounded-xl shadow-md hover:bg-gray-100 hover:shadow-lg transition duration-300 ease-in-out"
-            >
-              <svg
-                className="w-5 h-5 mr-2"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
+      {user === null ? (
+        <div className="h-screen ">
+          <Loading />
+        </div>
+      ) : (
+        <div className="w-full h-screen flex">
+          <div className="h-full w-[20%] bg-[#e17100] flex flex-col justify-between pl-7 py-6 text-white text-lg font-semibold">
+            {/* Top section: Navigation */}
+            <div className="flex flex-col items-start gap-6">
+              <button
+                onClick={() => navigate(-1)}
+                className="inline-flex items-center px-5 py-2.5 bg-white text-gray-700 border border-gray-300 rounded-xl shadow-md hover:bg-gray-100 hover:shadow-lg transition duration-300 ease-in-out"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-              Go Back
-            </button>
+                <svg
+                  className="w-5 h-5 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+                Go Back
+              </button>
 
-            <Link
-              to="/admin/home"
-              className={`flex items-center gap-3 mt-6 ${getClass(
-                "/admin/home"
-              )}`}
-            >
-              <IoHome /> Home
-            </Link>
+              <Link
+                to="/admin/home"
+                className={`flex items-center gap-3 mt-6 ${getClass(
+                  "/admin/home"
+                )}`}
+              >
+                <IoHome /> Home
+              </Link>
 
-            <Link
-              to="/admin/product"
-              className={`flex items-center gap-3 ${getClass(
-                "/admin/product"
-              )}`}
-            >
-              <FaBoxOpen /> Products
-            </Link>
+              <Link
+                to="/admin/product"
+                className={`flex items-center gap-3 ${getClass(
+                  "/admin/product"
+                )}`}
+              >
+                <FaBoxOpen /> Products
+              </Link>
 
-            <Link
-              to="/admin/users"
-              className={`flex items-center gap-3 ${getClass("/admin/users")}`}
-            >
-              <FaUsers /> Users
-            </Link>
+              <Link
+                to="/admin/users"
+                className={`flex items-center gap-3 ${getClass(
+                  "/admin/users"
+                )}`}
+              >
+                <FaUsers /> Users
+              </Link>
 
-            <Link
-              to="/admin/order"
-              className={`flex items-center gap-3 ${getClass("/admin/order")}`}
-            >
-              <FaClipboardList /> Orders
-            </Link>
+              <Link
+                to="/admin/order"
+                className={`flex items-center gap-3 ${getClass(
+                  "/admin/order"
+                )}`}
+              >
+                <FaClipboardList /> Orders
+              </Link>
 
-            <Link
-              to="/admin/category"
-              className={`flex items-center gap-3 ${getClass(
-                "/admin/category"
-              )}`}
-            >
-              <MdOutlineRateReview /> Reviews
-            </Link>
+              <Link
+                to="/admin/category"
+                className={`flex items-center gap-3 ${getClass(
+                  "/admin/category"
+                )}`}
+              >
+                <MdOutlineRateReview /> Reviews
+              </Link>
 
-            <Link
-              to="/admin/adduser"
-              className={`flex items-center gap-3 ${getClass(
-                "/admin/adduser"
-              )}`}
-            >
-              <FaUser /> Add User
-            </Link>
+              <Link
+                to="/admin/adduser"
+                className={`flex items-center gap-3 ${getClass(
+                  "/admin/adduser"
+                )}`}
+              >
+                <FaUser /> Add User
+              </Link>
+            </div>
+
+            {/* Bottom section: Admin info + Logout */}
+            <div className="flex flex-col items-start gap-4 border-t border-white pt-6">
+              <div className="text-sm text-white/80">👤 Admin</div>
+              <button
+                // Replace this with your logout logic
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  navigate("/"); // Refresh the page to reset all state
+                }}
+                className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-xl shadow-md transition duration-300"
+              >
+                Logout
+              </button>
+            </div>
           </div>
 
-          {/* Bottom section: Admin info + Logout */}
-          <div className="flex flex-col items-start gap-4 border-t border-white pt-6">
-            <div className="text-sm text-white/80">👤 Admin</div>
-            <button
-              // Replace this with your logout logic
-              onClick={() => {
-                localStorage.removeItem("token");
-                navigate("/"); // Refresh the page to reset all state
-              }}
-              className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-xl shadow-md transition duration-300"
-            >
-              Logout
-            </button>
+          <div className="h-full w-[80%] bg-white">
+            {path === "/admin/home" && <AdminHomePage />}
+            {path === "/admin/product" && <AdminProductsPage />}
+            {path === "/admin/users" && <AdminUsersPage />}
+            {path === "/admin/order" && <AdminOrderPage />}
+            {path === "/admin/category" && <ReviewPage />}
+            {path === "/admin/adduser" && <AddUserPage />}
           </div>
         </div>
-
-        <div className="h-full w-[80%] bg-white">
-          <Routes>
-            <Route path="/product" element={<AdminProductsPage />} />
-            <Route path="/users" element={<AdminUsersPage />} />
-            <Route path="/home" element={<AdminHomePage />} />
-            <Route path="/order" element={<AdminOrdersPage />} />
-            <Route path="/category" element={<ReviewPage />} />
-            <Route path="/add-product" element={<AddProductPage />} />
-            <Route path="/edit-product/" element={<EditProductPage />} />
-            <Route path="/adduser" element={<AddUserPage />} />
-          </Routes>
-        </div>
-      </div>
+      )}
     </>
   );
 }
