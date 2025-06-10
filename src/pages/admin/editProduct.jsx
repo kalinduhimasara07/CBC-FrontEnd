@@ -200,11 +200,14 @@ export default function AddProductPage() {
                   onChange={(e) => setCategory(e.target.value)}
                 >
                   <option value="">Select Category</option>
-                  <option value="electronics">📱 Electronics</option>
-                  <option value="fashion">👗 Fashion</option>
-                  <option value="beauty">💄 Beauty</option>
-                  <option value="home">🏠 Home</option>
-                  <option value="sports">⚽ Sports</option>
+                  <option value="Face Care">Face Care</option>
+                  <option value="Eye Care">Eye Care</option>
+                  <option value="Lip Care">Lip Care</option>
+                  <option value="Body Care">Body Care</option>
+                  <option value="Hair Care">Hair Care</option>
+                  <option value="Makeup">Makeup</option>
+                  <option value="Fragrance">Fragrance</option>
+                  <option value="Sun Care">Sun Care</option>
                 </select>
               </div>
 
