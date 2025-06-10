@@ -14,6 +14,10 @@ export default function LumineeFilterSidebar({ onFilterChange }) {
   });
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [priceInputs, setPriceInputs] = useState({
+    min: 0,
+    max: 50000
+  });
 
   const toggleSection = (section) => {
     setExpandedSections((prev) => ({
@@ -36,6 +40,27 @@ export default function LumineeFilterSidebar({ onFilterChange }) {
     updatedPriceRange[type] = value;
 
     setSelectedFilters({ ...selectedFilters, priceRange: updatedPriceRange });
+    
+    // Update price inputs to match slider
+    if (type === 0) {
+      setPriceInputs(prev => ({ ...prev, min: value }));
+    } else {
+      setPriceInputs(prev => ({ ...prev, max: value }));
+    }
+  };
+
+  const handlePriceInputChange = (type, value) => {
+    const numValue = parseInt(value) || 0;
+    
+    if (type === 'min') {
+      setPriceInputs(prev => ({ ...prev, min: numValue }));
+      const updatedPriceRange = [numValue, selectedFilters.priceRange[1]];
+      setSelectedFilters({ ...selectedFilters, priceRange: updatedPriceRange });
+    } else {
+      setPriceInputs(prev => ({ ...prev, max: numValue }));
+      const updatedPriceRange = [selectedFilters.priceRange[0], numValue];
+      setSelectedFilters({ ...selectedFilters, priceRange: updatedPriceRange });
+    }
   };
 
   const handleSearchChange = (e) => {
@@ -43,8 +68,17 @@ export default function LumineeFilterSidebar({ onFilterChange }) {
   };
 
   const clearAllFilters = () => {
-    setSelectedFilters({ categories: [], priceRange: [0, 50000] });
+    const defaultFilters = { categories: [], priceRange: [0, 50000] };
+    setSelectedFilters(defaultFilters);
     setSearchQuery("");
+    setPriceInputs({ min: 0, max: 50000 });
+    
+    // Automatically apply filters after clearing
+    onFilterChange({
+      categories: [],
+      priceRange: [0, 50000],
+      searchQuery: "",
+    });
   };
 
   const handleApplyFilters = () => {
@@ -71,7 +105,7 @@ export default function LumineeFilterSidebar({ onFilterChange }) {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed left-4 top-4 z-50 bg-white shadow-lg rounded-lg p-3 border hover:shadow-xl transition-shadow"
+        className="fixed left-4 top-25 z-50 bg-white shadow-lg rounded-lg p-3 border hover:shadow-xl transition-shadow"
         style={{ borderColor: "#e17100" }}
       >
         <Filter size={24} style={{ color: "#e17100" }} />
@@ -83,7 +117,7 @@ export default function LumineeFilterSidebar({ onFilterChange }) {
     <div className="xl:w-80 h-auto bg-white shadow-lg flex flex-col overflow-hidden">
       {/* Header */}
       <div
-        className="p-6 border-b border-gray-200"
+        className="p-6 border-b border-gray-200 pt-25"
         style={{ borderBottomColor: "#e17100" }}
       >
         <div className="flex items-center justify-between">
@@ -181,10 +215,45 @@ export default function LumineeFilterSidebar({ onFilterChange }) {
         {expandedSections.priceRange && (
           <div className="px-4 pb-4">
             <div className="space-y-4">
+              {/* Manual Price Input */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs text-gray-500 mb-1 block">
+                    Min Price ($)
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="50000"
+                    value={priceInputs.min}
+                    onChange={(e) => handlePriceInputChange('min', e.target.value)}
+                    className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:ring-1 focus:border-transparent"
+                    style={{ focusRingColor: "#e17100" }}
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 mb-1 block">
+                    Max Price ($)
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="50000"
+                    value={priceInputs.max}
+                    onChange={(e) => handlePriceInputChange('max', e.target.value)}
+                    className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:ring-1 focus:border-transparent"
+                    style={{ focusRingColor: "#e17100" }}
+                  />
+                </div>
+              </div>
+
+              {/* Range Display */}
               <div className="flex items-center justify-between text-sm text-gray-600">
                 <span>${selectedFilters.priceRange[0]}</span>
                 <span>${selectedFilters.priceRange[1]}</span>
               </div>
+              
+              {/* Range Sliders */}
               <div className="space-y-3">
                 <div>
                   <label className="text-xs text-gray-500 mb-1 block">
