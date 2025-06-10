@@ -32,7 +32,7 @@ export default function Checkout() {
     firstName: "",
     lastName: "",
     name: "",
-    email: "",
+    // email: "",
     phone: "",
     address: "",
     city: "",
@@ -194,13 +194,13 @@ export default function Checkout() {
 
     setShippingInfo(updatedShippingInfo);
 
-    console.log(updatedShippingInfo);
-    console.log("grandTotal: " + grandTotal);
-    console.log("tax: " + tax);
-    console.log("shipping: " + shipping);
-    console.log("subtotal: " + subtotal);
-    console.log(totalItems);
-    console.log(paymentMethod);
+    // console.log(updatedShippingInfo);
+    // console.log("grandTotal: " + grandTotal);
+    // console.log("tax: " + tax);
+    // console.log("shipping: " + shipping);
+    // console.log("subtotal: " + subtotal);
+    // console.log(totalItems);
+    // console.log(paymentMethod);
 
     // if (!validateShipping() || !validatePayment()) {
     //   return; // Stop if validation fails
@@ -232,7 +232,7 @@ export default function Checkout() {
         }
       )
       .then((res) => {
-        console.log("Order placed successfully:", res.data);
+        // console.log("Order placed successfully:", res.data);
         setShowSecondButton(true);
         toast.success("Order placed successfully!", {
           duration: 3000,
@@ -251,7 +251,7 @@ export default function Checkout() {
     const required = [
       "firstName",
       "lastName",
-      "email",
+      // "email",
       "phone",
       "address",
       "city",
@@ -389,7 +389,7 @@ export default function Checkout() {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                  <div>
+                  {/* <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Email
                     </label>
@@ -405,7 +405,7 @@ export default function Checkout() {
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
                       required
                     />
-                  </div>
+                  </div> */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Phone

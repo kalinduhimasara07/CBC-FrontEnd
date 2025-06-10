@@ -3,29 +3,23 @@ import {
   X, 
   ChevronDown, 
   ChevronUp,
-  Star,
-  Filter
+  Filter,
+  Search
 } from 'lucide-react';
 
 export default function LumineeFilterSidebar() {
   const [isOpen, setIsOpen] = useState(true);
   const [expandedSections, setExpandedSections] = useState({
     category: false,
-    brand: false,
-    priceRange: false,
-    skinType: false,
-    rating: false,
-    ingredients: false
+    priceRange: false
   });
 
   const [selectedFilters, setSelectedFilters] = useState({
     categories: [],
-    brands: [],
-    priceRange: [0, 50000],
-    skinTypes: [],
-    rating: 0,
-    ingredients: []
+    priceRange: [0, 50000]
   });
+
+  const [searchQuery, setSearchQuery] = useState('');
 
   const toggleSection = (section) => {
     setExpandedSections(prev => ({
@@ -46,31 +40,14 @@ export default function LumineeFilterSidebar() {
   const clearAllFilters = () => {
     setSelectedFilters({
       categories: [],
-      brands: [],
-      priceRange: [0, 50000],
-      skinTypes: [],
-      rating: 0,
-      ingredients: []
+      priceRange: [0, 50000]
     });
+    setSearchQuery('');
   };
 
   const categories = [
     'Face Care', 'Eye Care', 'Lip Care', 'Body Care', 
     'Hair Care', 'Makeup', 'Fragrance', 'Sun Care'
-  ];
-
-  const brands = [
-    'Lumineé', 'Glow Beauty', 'Pure Essence', 'Radiant Skin', 
-    'Natural Glow', 'Luxury Care', 'Skin Perfect'
-  ];
-
-  const skinTypes = [
-    'Normal', 'Dry', 'Oily', 'Combination', 'Sensitive', 'Mature'
-  ];
-
-  const ingredients = [
-    'Hyaluronic Acid', 'Vitamin C', 'Retinol', 'Niacinamide', 
-    'Salicylic Acid', 'Peptides', 'Ceramides', 'Natural Oils'
   ];
 
   if (!isOpen) {
@@ -113,6 +90,22 @@ export default function LumineeFilterSidebar() {
 
       {/* Filter Content */}
       <div className="flex-1 overflow-y-auto">
+        {/* Search Filter */}
+        <div className="border-b border-gray-100 p-4">
+          <label className="block text-sm font-semibold text-gray-900 mb-3">Search Products</label>
+          <div className="relative">
+            <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <input 
+              type="text"
+              placeholder="Search for products..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent text-sm"
+              style={{ focusRingColor: '#e17100' }}
+            />
+          </div>
+        </div>
+
         {/* Category Filter */}
         <div className="border-b border-gray-100">
           <button 
@@ -134,33 +127,6 @@ export default function LumineeFilterSidebar() {
                     style={{ accentColor: '#e17100' }}
                   />
                   <span className="text-sm text-gray-700">{category}</span>
-                </label>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Brand Filter */}
-        <div className="border-b border-gray-100">
-          <button 
-            onClick={() => toggleSection('brand')}
-            className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors"
-          >
-            <span className="font-semibold text-gray-900">Brand</span>
-            {expandedSections.brand ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-          </button>
-          {expandedSections.brand && (
-            <div className="px-4 pb-4 space-y-3">
-              {brands.map(brand => (
-                <label key={brand} className="flex items-center cursor-pointer">
-                  <input 
-                    type="checkbox"
-                    checked={selectedFilters.brands.includes(brand)}
-                    onChange={() => handleCheckboxChange('brands', brand)}
-                    className="w-4 h-4 rounded border-gray-300 focus:ring-2 mr-3"
-                    style={{ accentColor: '#e17100' }}
-                  />
-                  <span className="text-sm text-gray-700">{brand}</span>
                 </label>
               ))}
             </div>
@@ -220,98 +186,6 @@ export default function LumineeFilterSidebar() {
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-        </div>
-
-        {/* Skin Type Filter */}
-        <div className="border-b border-gray-100">
-          <button 
-            onClick={() => toggleSection('skinType')}
-            className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors"
-          >
-            <span className="font-semibold text-gray-900">Skin Type</span>
-            {expandedSections.skinType ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-          </button>
-          {expandedSections.skinType && (
-            <div className="px-4 pb-4 space-y-3">
-              {skinTypes.map(skinType => (
-                <label key={skinType} className="flex items-center cursor-pointer">
-                  <input 
-                    type="checkbox"
-                    checked={selectedFilters.skinTypes.includes(skinType)}
-                    onChange={() => handleCheckboxChange('skinTypes', skinType)}
-                    className="w-4 h-4 rounded border-gray-300 focus:ring-2 mr-3"
-                    style={{ accentColor: '#e17100' }}
-                  />
-                  <span className="text-sm text-gray-700">{skinType}</span>
-                </label>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Rating Filter */}
-        <div className="border-b border-gray-100">
-          <button 
-            onClick={() => toggleSection('rating')}
-            className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors"
-          >
-            <span className="font-semibold text-gray-900">Customer Rating</span>
-            {expandedSections.rating ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-          </button>
-          {expandedSections.rating && (
-            <div className="px-4 pb-4 space-y-3">
-              {[5, 4, 3, 2, 1].map(rating => (
-                <label key={rating} className="flex items-center cursor-pointer">
-                  <input 
-                    type="radio"
-                    name="rating"
-                    checked={selectedFilters.rating === rating}
-                    onChange={() => setSelectedFilters(prev => ({ ...prev, rating }))}
-                    className="w-4 h-4 mr-3"
-                    style={{ accentColor: '#e17100' }}
-                  />
-                  <div className="flex items-center gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star 
-                        key={i} 
-                        size={16} 
-                        fill={i < rating ? '#e17100' : 'none'}
-                        stroke={i < rating ? '#e17100' : '#e5e7eb'}
-                      />
-                    ))}
-                    <span className="text-sm text-gray-600 ml-2">& Up</span>
-                  </div>
-                </label>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Key Ingredients Filter */}
-        <div className="border-b border-gray-100">
-          <button 
-            onClick={() => toggleSection('ingredients')}
-            className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors"
-          >
-            <span className="font-semibold text-gray-900">Key Ingredients</span>
-            {expandedSections.ingredients ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-          </button>
-          {expandedSections.ingredients && (
-            <div className="px-4 pb-4 space-y-3">
-              {ingredients.map(ingredient => (
-                <label key={ingredient} className="flex items-center cursor-pointer">
-                  <input 
-                    type="checkbox"
-                    checked={selectedFilters.ingredients.includes(ingredient)}
-                    onChange={() => handleCheckboxChange('ingredients', ingredient)}
-                    className="w-4 h-4 rounded border-gray-300 focus:ring-2 mr-3"
-                    style={{ accentColor: '#e17100' }}
-                  />
-                  <span className="text-sm text-gray-700">{ingredient}</span>
-                </label>
-              ))}
             </div>
           )}
         </div>

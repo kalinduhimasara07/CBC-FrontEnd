@@ -536,37 +536,37 @@ export default function AdminOrdersPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 text-center mb-6">
-        <div className="bg-gray-50 rounded-lg p-3">
+        <div className="bg-gray-300 rounded-lg p-3 shadow">
           <div className="text-2xl font-bold text-gray-800">{stats.total}</div>
           <div className="text-sm text-gray-600">Total Orders</div>
         </div>
-        <div className="bg-green-50 rounded-lg p-3">
+        <div className="bg-green-200 rounded-lg p-3">
           <div className="text-2xl font-bold text-green-600">
             {stats.delivered}
           </div>
           <div className="text-sm text-gray-600">Delivered</div>
         </div>
-        <div className="bg-yellow-50 rounded-lg p-3">
+        <div className="bg-yellow-200 rounded-lg p-3">
           <div className="text-2xl font-bold text-yellow-600">
             {stats.pending}
           </div>
           <div className="text-sm text-gray-600">Pending</div>
         </div>
-        <div className="bg-red-50 rounded-lg p-3">
+        <div className="bg-red-200 rounded-lg p-3">
           <div className="text-2xl font-bold text-red-600">
             {stats.cancelled}
           </div>
           <div className="text-sm text-gray-600">Cancelled</div>
         </div>
 
-        <div className="bg-blue-50 rounded-lg p-3">
+        <div className="bg-blue-100 rounded-lg p-3">
           <div className="text-2xl font-bold text-blue-600">
             {stats.shipped}
           </div>
           <div className="text-sm text-gray-600">Shipped</div>
         </div>
 
-        <div className="bg-blue-50 rounded-lg p-3">
+        <div className="bg-blue-300 rounded-lg p-3">
           <div className="text-xl text-gray-600">Total</div>
           <div className="text-2xl font-bold text-blue-600">
             ${stats.totalSpent.toFixed(2)}
