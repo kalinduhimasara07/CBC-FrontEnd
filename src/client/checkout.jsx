@@ -288,7 +288,11 @@ export default function Checkout() {
     return true;
   };
 
-  if (cart.length === 0) {
+  if (token == null) {
+    <FloatingNotice cart={cart} />;
+  }
+
+  function emptyCart() {
     return (
       <div className="w-full flex flex-col justify-center items-center min-h-screen">
         <div className="text-center">
@@ -298,8 +302,43 @@ export default function Checkout() {
           <p className="text-gray-600 mb-6">
             Add some items to your cart before checking out
           </p>
-          <button className="bg-[#e17100] hover:bg-[#c5610a] text-white font-semibold py-3 px-6 rounded-lg">
+          <button
+            onClick={() => navigate("/products")}
+            className="bg-[#e17100] hover:bg-[#c5610a] text-white font-semibold py-3 px-6 rounded-lg"
+          >
             Continue Shopping
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (token == null) {
+    return <FloatingNotice cart={cart} />;
+  }
+
+  if (cart.length === 0) {
+    // setCart(localStorage.getItem("cart"));
+    return (
+      <div className="w-full flex flex-col justify-center items-center min-h-screen">
+        <div className="text-center flex flex-col items-center">
+          <h1 className="text-2xl font-bold text-gray-800 mb-4">
+            Your cart is empty
+          </h1>
+          <p className="text-gray-600 mb-6">
+            Add some items to your cart before checking out
+          </p>
+          <button
+            onClick={() => navigate("/products")}
+            className="bg-[#e17100] hover:bg-[#c5610a] text-white font-semibold py-3 px-6 rounded-lg"
+          >
+            Continue Shopping
+          </button>
+          <button
+            onClick={() => navigate("/cart")}
+            className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg m-2"
+          >
+            Go to Cart
           </button>
         </div>
       </div>
@@ -310,6 +349,24 @@ export default function Checkout() {
     <div className="w-full">
       <div className="w-full flex flex-col justify-center items-center bg-gray-50 ">
         {!token && <FloatingNotice cart={cart} />}
+        {/* {cart.length === 0 && (
+          <div className="w-full flex flex-col justify-center items-center min-h-screen">
+            <div className="text-center">
+              <h1 className="text-2xl font-bold text-gray-800 mb-4">
+                Your cart is empty
+              </h1>
+              <p className="text-gray-600 mb-6">
+                Add some items to your cart before checking out
+              </p>
+              <button
+                onClick={() => navigate("/products")}
+                className="bg-[#e17100] hover:bg-[#c5610a] text-white font-semibold py-3 px-6 rounded-lg"
+              >
+                Continue Shopping
+              </button>
+            </div>
+          </div>
+        )} */}
         <div className="mt-[100px] w-[95%] lg:w-[90%] max-w-7xl mb-[100px] flex flex-col lg:flex-row gap-6 lg:gap-8">
           {/* Checkout Form - Left Side */}
           <div className="flex-1 bg-white rounded-lg shadow-lg p-4 lg:p-6">

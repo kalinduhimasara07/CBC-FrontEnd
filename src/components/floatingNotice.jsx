@@ -6,7 +6,7 @@ export default function FloatingNotice({ cart }) {
   const location = useLocation();
   const Cart = cart || [];
 
-  console.log("FloatingNotice cart:", cart);
+  // console.log("FloatingNotice cart:", cart);
 
   function handleLogin() {
     navigate("/login", { state: { from: "checkout", cart: Cart } });
@@ -42,19 +42,22 @@ export default function FloatingNotice({ cart }) {
         <div className="space-y-3">
           <button
             onClick={handleLogin}
-            className="w-full bg-[#e17100] hover:bg-[#c5610a] text-white py-3 px-6 rounded-lg font-semibold transition-colors"
+            className="w-full bg-[#e17100] hover:bg-[#c5610a] text-white py-3 px-6 rounded-lg font-semibold transition-colors cursor-pointer"
           >
             Login to Account
           </button>
 
           <button
             onClick={handleCreateAccount}
-            className="w-full bg-white/80 hover:bg-white border border-gray-300 text-gray-700 py-3 px-6 rounded-lg font-semibold transition-colors"
+            className="w-full bg-white/80 hover:bg-white border border-gray-300 text-gray-700 py-3 px-6 rounded-lg font-semibold transition-colors cursor-pointer"
           >
             Create New Account
           </button>
 
-          <button className="w-full text-gray-500 hover:text-gray-700 py-2 text-sm font-medium transition-colors">
+          <button
+            onClick={() => navigate("/products")}
+            className="w-full text-gray-500 hover:text-gray-700 py-2 text-sm font-medium transition-colors cursor-pointer"
+          >
             Continue Shopping
           </button>
         </div>
