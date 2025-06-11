@@ -7,6 +7,7 @@ import {
   Settings,
   LogOut,
   PackageSearch,
+  Star,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -44,7 +45,7 @@ export default function Header() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-  if (!token) return; // 🚫 Don't call API if not logged in
+    if (!token) return; // 🚫 Don't call API if not logged in
     axios
       .get(import.meta.env.VITE_BACKEND_URL + "/api/users/user", {
         headers: {
@@ -213,11 +214,11 @@ export default function Header() {
                 </button>
 
                 <button
-                  onClick={() => handleNavigation("/settings")}
+                  onClick={() => handleNavigation("/review")}
                   className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
                 >
-                  <Settings className="w-4 h-4" />
-                  Settings
+                  <Star className="w-4 h-4" />
+                  Add a Review
                 </button>
 
                 <hr className="my-1" />

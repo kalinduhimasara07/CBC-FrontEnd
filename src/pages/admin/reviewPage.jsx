@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Loading from "../../components/loading";
 
 export default function ReviewPage() {
   const [reviews, setReviews] = useState([]);
@@ -23,6 +24,32 @@ export default function ReviewPage() {
         setIsLoading(false);
       });
   }, []);
+
+  const handleDelete = async (reviewId) => {
+    if (!window.confirm("Are you sure you want to delete this review?")) return;
+
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/siteReviews/${reviewId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        // Remove the deleted review from state
+        setReviews((prevReviews) =>
+          prevReviews.filter((review) => review._id !== reviewId)
+        );
+      } else {
+        console.error("Failed to delete the review");
+      }
+    } catch (error) {
+      console.error("Error deleting review:", error);
+    }
+  };
 
   // Handle approve review
   const handleApprove = async (reviewId, currentStatus) => {
@@ -74,10 +101,10 @@ export default function ReviewPage() {
         <h2 className="text-3xl font-bold mb-4 text-center">All Reviews</h2>
 
         {isLoading ? (
-          <div>Loading...</div>
+          <div><Loading /></div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full table-auto border-collapse border border-gray-200">
+          <div className="overflow-x-auto overflow-y-scroll">
+            <table className="min-w-[800px] table-auto border-collapse border border-gray-200">
               <thead>
                 <tr>
                   <th className="py-2 px-4 border-b">#</th>
@@ -102,8 +129,10 @@ export default function ReviewPage() {
                           () => handleApprove(review._id, review.isApproved) // Pass the current approval status
                         }
                         className={`${
-                          review.isApproved ? "bg-gray-500" : "bg-green-500 hover:bg-green-600"
-                        } text-white px-4 py-2 rounded-lg cursor-pointer mr-2`}
+                          review.isApproved
+                            ? "bg-gray-500"
+                            : "bg-green-500 hover:bg-green-600"
+                        } text-white w-30 px-4 py-2 rounded-lg cursor-pointer mr-2`}
                       >
                         {review.isApproved ? "Approved" : "Approve"}
                       </button>
@@ -112,6 +141,12 @@ export default function ReviewPage() {
                         className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-600"
                       >
                         View Details
+                      </button>
+                      <button
+                        onClick={() => handleDelete(review._id)}
+                        className="ml-2 bg-red-600 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-red-700"
+                      >
+                        Delete
                       </button>
                     </td>
                   </tr>
