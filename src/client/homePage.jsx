@@ -353,7 +353,7 @@ export default function Homepage() {
         <CardCarousel />
 
         {/* Testimonials Section */}
-        <div className="py-16 lg:py-20">
+        {/* <div className="py-16 lg:py-20">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
@@ -405,7 +405,7 @@ export default function Homepage() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <CosmeticReviewsComponent/>
 

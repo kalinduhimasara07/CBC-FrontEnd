@@ -132,7 +132,7 @@ const CosmeticReviewsComponent = () => {
               </div>
 
               {/* Review Content */}
-              <div className="flex-1 text-center md:text-left">
+              <div className="flex-1 text-center md:text-left h-60">
                 <div className="flex items-center justify-center md:justify-start gap-1 mb-4">
                   {renderStars(reviews[currentReview]?.rating)}{" "}
                   {/* Using optional chaining */}
@@ -148,41 +148,14 @@ const CosmeticReviewsComponent = () => {
                     {reviews[currentReview]?.name || "Anonymous"}{" "}
                     {/* Fallback if name is undefined */}
                   </h4>
-                  <p className="text-[#e17100] font-medium">
-                    {reviews[currentReview]?.product || "Unknown Product"}{" "}
-                    {/* Fallback for product name */}
-                  </p>
+
                   <p className="text-gray-500 text-sm">
                     {formatDate(reviews[currentReview]?.date) || "Unknown Date"}{" "}
                     {/* Fallback if date is undefined */}
                   </p>
                 </div>
               </div>
-              {/* <div className="flex-1 text-center md:text-left">
-                <div className="flex items-center justify-center md:justify-start gap-1 mb-4">
-                  {reviews[currentReview] && reviews[currentReview].rating ? (
-                    renderStars(reviews[currentReview].rating) // Only render stars if review is available
-                  ) : (
-                    <div className="text-gray-400">No Rating</div> // Optional fallback if rating is missing
-                  )}
-                </div>
-
-                <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-6">
-                  "{reviews[currentReview].comment}"
-                </p>
-
-                <div className="space-y-2">
-                  <h4 className="text-xl font-semibold text-gray-800">
-                    {reviews[currentReview].name}
-                  </h4>
-                  <p className="text-[#e17100] font-medium">
-                    {reviews[currentReview].product}
-                  </p>
-                  <p className="text-gray-500 text-sm">
-                    {formatDate(reviews[currentReview].date)}
-                  </p>
-                </div>
-              </div> */}
+              
             </div>
           </div>
 
@@ -219,7 +192,7 @@ const CosmeticReviewsComponent = () => {
 
         {/* Review Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reviews.slice(0, 6).map((review, index) => (
+          {reviews.slice(0, 3).map((review, index) => (
             <div
               key={index}
               className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer border border-orange-100 hover:border-[#e17100]/30"

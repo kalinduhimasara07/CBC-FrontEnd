@@ -79,43 +79,43 @@ export default function ProfilePage() {
   };
 
   const handleSave = async () => {
-  if (!formData._id) {
-    console.error("User ID is missing");
-    return;
-  }
-
-  try {
-    let imageUrl = formData.img;
-
-    // Upload only if a new image was selected
-    if (selectedImage) {
-      imageUrl = await mediaUpload(selectedImage);
+    if (!formData._id) {
+      console.error("User ID is missing");
+      return;
     }
 
-    // Update user data
-    await axios.put(
-      `${import.meta.env.VITE_BACKEND_URL}/api/users/${formData._id}`,
-      { ...formData, img: imageUrl },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    try {
+      let imageUrl = formData.img;
+
+      // Upload only if a new image was selected
+      if (selectedImage) {
+        imageUrl = await mediaUpload(selectedImage);
       }
-    );
 
-    setIsEditing(false);
-    setSelectedImage(null);
-    setFormData((prev) => ({
-      ...prev,
-      img: imageUrl,
-    }));
+      // Update user data
+      await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/${formData._id}`,
+        { ...formData, img: imageUrl },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    // Optional: reload from server if you want fully fresh data
-    // Or just update state locally
-  } catch (err) {
-    console.error("Error during save:", err);
-  }
-};
+      setIsEditing(false);
+      setSelectedImage(null);
+      setFormData((prev) => ({
+        ...prev,
+        img: imageUrl,
+      }));
+
+      // Optional: reload from server if you want fully fresh data
+      // Or just update state locally
+    } catch (err) {
+      console.error("Error during save:", err);
+    }
+  };
 
   const handleCancel = () => {
     // Reset form data or fetch from server
@@ -124,11 +124,11 @@ export default function ProfilePage() {
 
   return (
     <div className="w-full">
-      <div className="md:h-[calc(100vh-80px)] bg-gray-50 pt-[80px] flex items-center justify-center">
-        <div className="max-w-6xl mx-auto p-4 md:p-6">
+      <div className=" bg-gray-100 pt-[80px] flex items-center justify-center">
+        <div className="max-w-6xl mx-auto p-4 md:p-6  pt-[80px]">
           {/* Profile Header */}
           {/* Modern Profile Header */}
-          <div className="relative bg-gradient-to-br from-amber-600 to-yellow-400 h-48 md:h-64 rounded-2xl shadow-lg overflow-hidden mb-6">
+          <div className="relative bg-gradient-to-br from-amber-600 to-yellow-400 pt-[50px] h-48 md:h-64 rounded-2xl shadow-lg overflow-hidden mb-6">
             {/* Cover Overlay */}
             <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" />
 
@@ -138,10 +138,11 @@ export default function ProfilePage() {
               <div className="flex items-center gap-4 -mt-16 md:-mt-20">
                 <div className="relative">
                   <img
-                    src={formData.img || "/default-avatar.png"}
-                    alt="Profile"
+                    src={formData.img || "/user.png"}
+                    alt=""
                     className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white shadow-md object-cover"
                   />
+                  {console.log(formData.img)}
                   <input
                     type="file"
                     accept="image/*"
