@@ -103,8 +103,8 @@ export default function ReviewPage() {
         {isLoading ? (
           <div><Loading /></div>
         ) : (
-          <div className="overflow-x-auto overflow-y-scroll">
-            <table className="min-w-[800px] table-auto border-collapse border border-gray-200">
+          <div className="flex flex-col overflow-x-auto overflow-y-scroll">
+            <table className="min-w-[800px] table-auto border-collapse border border-gray-200 overflow-x-auto overflow-y-scroll">
               <thead>
                 <tr>
                   <th className="py-2 px-4 border-b">#</th>

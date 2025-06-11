@@ -18,8 +18,13 @@ const CosmeticReviewsComponent = () => {
 
   useEffect(() => {
     if (isLoading) {
+      const token = localStorage.getItem("token");
+
       axios
-        .get(import.meta.env.VITE_BACKEND_URL + "/api/siteReviews") // This should return only approved reviews for non-admin users
+        .get(import.meta.env.VITE_BACKEND_URL + "/api/siteReviews", {
+          headers: token ? { Authorization: `Bearer ${token}` } : {}, // no headers if no token
+        })
+
         .then((res) => {
           setReviews(res.data); // Store the filtered reviews (approved reviews only)
           // console.log(res.data); // You can remove this console log in production
@@ -32,15 +37,23 @@ const CosmeticReviewsComponent = () => {
     }
   }, [isLoading]);
 
-  useEffect(() => {
-    if (!isAutoPlaying) return;
+  // useEffect(() => {
+  //   if (!isAutoPlaying) return;
 
+  //   const interval = setInterval(() => {
+  //     setCurrentReview((prev) => (prev + 1) % reviews.length);
+  //   }, 6000);
+
+  //   return () => clearInterval(interval);
+  // }, [isAutoPlaying, reviews.length]);
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setCurrentReview((prev) => (prev + 1) % reviews.length);
-    }, 6000);
+    }, 4000); // Changes every 5 seconds
 
     return () => clearInterval(interval);
-  }, [isAutoPlaying, reviews.length]);
+  }, [reviews.length]);
 
   const nextReview = () => {
     setIsAutoPlaying(false);
@@ -109,72 +122,79 @@ const CosmeticReviewsComponent = () => {
           </div>
         </div>
 
-        {/* Featured Review */}
+        {/* Featured Review - Auto-changing with center alignment */}
         <div className="relative mb-16">
-          <div className="bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-orange-100">
-            <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="bg-gradient-to-br from-white via-orange-50/30 to-white rounded-3xl p-8 md:p-12 shadow-2xl border border-orange-100 backdrop-blur-sm">
+            <div className="flex flex-col items-center gap-8 text-center">
               {/* Customer Image */}
               <div className="flex-shrink-0">
-                <div className="relative">
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#e17100] to-[#ff8c42] rounded-full blur-lg opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
                   <img
                     src={
                       reviews[currentReview]?.profileImg ||
                       "https://avatar.iran.liara.run/public/boy?username=Ash"
-                    } // Ensure `reviews[currentReview]` is defined
-                    alt={reviews[currentReview]?.name || "Anonymous"} // Fallback for name if not defined
-                    className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-[#e17100]/20"
+                    }
+                    alt={reviews[currentReview]?.name || "Anonymous"}
+                    className="relative w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-white shadow-xl ring-2 ring-[#e17100]/20 group-hover:scale-105 transition-transform duration-300"
                   />
 
-                  <div className="absolute -bottom-2 -right-2 bg-[#e17100] rounded-full p-2">
-                    <Heart className="w-4 h-4 text-white fill-current" />
+                  <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-[#e17100] to-[#ff8c42] rounded-full p-3 shadow-lg border-2 border-white">
+                    <Heart className="w-4 h-4 text-white fill-current animate-pulse" />
                   </div>
                 </div>
               </div>
 
               {/* Review Content */}
-              <div className="flex-1 text-center md:text-left h-60">
-                <div className="flex items-center justify-center md:justify-start gap-1 mb-4">
-                  {renderStars(reviews[currentReview]?.rating)}{" "}
-                  {/* Using optional chaining */}
+              <div className="flex-1 text-center min-h-[240px] flex flex-col justify-center">
+                <div className="flex items-center justify-center gap-1 mb-6">
+                  <div className="flex gap-1 p-2 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg">
+                    {renderStars(reviews[currentReview]?.rating)}
+                  </div>
                 </div>
 
-                <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-6">
-                  "{reviews[currentReview]?.comment || "No comment available"}"{" "}
-                  {/* Using optional chaining */}
-                </p>
+                <div className="relative mb-8">
+                  <div className="absolute -top-2 -left-2 text-4xl text-[#e17100]/20 font-serif">
+                    "
+                  </div>
+                  <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-medium italic px-4">
+                    {reviews[currentReview]?.comment || "No comment available"}
+                  </p>
+                  <div className="absolute -bottom-2 -right-2 text-4xl text-[#e17100]/20 font-serif rotate-180">
+                    "
+                  </div>
+                </div>
 
-                <div className="space-y-2">
-                  <h4 className="text-xl font-semibold text-gray-800">
-                    {reviews[currentReview]?.name || "Anonymous"}{" "}
-                    {/* Fallback if name is undefined */}
+                <div className="space-y-3">
+                  <div className="h-px bg-gradient-to-r from-transparent via-[#e17100]/30 to-transparent"></div>
+                  <h4 className="text-xl font-bold text-gray-800 tracking-wide">
+                    {reviews[currentReview]?.name || "Anonymous"}
                   </h4>
-
-                  <p className="text-gray-500 text-sm">
-                    {formatDate(reviews[currentReview]?.date) || "Unknown Date"}{" "}
-                    {/* Fallback if date is undefined */}
+                  <p className="text-gray-500 text-sm font-medium uppercase tracking-wider">
+                    {formatDate(reviews[currentReview]?.date) || "Unknown Date"}
                   </p>
                 </div>
               </div>
-              
             </div>
           </div>
 
-          {/* Navigation Arrows */}
+          {/* Navigation Arrows - Enhanced */}
           <button
             onClick={prevReview}
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-[#e17100] hover:bg-[#c5640e] rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 shadow-lg"
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-gradient-to-r from-[#e17100] to-[#ff8c42] hover:from-[#c5640e] hover:to-[#e17100] rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 shadow-xl border-2 border-white/20 backdrop-blur-sm group"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-6 h-6 group-hover:translate-x-[-2px] transition-transform duration-200" />
           </button>
 
           <button
             onClick={nextReview}
-            className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-[#e17100] hover:bg-[#c5640e] rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 shadow-lg"
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-gradient-to-r from-[#e17100] to-[#ff8c42] hover:from-[#c5640e] hover:to-[#e17100] rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 shadow-xl border-2 border-white/20 backdrop-blur-sm group"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-6 h-6 group-hover:translate-x-[2px] transition-transform duration-200" />
           </button>
         </div>
 
+        {/* Dots Indicator - Enhanced */}
         {/* Dots Indicator */}
         <div className="flex justify-center gap-3 mb-16">
           {reviews.map((_, index) => (
@@ -202,7 +222,7 @@ const CosmeticReviewsComponent = () => {
               <div className="flex items-center gap-4 mb-4">
                 <img
                   src={
-                    reviews[currentReview].profileImg ||
+                    review.profileImg ||
                     "https://avatar.iran.liara.run/public/boy?username=Ash"
                   } // Fallback image if profileImg is empty
                   alt={reviews[currentReview].name}
