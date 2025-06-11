@@ -5,7 +5,6 @@ import { Star, MessageSquare } from "lucide-react";
 import mediaUpload from "../utils/mediaUpload";
 import Footer from "../components/footer";
 
-
 const SiteReviewsPage = () => {
   const [newReview, setNewReview] = useState({
     name: "",
@@ -60,7 +59,12 @@ const SiteReviewsPage = () => {
         setIsSubmitting(false);
       })
       .catch((err) => {
-        toast.error("Error submitting review");
+        const errorMessage =
+          err?.response?.data?.message || // Common for Axios
+          err?.message || // Fallback for generic errors
+          "Error submitting review"; // Final fallback message
+
+        toast.error(errorMessage);
         setIsSubmitting(false);
       });
   };
@@ -201,7 +205,7 @@ const SiteReviewsPage = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

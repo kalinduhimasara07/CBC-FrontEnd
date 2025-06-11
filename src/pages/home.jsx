@@ -14,8 +14,8 @@ import Checkout from "../client/checkout";
 import OrderView from "../client/orderView";
 import AllOrdersView from "../client/orderView";
 import ProfilePage from "../client/profilePage";
-import CosmeticReviewsComponent from "../components/reviews";
 import SiteReviewsPage from "../client/addReviewPage";
+
 
 export default function HomePage() {
   return (

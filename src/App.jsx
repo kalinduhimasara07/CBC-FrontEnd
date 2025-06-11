@@ -5,7 +5,6 @@ import HomePage from "./pages/home";
 import Signup from "./pages/signup";
 import Login from "./pages/login";
 import AdminPage from "./pages/admin/adminPage";
-import TestPage from "./pages/testPage";
 import { Toaster } from "react-hot-toast";
 import LumineeFAQ from "./client/faq";
 import ScrollToTop from "./utils/scrolltotop";
@@ -20,20 +19,19 @@ function App() {
     <>
       <BrowserRouter>
         <Toaster position="top-center" />
-        <ScrollToTop/>
+        <ScrollToTop />
         <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-        <Routes path="/*">
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/admin/*" element={<AdminPage />} />
-          <Route path="testing" element={<TestPage />} />
-          <Route path="/*" element={<HomePage />} />
-          <Route path="/faq" element={<LumineeFAQ/>} />
-          <Route path="/privacy" element={<LumineePrivacyPolicy/>} />
-          <Route path="/terms" element={<TermsOfService/>} />
-          <Route path="/return" element={<ReturnPolicy/>} />
-          <Route path="/skincare" element={<SkincareGuide/>} />
-        </Routes>
+          <Routes path="/*">
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/admin/*" element={<AdminPage />} />
+            <Route path="/*" element={<HomePage />} />
+            <Route path="/faq" element={<LumineeFAQ />} />
+            <Route path="/privacy" element={<LumineePrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/return" element={<ReturnPolicy />} />
+            <Route path="/skincare" element={<SkincareGuide />} />
+          </Routes>
         </GoogleOAuthProvider>
       </BrowserRouter>
     </>

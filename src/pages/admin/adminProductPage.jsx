@@ -35,71 +35,9 @@ const AdminProductsPage = () => {
         console.error(err);
         setIsLoading(false);
       });
-  }, [searchTerm, selectedCategory]); // Re-fetch when searchTerm or selectedCategory changes
+  }, [searchTerm, selectedCategory ,isLoading]); // Re-fetch when searchTerm or selectedCategory changes
 
-  // Sample product data (matching mongoose schema)
-  //   const [products, setProducts] = useState([
-  //     {
-  //       productId: 'LUM-FOUND-001',
-  //       name: 'Luminous Foundation',
-  //       altNames: ['Glow Foundation', 'Radiant Base'],
-  //       description: 'Full coverage foundation with luminous finish that provides all-day wear and natural-looking coverage',
-  //       images: ['https://via.placeholder.com/80x80/e17100/white?text=LF'],
-  //       labeledPrice: 55.99,
-  //       price: 45.99,
-  //       stock: 120,
-  //       isAvailable: true,
-  //       category: 'Foundation'
-  //     },
-  //     {
-  //       productId: 'ROS-HIGH-002',
-  //       name: 'Rose Gold Highlighter',
-  //       altNames: ['Champagne Glow', 'Golden Highlight'],
-  //       description: 'Radiant rose gold highlighting powder that adds a beautiful luminous glow to your complexion',
-  //       images: ['https://via.placeholder.com/80x80/e17100/white?text=RH'],
-  //       labeledPrice: 35.50,
-  //       price: 28.50,
-  //       stock: 85,
-  //       isAvailable: true,
-  //       category: 'Highlighter'
-  //     },
-  //     {
-  //       productId: 'VEL-LIPS-003',
-  //       name: 'Velvet Matte Lipstick',
-  //       altNames: ['Matte Lip Color', 'Velvet Lips'],
-  //       description: 'Long-lasting velvet matte lipstick with comfortable wear and intense color payoff',
-  //       images: ['https://via.placeholder.com/80x80/e17100/white?text=VL'],
-  //       labeledPrice: 28.00,
-  //       price: 22.00,
-  //       stock: 5,
-  //       isAvailable: true,
-  //       category: 'Lipstick'
-  //     },
-  //     {
-  //       productId: 'GLO-SER-004',
-  //       name: 'Glow Serum',
-  //       altNames: ['Vitamin C Serum', 'Brightening Serum'],
-  //       description: 'Brightening vitamin C serum that helps improve skin tone and provides antioxidant protection',
-  //       images: ['https://via.placeholder.com/80x80/e17100/white?text=GS'],
-  //       labeledPrice: 75.00,
-  //       price: 65.00,
-  //       stock: 0,
-  //       isAvailable: false,
-  //       category: 'Skincare'
-  //     },
-  //     {
-  //       productId: 'EYE-PAL-005',
-  //       name: 'Eyeshadow Palette - Sunset',
-  //       altNames: ['Sunset Collection', 'Warm Tones Palette'],
-  //       description: '12-shade warm sunset eyeshadow palette featuring highly pigmented and blendable colors',
-  //       images: ['https://via.placeholder.com/80x80/e17100/white?text=EP'],
-  //       labeledPrice: 45.75,
-  //       price: 38.75,
-  //       stock: 92,
-  //       isAvailable: true,
-  //       category: 'Eyeshadow'
-  //     }
-  //   ]);
+
 
   const categories = [
     "all",
@@ -277,7 +215,7 @@ const AdminProductsPage = () => {
               <div>
                 <p className="text-gray-600 text-sm font-medium">Total Value</p>
                 <p className="text-2xl font-bold text-gray-900 mt-1">
-                  $
+                  LKR
                   {products
                     .reduce((sum, p) => sum + p.price * p.stock, 0)
                     .toLocaleString()}
@@ -367,7 +305,7 @@ const AdminProductsPage = () => {
                           <div className="text-sm font-medium text-gray-900">
                             {product.name.length > 50
                               ? `${product.name.slice(0, 30)}...`
-                                : product.name}
+                              : product.name}
                           </div>
                           <div className="text-sm text-gray-500">
                             {product.productId}
@@ -387,10 +325,10 @@ const AdminProductsPage = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">
-                        <span className="font-medium">${product.price}</span>
+                        <span className="font-medium">LKR {product.price}</span>
                         {product.labeledPrice !== product.price && (
                           <div className="text-xs text-gray-500 line-through">
-                            ${product.labeledPrice}
+                            LKR {product.labeledPrice}
                           </div>
                         )}
                       </div>
@@ -430,7 +368,7 @@ const AdminProductsPage = () => {
                         <button
                           className="text-orange-600 hover:text-orange-900 p-1 rounded cursor-pointer"
                           onClick={() =>
-                            navigate("/admin/edit-product/", { state: product })
+                            navigate("/admin/edit-product", { state: product })
                           }
                         >
                           <Edit size={20} />
@@ -578,12 +516,12 @@ const AdminProductsPage = () => {
                           className="text-2xl font-bold"
                           style={{ color: "#e17100" }}
                         >
-                          ${selectedProduct.price}
+                          LKR{selectedProduct.price}
                         </p>
                         {selectedProduct.labeledPrice !==
                           selectedProduct.price && (
                           <p className="text-sm text-gray-500 line-through">
-                            Original: ${selectedProduct.labeledPrice}
+                            Original: LKR{selectedProduct.labeledPrice}
                           </p>
                         )}
                       </div>

@@ -14,6 +14,9 @@ import axios from "axios";
 import Loading from "../../components/loading";
 
 import toast from "react-hot-toast";
+import AddProductPage from "./addProductPage";
+import EditProductPage from "./editProduct";
+
 
 export default function AdminPage() {
   const [user, setUser] = useState(null);
@@ -34,7 +37,6 @@ export default function AdminPage() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data.role !== "admin") {
           toast.error("You are not authorized to access this page");
           navigate("/login");
@@ -128,9 +130,9 @@ export default function AdminPage() {
               </Link>
 
               <Link
-                to="/admin/category"
+                to="/admin/reviews"
                 className={`flex items-center gap-3 ${getClass(
-                  "/admin/category"
+                  "/admin/reviews"
                 )}`}
               >
                 <MdOutlineRateReview /> Reviews
@@ -166,9 +168,11 @@ export default function AdminPage() {
             {path === "/admin/home" && <AdminHomePage />}
             {path === "/admin/product" && <AdminProductsPage />}
             {path === "/admin/users" && <AdminUsersPage />}
-            {path === "/admin/order" && <AdminProductsPage />}
-            {path === "/admin/category" && <ReviewPage />}
+            {path === "/admin/order" && <AdminOrdersPage />}
+            {path === "/admin/reviews" && <ReviewPage />}
             {path === "/admin/adduser" && <AddUserPage />}
+            {path === "/admin/edit-product" && <EditProductPage/>}
+            {path === "/admin/add-product" && <AddProductPage />}
           </div>
         </div>
       )}
