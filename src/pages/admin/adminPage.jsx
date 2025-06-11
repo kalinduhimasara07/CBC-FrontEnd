@@ -1,21 +1,6 @@
-import {
-  Link,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
-import {
-  FaBoxOpen,
-  FaUsers,
-  FaClipboardList,
-  FaTags,
-  FaUser,
-} from "react-icons/fa";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FaBoxOpen, FaUsers, FaClipboardList, FaUser } from "react-icons/fa";
 
-import AdminProductPage from "./adminProductPage";
-import AddProductPage from "./addProductPage";
-import EditProductPage from "./editProduct";
 import { IoHome } from "react-icons/io5";
 import AdminOrdersPage from "./adminOrdersPage";
 import AdminUsersPage from "./adminUsersPage";
@@ -23,11 +8,11 @@ import { MdOutlineRateReview } from "react-icons/md";
 import AddUserPage from "./addUserPage";
 import ReviewPage from "./reviewPage";
 import AdminHomePage from "./adminHome";
-import AdminProductsPage from "./testAdminProduct";
+import AdminProductsPage from "./adminProductPage";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../../components/loading";
-import { div } from "framer-motion/client";
+
 import toast from "react-hot-toast";
 
 export default function AdminPage() {
@@ -181,7 +166,7 @@ export default function AdminPage() {
             {path === "/admin/home" && <AdminHomePage />}
             {path === "/admin/product" && <AdminProductsPage />}
             {path === "/admin/users" && <AdminUsersPage />}
-            {path === "/admin/order" && <AdminOrderPage />}
+            {path === "/admin/order" && <AdminProductsPage />}
             {path === "/admin/category" && <ReviewPage />}
             {path === "/admin/adduser" && <AddUserPage />}
           </div>

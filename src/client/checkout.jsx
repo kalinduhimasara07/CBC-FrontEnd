@@ -1,5 +1,4 @@
 import { use, useEffect, useState } from "react";
-import { getCart } from "../utils/cart";
 import {
   FaCreditCard,
   FaTruck,
@@ -10,11 +9,10 @@ import {
 import toast from "react-hot-toast";
 import Footer from "../components/footer";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FcMinus, FcPlus } from "react-icons/fc";
 import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
 import FloatingNotice from "../components/floatingNotice";
 import axios from "axios";
-import { address } from "framer-motion/client";
+import { getCart } from "../utils/cart";
 
 export default function Checkout() {
   const location = useLocation();
@@ -124,64 +122,6 @@ export default function Checkout() {
     }
   };
 
-  // const handleFinalSubmit = (e) => {
-  //   e.preventDefault();
-  //   setShippingInfo({
-  //     ...shippingInfo,
-  //     name: shippingInfo.firstName + " " + shippingInfo.lastName,
-  //   });
-  //   console.log(shippingInfo);
-  //   console.log("grandTotal: " + grandTotal);
-  //   console.log("tax: " + tax);
-  //   console.log("shipping: " + shipping);
-  //   console.log("subtotal: " + subtotal);
-  //   console.log(totalItems);
-  //   console.log(paymentMethod);
-  //   // if (!validateShipping() || !validatePayment()) {
-  //   //   return; // Stop if validation fails
-  //   // }
-  //   const orderInformation = {
-  //     products: [],
-  //     name: shippingInfo.name,
-  //     phone: shippingInfo.phone,
-  //     address: shippingInfo.address,
-  //     state: shippingInfo.state,
-  //     zip: shippingInfo.zipCode,
-  //     city: shippingInfo.city,
-  //     shipping,
-  //     tax,
-  //   };
-  //   for (let i = 0; i < cart.length; i++) {
-  //     const item = {
-  //       productId: cart[i].productId,
-  //       qty: cart[i].qty,
-  //     };
-  //     orderInformation.products.push(item);
-  //   }
-
-  //   axios
-  //     .post(
-  //       import.meta.env.VITE_BACKEND_URL + "/api/orders",
-  //       orderInformation,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       console.log("Order placed successfully:", res.data);
-  //       toast.success("Order placed successfully!");
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-
-  //   // Process order
-  //   // toast.success("Order placed successfully!");
-  //   // Redirect to confirmation page or clear cart
-  // };
-
   const handleFinalSubmit = (e) => {
     e.preventDefault();
 
@@ -288,32 +228,15 @@ export default function Checkout() {
     return true;
   };
 
-  if (token == null) {
-    <FloatingNotice cart={cart} />;
-  }
-
-  function emptyCart() {
-    return (
-      <div className="w-full flex flex-col justify-center items-center min-h-screen">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">
-            Your cart is empty
-          </h1>
-          <p className="text-gray-600 mb-6">
-            Add some items to your cart before checking out
-          </p>
-          <button
-            onClick={() => navigate("/products")}
-            className="bg-[#e17100] hover:bg-[#c5610a] text-white font-semibold py-3 px-6 rounded-lg"
-          >
-            Continue Shopping
-          </button>
-        </div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (cart.length === 0) {
+      setCart(getCart());
+    }
+  }, []);
+  
 
   if (token == null) {
+    console.log("token is null");
     return <FloatingNotice cart={cart} />;
   }
 
@@ -349,24 +272,6 @@ export default function Checkout() {
     <div className="w-full">
       <div className="w-full flex flex-col justify-center items-center bg-gray-50 ">
         {!token && <FloatingNotice cart={cart} />}
-        {/* {cart.length === 0 && (
-          <div className="w-full flex flex-col justify-center items-center min-h-screen">
-            <div className="text-center">
-              <h1 className="text-2xl font-bold text-gray-800 mb-4">
-                Your cart is empty
-              </h1>
-              <p className="text-gray-600 mb-6">
-                Add some items to your cart before checking out
-              </p>
-              <button
-                onClick={() => navigate("/products")}
-                className="bg-[#e17100] hover:bg-[#c5610a] text-white font-semibold py-3 px-6 rounded-lg"
-              >
-                Continue Shopping
-              </button>
-            </div>
-          </div>
-        )} */}
         <div className="mt-[100px] w-[95%] lg:w-[90%] max-w-7xl mb-[100px] flex flex-col lg:flex-row gap-6 lg:gap-8">
           {/* Checkout Form - Left Side */}
           <div className="flex-1 bg-white rounded-lg shadow-lg p-4 lg:p-6">
@@ -499,22 +404,7 @@ export default function Checkout() {
                   />
                 </div>
 
-                {/* <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Apartment, suite, etc.
-                </label>
-                <input
-                  type="text"
-                  value={shippingInfo.apartment}
-                  onChange={(e) =>
-                    setShippingInfo({
-                      ...shippingInfo,
-                      apartment: e.target.value,
-                    })
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e17100]"
-                />
-              </div> */}
+                
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
                   <div>

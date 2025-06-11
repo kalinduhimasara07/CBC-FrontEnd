@@ -14,6 +14,7 @@ import Checkout from "../client/checkout";
 import OrderView from "../client/orderView";
 import AllOrdersView from "../client/orderView";
 import ProfilePage from "../client/profilePage";
+import CosmeticReviewsComponent from "../components/reviews";
 
 export default function HomePage() {
   return (
@@ -33,6 +34,7 @@ export default function HomePage() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<AllOrdersView />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/review" element={<CosmeticReviewsComponent />} />
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       </div>

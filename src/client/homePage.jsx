@@ -3,6 +3,7 @@ import Footer from "../components/footer";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CardCarousel from "./cardCarousel";
+import CosmeticReviewsComponent from "../components/reviews";
 
 export default function Homepage() {
   const [products, setProducts] = useState([]);
@@ -405,6 +406,8 @@ export default function Homepage() {
             </div>
           </div>
         </div>
+
+        <CosmeticReviewsComponent/>
 
         {/* Skin Quiz CTA Section */}
         <div className="py-16 lg:py-20 bg-gradient-to-r from-pink-500 to-purple-500">
