@@ -41,11 +41,14 @@ const AdminProductsPage = () => {
 
   const categories = [
     "all",
-    "Foundation",
-    "Highlighter",
-    "Lipstick",
-    "Skincare",
-    "Eyeshadow",
+    "Face Care",
+    "Eye Care",
+    "Lip Care",
+    "Body Care",
+    "Hair Care",
+    "Makeup",
+    "Fragrance",
+    "Sun Care",
   ];
 
   const getStatusColor = (product) => {

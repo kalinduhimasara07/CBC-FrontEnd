@@ -139,17 +139,17 @@ export default function ProductOverViewPage() {
                 <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl p-6 mb-6">
                   <div className="flex items-center gap-4 mb-2">
                     <span className="text-2xl lg:text-3xl font-bold text-amber-700">
-                      ${product.price.toFixed(2)}
+                      LKR {product.price.toFixed(2)}
                     </span>
                     <span className="text-lg text-gray-500 line-through">
-                      ${product.labeledPrice.toFixed(2)}
+                      LKR {product.labeledPrice.toFixed(2)}
                     </span>
                     <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                       {discountPercentage}% OFF
                     </span>
                   </div>
                   <p className="text-sm text-gray-600">
-                    You save $
+                    You save LKR
                     {(product.labeledPrice - product.price).toFixed(2)}!
                   </p>
                 </div>
@@ -220,7 +220,7 @@ export default function ProductOverViewPage() {
                     disabled={product.stock === 0}
                     className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:from-gray-300 disabled:to-gray-400 text-white font-bold py-4 px-8 rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:cursor-not-allowed disabled:transform-none"
                   >
-                    Add to Cart • ${(product.price * quantity).toFixed(2)}
+                    Add to Cart • LKR {(product.price * quantity).toFixed(2)}
                   </button>
 
                   <button
@@ -228,7 +228,7 @@ export default function ProductOverViewPage() {
                     disabled={product.stock === 0}
                     className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 disabled:from-gray-300 disabled:to-gray-400 text-white font-bold py-4 px-8 rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:cursor-not-allowed disabled:transform-none"
                   >
-                    Buy Now • ${(product.price * quantity).toFixed(2)}
+                    Buy Now • LKR{(product.price * quantity).toFixed(2)}
                   </button>
                 </div>
 
