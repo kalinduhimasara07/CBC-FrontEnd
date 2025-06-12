@@ -24,7 +24,30 @@ const AdminHomePage = () => {
   const [latestOrder, setLatestOrder] = useState(null);
   const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
+  const [user, setUser] = useState(null);
+  const [loadingUser, setLoadingUser] = useState(true);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return; // 🚫 Don't call API if not logged in
+    axios
+      .get(import.meta.env.VITE_BACKEND_URL + "/api/users/user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoadingUser(false);
+      });
+  }, [token]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -124,7 +147,7 @@ const AdminHomePage = () => {
     {
       title: "Revenue",
       value:
-        "$" +
+        "LKR " +
         orders
           .filter((o) => o.status !== "cancelled")
           .reduce((sum, order) => sum + order.grandTotal, 0)
@@ -176,9 +199,34 @@ const AdminHomePage = () => {
               <button className="p-2 text-gray-600 hover:text-orange-600 transition-colors">
                 <Bell size={20} />
               </button>
-              <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center">
+              {/* <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center">
                 <User size={16} className="text-white" />
+              </div> */}
+              {!token ? (
+              <div
+                className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-amber-600 rounded-full cursor-pointer flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-md hover:scale-105 transition-transform"
+                
+              >
+                <User className="w-4 h-4 md:w-5 md:h-5" />
+                {/* <img src={user?.img} alt="" /> */}
               </div>
+            ) : (
+              <div
+                className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-amber-600 rounded-full cursor-pointer flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-md hover:scale-105 transition-transform"
+                
+              >
+                {/* <User className="w-4 h-4 md:w-5 md:h-5" /> */}
+                {user?.img ? (
+                  <img
+                    src={user.img}
+                    alt="U"
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                ) : (
+                  <User className="w-4 h-4 md:w-5 md:h-5" />
+                )}
+              </div>
+            )}
             </div>
           </div>
         </div>

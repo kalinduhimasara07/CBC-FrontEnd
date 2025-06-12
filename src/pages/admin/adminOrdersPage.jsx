@@ -345,7 +345,7 @@ export default function AdminOrdersPage() {
                       setIsOpen(true);
                     }}
                   >
-                    ${order.total.toFixed(2)}
+                    LKR {order.total.toFixed(2)}
                   </td>
                   <td
                     className="p-3 border font-semibold"
@@ -354,7 +354,7 @@ export default function AdminOrdersPage() {
                       setIsOpen(true);
                     }}
                   >
-                    ${order.grandTotal.toFixed(2)}
+                    LKR {order.grandTotal.toFixed(2)}
                   </td>
                   <td className="p-3 border space-y-1">
                     <button
@@ -569,7 +569,7 @@ export default function AdminOrdersPage() {
         <div className="bg-blue-300 rounded-lg p-3">
           <div className="text-xl text-gray-600">Total</div>
           <div className="text-2xl font-bold text-blue-600">
-            ${stats.totalSpent.toFixed(2)}
+            LKR {stats.totalSpent.toFixed(2)}
           </div>
 
           <div className="text-[13px] text-red-600 font-semibold">

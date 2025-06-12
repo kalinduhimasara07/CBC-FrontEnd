@@ -12,6 +12,8 @@ import {
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+// import Loader from "./Loader"; // Ensure Loader is imported
+import Loading from "../../components/loading";
 
 const AdminProductsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,22 +24,25 @@ const AdminProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    setIsLoading(true); // Trigger loading state when search or category changes
+    setIsLoading(true); // Trigger loading state when data fetch begins
     axios
-      .get(import.meta.env.VITE_BACKEND_URL + "/api/product")
+      .get(import.meta.env.VITE_BACKEND_URL + "/api/product", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         setProducts(res.data);
-        setIsLoading(false);
+        setIsLoading(false); // Set loading to false once data is fetched
       })
       .catch((err) => {
         console.error(err);
-        setIsLoading(false);
+        setIsLoading(false); // Ensure loading is set to false even in case of error
       });
-  }, [searchTerm, selectedCategory ,isLoading]); // Re-fetch when searchTerm or selectedCategory changes
-
-
+  }, [searchTerm, selectedCategory]); // Re-fetch when searchTerm or selectedCategory changes
 
   const categories = [
     "all",
@@ -59,9 +64,9 @@ const AdminProductsPage = () => {
   };
 
   const getStatusText = (product) => {
-    if (!product.isAvailable) return "Unavailable";
     if (product.stock === 0) return "Out of Stock";
     if (product.stock <= 10) return "Low Stock";
+    if (!product.isAvailable) return "Unavailable";
     return "Available";
   };
 
@@ -135,7 +140,7 @@ const AdminProductsPage = () => {
       .then((res) => {
         console.log(res.data);
         toast.success("Product deleted successfully");
-        setIsLoading(true);
+        setIsLoading(true); // Re-trigger loading to fetch data again
       })
       .catch((err) => {
         console.log(err);
@@ -262,8 +267,14 @@ const AdminProductsPage = () => {
           </div>
         </div>
 
-        {/* Products Table */}
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        {/* Show loader if products are loading */}
+        {isLoading ? (
+          <div className="flex justify-center items-center py-12">
+            <Loading /> {/* Show Loader component when loading */}
+          </div>
+        ) : (
+          // Products Table
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
@@ -356,7 +367,7 @@ const AdminProductsPage = () => {
                           }`}
                         ></span>
                         <span className="text-sm text-gray-900">
-                          {product.isAvailable ? "Available" : "Disabled"}
+                          {product.isAvailable ? "Available" : "Unavailable"}
                         </span>
                       </div>
                     </td>
@@ -390,9 +401,10 @@ const AdminProductsPage = () => {
             </table>
           </div>
         </div>
+        )}
 
         {/* Empty State */}
-        {filteredProducts.length === 0 && (
+        {filteredProducts.length === 0 && !isLoading && (
           <div className="text-center py-12">
             <Package size={48} className="mx-auto text-gray-400 mb-4" />
             <h3 className="text-lg font-medium text-gray-900 mb-2">
@@ -519,12 +531,12 @@ const AdminProductsPage = () => {
                           className="text-2xl font-bold"
                           style={{ color: "#e17100" }}
                         >
-                          LKR{selectedProduct.price}
+                          LKR {selectedProduct.price}
                         </p>
                         {selectedProduct.labeledPrice !==
                           selectedProduct.price && (
                           <p className="text-sm text-gray-500 line-through">
-                            Original: LKR{selectedProduct.labeledPrice}
+                            Original: LKR {selectedProduct.labeledPrice}
                           </p>
                         )}
                       </div>
@@ -545,6 +557,7 @@ const AdminProductsPage = () => {
                   {/* Product Images */}
                   {selectedProduct.images &&
                     selectedProduct.images.length > 1 && (
+                      console.log(selectedProduct.images),
                       <div>
                         <h4 className="text-lg font-semibold text-gray-900 mb-3">
                           Product Images
@@ -621,7 +634,9 @@ const AdminProductsPage = () => {
                 >
                   Close
                 </button>
-                <button className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors flex items-center space-x-2">
+                <button onClick={() =>
+                            navigate("/admin/edit-product", { state: selectedProduct })
+                          } className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors flex items-center space-x-2">
                   <Edit size={16} />
                   <span>Edit Product</span>
                 </button>

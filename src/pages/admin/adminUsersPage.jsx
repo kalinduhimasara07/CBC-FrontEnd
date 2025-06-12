@@ -239,7 +239,7 @@ export default function AdminUsersPage() {
   }
 
   return (
-    <div className="w-full min-h-screen bg-gray-100 p-6 relative">
+    <div className="w-full h-screen bg-gray-100 p-6 relative">
       <h2 className="text-2xl font-semibold text-gray-800 mb-6">
         Users Management
       </h2>
@@ -359,7 +359,7 @@ export default function AdminUsersPage() {
       </button>
 
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
-        <div className="overflow-y-auto h-[400px]">
+        <div className="overflow-y-auto h-[380px]">
           <table className="min-w-full table-fixed border-collapse overflow-scroll">
             <thead className="bg-gray-300 text-gray-700 text-sm uppercase tracking-wider sticky top-0 z-10">
               <tr>
