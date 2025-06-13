@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ImageSlider from "../components/imageSlider";
 import { AddToCart, getCart } from "../utils/cart";
 import toast from "react-hot-toast";
-import { s } from "framer-motion/client";
+import { div, s } from "framer-motion/client";
 
 // Loading Component
 function Loading() {
@@ -215,10 +215,20 @@ function ProductReviews() {
               <div className="flex flex-col sm:flex-row sm:items-start gap-4">
                 {/* User Avatar */}
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">
-                      {review.name.charAt(0)}
-                    </span>
+                  <div >
+                    {review.profileImg ? (
+                      <img
+                        src={review.profileImg}
+                        alt={review.name}
+                        className="w-13 h-13 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">
+                          {review.name.charAt(0)}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -291,6 +301,31 @@ function ProductReviews() {
         >
           Write a Review
         </button> */}
+        <div className="py-6 px-4">
+          <p className="text-lg text-gray-800 leading-relaxed">
+            <span className="font-semibold text-yellow-500">
+              If you would like to leave a review for a product,
+            </span>{" "}
+            please follow these steps:
+          </p>
+          <ol className="list-decimal list-inside text-gray-700 space-y-2">
+            <li className="text-orange-600">
+              Go to{" "}
+              <strong className="font-bold text-gray-900 hover:text-amber-500 hover:underline"><Link to="/orders">Order History</Link></strong>
+            </li>
+            <li className="text-orange-600">
+              Select your <strong className="font-bold text-gray-900">Order</strong>
+            </li>
+            <li className="text-orange-600">
+              Click on{" "}
+              <strong className="font-bold text-gray-900">View Details</strong>
+            </li>
+            <li className="text-orange-600">
+              Then click on{" "}
+              <strong className="font-bold text-gray-900">Write Review</strong>
+            </li>
+          </ol>
+        </div>
       </div>
     </div>
   );
