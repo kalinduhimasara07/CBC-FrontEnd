@@ -78,7 +78,6 @@ function ProductReviews() {
     axios
       .get(import.meta.env.VITE_BACKEND_URL + "/api/reviews/" + productId)
       .then((res) => {
-        console.log(res.data);
         setSampleReviews(res.data);
       })
       .catch((err) => {
@@ -281,7 +280,7 @@ function ProductReviews() {
       {/* Write a Review Button */}
       {/* when dosetn have token then disable the button */}
       <div className="mt-8 pt-6 border-t border-gray-200">
-        <button
+        {/* <button
           onClick={handleWriteReview}
           disabled={!token}
           className={`bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transform transition-all duration-300 ${
@@ -291,7 +290,7 @@ function ProductReviews() {
           }`}
         >
           Write a Review
-        </button>
+        </button> */}
       </div>
     </div>
   );

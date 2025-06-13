@@ -231,7 +231,6 @@ export default function WriteReviewPage() {
         profileImg: formData.profileImg.trim() || undefined, // Ensure this is being sent
       };
 
-      console.log(reviewData);
 
       await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/reviews`,
