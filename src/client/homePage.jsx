@@ -170,11 +170,11 @@ export default function Homepage() {
                       {featuredProducts[0].description}
                     </p>
                     <div className="text-3xl font-bold text-yellow-200">
-                      ${featuredProducts[0].price}
+                      LKR {featuredProducts[0].price}
                       {featuredProducts[0].price <
                         featuredProducts[0].labeledPrice && (
                         <span className="text-gray-600 line-through text-xl mx-2">
-                          ${featuredProducts[0].labeledPrice.toFixed(2)}
+                          LKR {featuredProducts[0].labeledPrice.toFixed(2)}
                         </span>
                       )}
                     </div>
@@ -184,7 +184,7 @@ export default function Homepage() {
                       </span>
 
                       <p className="text-2xl font-semibold text-gray-600">
-                        You save $
+                        You save LKR{" "}
                         {(
                           featuredProducts[0].labeledPrice -
                           featuredProducts[0].price
@@ -195,23 +195,23 @@ export default function Homepage() {
                   </div>
                   <div className="flex flex-col md:flex-row gap-4">
                     <button
-                    onClick={() => {
-                      navigate("/overview/" + featuredProducts[0].productId);
-                      // AddToCart(featuredProducts[0], 1);
-                      // toast.success(
-                      //   `Added ${1} x ${featuredProducts[0].name} to cart!`,
-                      //   {
-                      //     duration: 3000,
-                      //     style: {
-                      //       fontSize: "18px",
-                      //     },
-                      //   }
-                      // );
-                    }}
-                    className="md:w-full bg-yellow-400 text-amber-800 font-bold py-3 px-6 rounded-xl hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105"
-                  >
-                    Add to Cart
-                  </button>
+                      onClick={() => {
+                        navigate("/overview/" + featuredProducts[0].productId);
+                        // AddToCart(featuredProducts[0], 1);
+                        // toast.success(
+                        //   `Added ${1} x ${featuredProducts[0].name} to cart!`,
+                        //   {
+                        //     duration: 3000,
+                        //     style: {
+                        //       fontSize: "18px",
+                        //     },
+                        //   }
+                        // );
+                      }}
+                      className="md:w-full bg-yellow-400 text-amber-800 font-bold py-3 px-6 rounded-xl hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105"
+                    >
+                      Add to Cart
+                    </button>
                   </div>
                 </div>
               </div>
@@ -407,7 +407,7 @@ export default function Homepage() {
           </div>
         </div> */}
 
-        <CosmeticReviewsComponent/>
+        <CosmeticReviewsComponent />
 
         {/* Skin Quiz CTA Section */}
         <div className="py-16 lg:py-20 bg-gradient-to-r from-pink-500 to-purple-500">

@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 export default function HomeProductCard({ product }) {
   return (
-    <div className="w-auto h-auto  pb-4 m-4 flex flex-col rounded-2xl justify-center items-center transition-all duration-300   hover:shadow-xl hover:scale-105 hover:ring-3 hover:ring-amber-500 ">
+    <div className="w-auto h-auto  pb-4 m-4 flex flex-col rounded-2xl justify-center items-center transition-all duration-300   hover:shadow-xl hover:scale-105 ">
       <Link
         to={"/overview/" + product.productId}
         className="w-[300px] h-[400px] bg-white shadow-lg rounded-t-lg  p-4 m-4 pb-0 mb-0 flex flex-col justify-between hover:shadow-2xl transition-shadow duration-300"
@@ -32,7 +32,7 @@ export default function HomeProductCard({ product }) {
 
           {/* Price */}
           <div className="mt-2 flex items-center gap-2">
-            <span className="text-[30px] font-bold text-amber-600">
+            <span className="text-[20px] font-bold text-amber-600">
               Rs. {product.price.toFixed(2)}
             </span>
             {product.labeledPrice > product.price && (

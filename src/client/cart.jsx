@@ -87,10 +87,10 @@ export default function Cart() {
                         <p className="text-green-700 font-bold text-sm sm:text-base">
                           {item.price < item.labeledPrice && (
                             <span className="line-through text-red-600 mr-2">
-                              ${item.labeledPrice.toFixed(2)}
+                              LKR {item.labeledPrice.toFixed(2)}
                             </span>
                           )}
-                          ${item.price.toFixed(2)}
+                          LKR {item.price.toFixed(2)}
                         </p>
                       </div>
                     </div>
@@ -124,7 +124,7 @@ export default function Cart() {
                       {/* Item total */}
                       <div className="flex items-center">
                         <p className="text-gray-800 font-bold text-lg sm:text-xl">
-                          ${(item.price * item.qty).toFixed(2)}
+                          LKR {(item.price * item.qty).toFixed(2)}
                         </p>
                       </div>
 
@@ -157,13 +157,13 @@ export default function Cart() {
               <div className="space-y-2 lg:space-y-3 mb-3 lg:mb-4">
                 <div className="flex justify-between text-gray-600 text-sm lg:text-base">
                   <span>Items ({totalItems}):</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>LKR {subtotal.toFixed(2)}</span>
                 </div>
 
                 {totalSavings > 0 && (
                   <div className="flex justify-between text-green-600 text-sm lg:text-base">
                     <span>Total Savings:</span>
-                    <span>-${totalSavings.toFixed(2)}</span>
+                    <span>-LKR {totalSavings.toFixed(2)}</span>
                   </div>
                 )}
 
@@ -182,7 +182,7 @@ export default function Cart() {
 
               <div className="flex justify-between text-lg lg:text-xl font-bold text-gray-800 mb-4 lg:mb-6">
                 <span>Total:</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>LKR {subtotal.toFixed(2)}</span>
               </div>
 
               <button

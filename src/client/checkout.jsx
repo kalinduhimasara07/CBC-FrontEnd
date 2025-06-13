@@ -785,26 +785,26 @@ export default function Checkout() {
             <div className="space-y-2 mb-4">
               <div className="flex justify-between text-gray-600 text-sm">
                 <span>Items ({totalItems}):</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>LKR {subtotal.toFixed(2)}</span>
               </div>
 
               {totalSavings > 0 && (
                 <div className="flex justify-between text-green-600 text-sm">
                   <span>Total Savings:</span>
-                  <span>-${totalSavings.toFixed(2)}</span>
+                  <span>-LKR {totalSavings.toFixed(2)}</span>
                 </div>
               )}
 
               <div className="flex justify-between text-gray-600 text-sm">
                 <span>Shipping:</span>
                 <span>
-                  {shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}
+                  {shipping === 0 ? "Free" : `LKR ${shipping.toFixed(2)}`}
                 </span>
               </div>
 
               <div className="flex justify-between text-gray-600 text-sm">
                 <span>Tax:</span>
-                <span>${tax.toFixed(2)}</span>
+                <span>LKR {tax.toFixed(2)}</span>
               </div>
             </div>
 
@@ -812,13 +812,13 @@ export default function Checkout() {
 
             <div className="flex justify-between text-xl font-bold text-gray-800 mb-4">
               <span>Total:</span>
-              <span>${grandTotal.toFixed(2)}</span>
+              <span>LKR {grandTotal.toFixed(2)}</span>
             </div>
 
             {shipping > 0 && (
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
                 <p className="text-sm text-blue-700">
-                  💡 Add ${(50 - subtotal).toFixed(2)} more to get free
+                  💡 Add LKR {(50 - subtotal).toFixed(2)} more to get free
                   shipping!
                 </p>
               </div>

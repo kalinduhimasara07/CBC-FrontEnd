@@ -181,7 +181,7 @@ export default function AllOrdersView() {
               </div>
               <div className="bg-blue-50 rounded-lg p-3">
                 <div className="text-2xl font-bold text-blue-600">
-                  ${stats.totalSpent.toFixed(2)}
+                  LKR {stats.totalSpent.toFixed(2)}
                 </div>
                 <div className="text-sm text-gray-600">Total Spent</div>
               </div>
@@ -327,7 +327,7 @@ export default function AllOrdersView() {
                       <div className="flex flex-col sm:flex-row sm:items-center lg:flex-col lg:items-end gap-3 lg:w-48">
                         <div className="text-right">
                           <div className="text-xl font-bold text-gray-800">
-                            ${order.grandTotal.toFixed(2)}
+                            LKR {order.grandTotal.toFixed(2)}
                           </div>
                           <div className="text-sm text-gray-600">
                             Total Paid
@@ -465,19 +465,19 @@ export default function AllOrdersView() {
                                 💰 Totals
                               </h3>
                               <p>
-                                <strong>Subtotal:</strong> $
+                                <strong>Subtotal:</strong> LKR{" "}
                                 {selectedOrder.total.toFixed(2)}
                               </p>
                               <p>
-                                <strong>Shipping:</strong> $
+                                <strong>Shipping:</strong> LKR {" "}
                                 {selectedOrder.shipping.toFixed(2)}
                               </p>
                               <p>
-                                <strong>Tax:</strong> $
+                                <strong>Tax:</strong> LKR{" "}
                                 {selectedOrder.tax.toFixed(2)}
                               </p>
                               <p style={{ fontSize: "1.1rem" }}>
-                                <strong>Grand Total:</strong> $
+                                <strong>Grand Total:</strong> LKR {" "}
                                 {selectedOrder.grandTotal.toFixed(2)}
                               </p>
                             </div>
@@ -538,7 +538,7 @@ export default function AllOrdersView() {
                                     </p>
                                     <p>Quantity: {product.quantity}</p>
                                     <p>
-                                      Price: $
+                                      Price: LKR {" "}
                                       {product.productInfo.price.toFixed(2)}
                                     </p>
                                   </div>
