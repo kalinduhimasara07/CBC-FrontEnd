@@ -4,7 +4,7 @@ import ProductCard from "../components/productCard";
 import Loading from "../components/loading";
 import HomeProductCard from "../components/homeProductCard";
 
-export default function CardCarousel() {
+export default function CardCarousel({ addToCart }) {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -77,7 +77,7 @@ export default function CardCarousel() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
             {visibleProducts.map((product) => (
-              <HomeProductCard key={product.productId} product={product} />
+              <HomeProductCard key={product.productId} product={product} addToCart={addToCart}/>
             ))}
           </div>
 

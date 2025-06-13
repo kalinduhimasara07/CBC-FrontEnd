@@ -5,7 +5,7 @@ import Footer from "../components/footer";
 import Loading from "../components/loading";
 import LumineeFilterSidebar from "../components/filterSideBar";
 
-export default function ProductPage() {
+export default function ProductPage({ addToCart }) {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState({
@@ -101,7 +101,7 @@ export default function ProductPage() {
           ) : (
             <div className="w-full h-auto pt-[80px] pb-8 bg-gray-200 flex flex-wrap justify-center items-center overflow-y-scroll">
               {products.map((product) => (
-                <ProductCard key={product.productId} product={product} />
+                <ProductCard key={product.productId} product={product} addToCart={addToCart}/>
               ))}
             </div>
           )}

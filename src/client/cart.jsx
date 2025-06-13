@@ -6,7 +6,7 @@ import Footer from "../components/footer";
 import { useNavigate } from "react-router-dom";
 import { div } from "framer-motion/client";
 
-export default function Cart() {
+export default function Cart({ addToCart }) {
   const [cart, setCart] = useState(getCart());
   const navigate = useNavigate();
 
@@ -134,6 +134,7 @@ export default function Cart() {
                           onClick={() => {
                             RemoveFromCart(item.productId);
                             setCart(getCart());
+                            addToCart();
                             toast.success("Product removed from cart");
                           }}
                         >

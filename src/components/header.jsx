@@ -11,8 +11,9 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { getCart } from "../utils/cart";
 
-export default function Header() {
+export default function Header({ cartItemCount }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -20,6 +21,7 @@ export default function Header() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [loadingUser, setLoadingUser] = useState(true);
+  // const [ cartItemCount, addToCart ] = useState(getCart().length);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -153,9 +155,14 @@ export default function Header() {
         {/* Right Side - Cart and User Profile */}
         <div className="flex items-center gap-3 md:gap-4">
           {/* Shopping Cart */}
-          <div className="flex items-center justify-center font-bold text-2xl md:text-3xl hover:scale-110 transition-transform">
+          <div className="relative flex items-center justify-center font-bold text-2xl md:text-3xl hover:scale-110 transition-transform">
             <button onClick={() => handleNavigation("/cart")}>
+              {" "}
+              {/* Adding to the cart */}
               <ShoppingCart className="text-[#e17100] cursor-pointer w-6 h-6 md:w-7 md:h-7" />
+              <span className="absolute top-[-6px] right-[-6px] bg-red-600 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
+                {cartItemCount}
+              </span>
             </button>
           </div>
 

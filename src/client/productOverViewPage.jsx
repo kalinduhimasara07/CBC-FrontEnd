@@ -215,7 +215,7 @@ function ProductReviews() {
               <div className="flex flex-col sm:flex-row sm:items-start gap-4">
                 {/* User Avatar */}
                 <div className="flex-shrink-0">
-                  <div >
+                  <div>
                     {review.profileImg ? (
                       <img
                         src={review.profileImg}
@@ -311,10 +311,13 @@ function ProductReviews() {
           <ol className="list-decimal list-inside text-gray-700 space-y-2">
             <li className="text-orange-600">
               Go to{" "}
-              <strong className="font-bold text-gray-900 hover:text-amber-500 hover:underline"><Link to="/orders">Order History</Link></strong>
+              <strong className="font-bold text-gray-900 hover:text-amber-500 hover:underline">
+                <Link to="/orders">Order History</Link>
+              </strong>
             </li>
             <li className="text-orange-600">
-              Select your <strong className="font-bold text-gray-900">Order</strong>
+              Select your{" "}
+              <strong className="font-bold text-gray-900">Order</strong>
             </li>
             <li className="text-orange-600">
               Click on{" "}
@@ -334,7 +337,7 @@ function ProductReviews() {
 // ========================================
 // MAIN PRODUCT OVERVIEW PAGE COMPONENT
 // ========================================
-export default function ProductOverViewPage() {
+export default function ProductOverViewPage({ addToCart }) {
   const { id: productId } = useParams();
   const [status, setStatus] = useState("loading");
   const [product, setProduct] = useState(null);
@@ -348,6 +351,7 @@ export default function ProductOverViewPage() {
     // console.log(getCart());
     AddToCart(product, quantity);
     toast.success(`Added ${quantity} x ${product.name} to cart!`);
+    addToCart();
     // console.log("New Cart");
     // console.log(getCart());
   };

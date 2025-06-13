@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { AddToCart } from "../utils/cart";
 import toast from "react-hot-toast";
 
-export default function HomeProductCard({ product }) {
+export default function HomeProductCard({ product , addToCart}) {
   return (
     <div className="w-auto h-auto  pb-4 m-4 flex flex-col rounded-2xl justify-center items-center transition-all duration-300   hover:shadow-xl hover:scale-105 ">
       <Link
@@ -82,6 +82,7 @@ export default function HomeProductCard({ product }) {
                 fontSize: "18px",
               },
             });
+            addToCart();
           }}
           disabled={!product.isAvailable || product.stock <= 0}
           className={` m-0 w-full py-2 rounded-md text-white text-sm font-semibold cursor-pointer ${

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import CardCarousel from "./cardCarousel";
 import CosmeticReviewsComponent from "../components/reviews";
 
-export default function Homepage() {
+export default function Homepage({ addToCart }) {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -350,7 +350,7 @@ export default function Homepage() {
         </div>
       </div> */}
 
-        <CardCarousel />
+        <CardCarousel addToCart={addToCart}/>
 
         {/* Testimonials Section */}
         {/* <div className="py-16 lg:py-20">
