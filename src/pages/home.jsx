@@ -15,27 +15,28 @@ import OrderView from "../client/orderView";
 import AllOrdersView from "../client/orderView";
 import ProfilePage from "../client/profilePage";
 import SiteReviewsPage from "../client/addReviewPage";
-
+import WriteReviewPage from "../client/writeReviewPage";
 
 export default function HomePage() {
   return (
     <>
       <Header />
       <div className="w-full h-[calc(100vh-80px)] flex flex-col items-center">
-        <ScrollToTop/>
+        <ScrollToTop />
         <Routes path="/">
-          <Route path="/" element={<Homepage/>} />
+          <Route path="/" element={<Homepage />} />
           <Route path="/about" element={<AboutUs />} />
-          <Route path="/contact" element={<ContactUsPage/>} />
+          <Route path="/contact" element={<ContactUsPage />} />
           <Route path="/products" element={<ProductPage />} />
           <Route path="/overview/:id" element={<ProductOverViewPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup/> } />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<AllOrdersView />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/review" element={<SiteReviewsPage />} />
+          <Route path="/writereview" element={<WriteReviewPage />} />
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       </div>

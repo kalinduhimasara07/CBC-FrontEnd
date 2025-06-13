@@ -88,7 +88,7 @@ const SiteReviewsPage = () => {
   };
 
   return (
-    <div className="h-full w-full bg-gray-50">
+    <div className=" w-full bg-gray-50">
       <div className="max-w-4xl mx-auto pt-[90px]">
         {/* Header */}
         <div className="text-center mb-12">

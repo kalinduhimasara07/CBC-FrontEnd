@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ImageSlider from "../components/imageSlider";
 import { AddToCart, getCart } from "../utils/cart";
 import toast from "react-hot-toast";
+import { s } from "framer-motion/client";
 
 // Loading Component
 function Loading() {
@@ -19,7 +20,286 @@ function Loading() {
   );
 }
 
-// Main Product Overview Page Component
+// ========================================
+// REVIEWS COMPONENT - NEW ADDITION
+// ========================================
+function ProductReviews() {
+  // Sample review data - in real app, this would come from API
+  // TO TEST NO REVIEWS: Change sampleReviews to [] (empty array)
+  // const sampleReviews = [
+  //   {
+  //     id: 1,
+  //     name: "Sarah Johnson",
+  //     rating: 5,
+  //     date: "2024-12-15",
+  //     comment: "Absolutely love this product! The quality exceeded my expectations and delivery was super fast. Highly recommend!",
+  //     verified: true
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Mike Chen",
+  //     rating: 4,
+  //     date: "2024-12-10",
+  //     comment: "Great product overall. Good value for money. Only minor issue was the packaging could be better, but the product itself is excellent.",
+  //     verified: true
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Emma Rodriguez",
+  //     rating: 5,
+  //     date: "2024-12-08",
+  //     comment: "Perfect! Exactly what I was looking for. The description was accurate and it arrived in perfect condition. Will definitely buy again.",
+  //     verified: false
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "David Wilson",
+  //     rating: 4,
+  //     date: "2024-12-05",
+  //     comment: "Good quality product. Took a bit longer to arrive than expected but worth the wait. Customer service was helpful when I had questions.",
+  //     verified: true
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Lisa Thompson",
+  //     rating: 5,
+  //     date: "2024-12-01",
+  //     comment: "Outstanding! This has become my go-to product. The quality is consistent and the price is very reasonable. Shipping was quick too.",
+  //     verified: true
+  //   }
+  // ];
+
+  const [sampleReviews, setSampleReviews] = useState([]);
+  const { id: productId } = useParams();
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get(import.meta.env.VITE_BACKEND_URL + "/api/reviews/" + productId)
+      .then((res) => {
+        console.log(res.data);
+        setSampleReviews(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // Calculate average rating - handle empty reviews
+  const averageRating =
+    sampleReviews.length > 0
+      ? sampleReviews.reduce((sum, review) => sum + review.rating, 0) /
+        sampleReviews.length
+      : 0;
+
+  // Count ratings by star - handle empty reviews
+  const ratingCounts = {
+    5: sampleReviews.filter((r) => r.rating === 5).length,
+    4: sampleReviews.filter((r) => r.rating === 4).length,
+    3: sampleReviews.filter((r) => r.rating === 3).length,
+    2: sampleReviews.filter((r) => r.rating === 2).length,
+    1: sampleReviews.filter((r) => r.rating === 1).length,
+  };
+
+  // Helper function to render stars
+  const renderStars = (rating) => {
+    return Array.from({ length: 5 }, (_, index) => (
+      <svg
+        key={index}
+        className={`w-5 h-5 ${
+          index < rating ? "text-yellow-400" : "text-gray-300"
+        }`}
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+      </svg>
+    ));
+  };
+
+  //handleWriteReview
+  const handleWriteReview = () => {
+    navigate("/writereview", { state: { productId } });
+  };
+
+  return (
+    <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 lg:p-10 border border-white/50">
+      {/* Reviews Header */}
+      <div className="mb-8">
+        <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-4">
+          Customer Reviews
+        </h2>
+
+        {/* Rating Summary - Show only if reviews exist */}
+        {sampleReviews.length > 0 ? (
+          <div className="flex flex-col lg:flex-row lg:items-center gap-6 mb-6">
+            <div className="text-center lg:text-left">
+              <div className="flex items-center justify-center lg:justify-start gap-2 mb-2">
+                <span className="text-3xl font-bold text-gray-800">
+                  {averageRating.toFixed(1)}
+                </span>
+                <div className="flex">
+                  {renderStars(Math.round(averageRating))}
+                </div>
+              </div>
+              <p className="text-gray-600">
+                Based on {sampleReviews.length} reviews
+              </p>
+            </div>
+
+            {/* Rating Breakdown */}
+            <div className="flex-1 max-w-md">
+              {[5, 4, 3, 2, 1].map((star) => (
+                <div key={star} className="flex items-center gap-2 mb-1">
+                  <span className="text-sm text-gray-600 w-3">{star}</span>
+                  <svg
+                    className="w-4 h-4 text-yellow-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <div className="flex-1 bg-gray-200 rounded-full h-2">
+                    <div
+                      className="bg-yellow-400 h-2 rounded-full"
+                      style={{
+                        width: `${
+                          (ratingCounts[star] / sampleReviews.length) * 100
+                        }%`,
+                      }}
+                    ></div>
+                  </div>
+                  <span className="text-sm text-gray-600 w-8">
+                    {ratingCounts[star]}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          // No Reviews Message
+          <div className="text-center py-8 mb-6">
+            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg
+                className="w-8 h-8 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.921-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                />
+              </svg>
+            </div>
+            <h3 className="text-lg font-semibold text-gray-600 mb-2">
+              No Reviews Yet
+            </h3>
+            <p className="text-gray-500">
+              Be the first to review this product!
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* Individual Reviews - Show only if reviews exist */}
+      {sampleReviews.length > 0 ? (
+        <div className="space-y-6">
+          {sampleReviews.map((review, index) => (
+            <div
+              key={index}
+              className="border-b border-gray-200 pb-6 last:border-b-0 last:pb-0"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-start gap-4">
+                {/* User Avatar */}
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">
+                      {review.name.charAt(0)}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Review Content */}
+                <div className="flex-1">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+                    <h4 className="font-semibold text-gray-800">
+                      {review.name}
+                    </h4>
+                    <span className="inline-flex items-center gap-1 bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                      <svg
+                        className="w-3 h-3"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      Verified Purchase
+                    </span>
+                    {/* {review.verified && (
+                      <span className="inline-flex items-center gap-1 bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        Verified Purchase
+                      </span>
+                    )} */}
+                  </div>
+
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="flex">{renderStars(review.rating)}</div>
+                    <span className="text-sm text-gray-500">
+                      {new Date(review.date).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </span>
+                  </div>
+
+                  <p className="text-gray-700 leading-relaxed">
+                    {review.comment}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : null}
+
+      {/* Write a Review Button */}
+      {/* when dosetn have token then disable the button */}
+      <div className="mt-8 pt-6 border-t border-gray-200">
+        <button
+          onClick={handleWriteReview}
+          disabled={!token}
+          className={`bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transform transition-all duration-300 ${
+            !token
+              ? "opacity-50 cursor-not-allowed hover:scale-100 shadow-none"
+              : "hover:shadow-xl hover:scale-[1.02]"
+          }`}
+        >
+          Write a Review
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ========================================
+// MAIN PRODUCT OVERVIEW PAGE COMPONENT
+// ========================================
 export default function ProductOverViewPage() {
   const { id: productId } = useParams();
   const [status, setStatus] = useState("loading");
@@ -287,6 +567,13 @@ export default function ProductOverViewPage() {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* ========================================
+              PRODUCT REVIEWS SECTION - NEW ADDITION
+              ======================================== */}
+          <div className="mt-16">
+            <ProductReviews />
           </div>
         </div>
       </div>
