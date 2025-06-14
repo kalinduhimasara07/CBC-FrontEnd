@@ -97,12 +97,13 @@ export default function Header({ cartItemCount }) {
               onClick={() => navigate("/")}
               src="/logo.png"
               alt="Logo"
-              className="w-[60px] h-[60px] object-cover cursor-pointer rounded-full shadow-md transition-transform hover:scale-105"
+              className="w-10 h-10 md:w-[60px] md:h-[60px] object-cover cursor-pointer rounded-full shadow-md transition-transform hover:scale-105"
             />
           </div>
           <span
             onClick={() => handleNavigation("/")}
-            className="text-xl md:text-3xl font-extrabold text-amber-600 cursor-pointer tracking-wide"
+            style={{ fontFamily: "'Great Vibes', cursive" }}
+            className="text-2xl font-bold md:text-4xl md:font-extrabold text-amber-600 cursor-pointer tracking-wide"
           >
             Crystal Beauty Clear
           </span>

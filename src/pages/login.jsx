@@ -127,7 +127,7 @@ export default function Login() {
         <div className="relative z-10 w-full md:w-[50%] flex items-center justify-center p-4">
           <div className="w-full max-w-md backdrop-blur-md rounded-2xl shadow-2xl flex flex-col items-center justify-center gap-6 bg-white/30 p-10 border border-white/20">
             {/* Title */}
-            <h1 className="text-5xl font-bold text-[#e17100] tracking-wide text-center drop-shadow-md">
+            <h1 className="text-4xl font-bold text-[#e17100] tracking-wide text-center drop-shadow-md">
               Crystal Beauty Clear
             </h1>
             <p className="text-md text-gray-700 font-medium -mt-4 mb-2">
