@@ -64,8 +64,8 @@ export default function ContactUsPage() {
             Message Sent!
           </h2>
           <p className="text-gray-600 mb-6">
-            Thank you for contacting Lumineé. We'll get back to you within 24
-            hours.
+            Thank you for contacting Crystal Beauty Clear. We'll get back to you
+            within 24 hours.
           </p>
           <button
             onClick={() => setSubmitted(false)}
@@ -86,7 +86,8 @@ export default function ContactUsPage() {
         <div className="relative container mx-auto px-4 py-16 lg:py-24">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl lg:text-6xl font-bold mb-6 tracking-wide">
-              Contact <span className="text-yellow-200">Lumineé</span>
+              Contact{" "}
+              <span className="text-yellow-200">Crystal Beauty Clear</span>
             </h1>
             <p className="text-xl lg:text-2xl text-amber-100 leading-relaxed">
               We're here to help you discover your perfect skincare routine.
@@ -319,7 +320,7 @@ export default function ContactUsPage() {
                         Detailed inquiries and skin consultations
                       </p>
                       <p className="text-blue-600 font-semibold">
-                        hello@luminee.com
+                        hello@cbc.com
                       </p>
                       <p className="text-sm text-gray-500">
                         Response within 24 hours
@@ -388,7 +389,8 @@ export default function ContactUsPage() {
                     },
                     {
                       question: "Are your products cruelty-free?",
-                      answer: "Yes, all Lumineé products are 100% cruelty-free",
+                      answer:
+                        "Yes, all Crystal Beauty Clear products are 100% cruelty-free",
                     },
                     {
                       question: "Can I get personalized recommendations?",
@@ -411,7 +413,9 @@ export default function ContactUsPage() {
 
               {/* Social Media */}
               <div className="bg-gradient-to-r from-pink-500 to-purple-500 rounded-2xl shadow-lg p-6 text-white">
-                <h3 className="text-xl font-bold mb-3">Follow Lumineé</h3>
+                <h3 className="text-xl font-bold mb-3">
+                  Follow Crystal Beauty Clear
+                </h3>
                 <p className="text-pink-100 mb-4">
                   Join our beauty community for tips, tutorials, and exclusive
                   offers
@@ -438,7 +442,7 @@ export default function ContactUsPage() {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

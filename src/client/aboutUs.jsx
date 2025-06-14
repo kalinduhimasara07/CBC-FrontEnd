@@ -63,7 +63,8 @@ export default function AboutUs() {
   const milestones = [
     {
       year: "2018",
-      event: "Lumineé founded with a vision to revolutionize natural skincare",
+      event:
+        "Crystal Beauty Clear founded with a vision to revolutionize natural skincare",
     },
     {
       year: "2019",
@@ -85,7 +86,8 @@ export default function AboutUs() {
         <div className="relative container mx-auto px-4 py-16 lg:py-24">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl lg:text-6xl font-bold mb-6 tracking-wide">
-              About <span className="text-yellow-200">Lumineé</span>
+              About{" "}
+              <span className="text-yellow-200">Crystal Beauty Clear</span>
             </h1>
             <p className="text-xl lg:text-2xl text-amber-100 leading-relaxed mb-8">
               Where science meets nature to unlock your skin's true potential.
@@ -124,11 +126,11 @@ export default function AboutUs() {
               </h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  Lumineé was born from a simple yet powerful belief: everyone
-                  deserves to feel confident in their own skin. Our founder,
-                  Sofia Martinez, struggled for years to find skincare products
-                  that were both effective and gentle, leading her on a journey
-                  to create something better.
+                  Crystal Beauty Clear was born from a simple yet powerful
+                  belief: everyone deserves to feel confident in their own skin.
+                  Our founder, Sofia Martinez, struggled for years to find
+                  skincare products that were both effective and gentle, leading
+                  her on a journey to create something better.
                 </p>
                 <p>
                   What started as a small lab experiment in 2018 has grown into
@@ -137,9 +139,9 @@ export default function AboutUs() {
                   that don't just promise results - they deliver them.
                 </p>
                 <p>
-                  Today, Lumineé stands at the forefront of clean beauty
-                  innovation, trusted by over a million customers worldwide
-                  who've discovered the transformative power of truly
+                  Today, Crystal Beauty Clear stands at the forefront of clean
+                  beauty innovation, trusted by over a million customers
+                  worldwide who've discovered the transformative power of truly
                   personalized skincare.
                 </p>
               </div>
@@ -211,8 +213,8 @@ export default function AboutUs() {
               Meet Our Team
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              The passionate innovators, scientists, and dreamers behind
-              Lumineé's success.
+              The passionate innovators, scientists, and dreamers behind Crystal
+              Beauty Clear's success.
             </p>
           </div>
 
@@ -318,7 +320,7 @@ export default function AboutUs() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-3xl shadow-2xl p-8 lg:p-12 text-white">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-              Join the Lumineé Family
+              Join the Crystal Beauty Clear Family
             </h2>
             <p className="text-xl text-amber-100 mb-8 leading-relaxed">
               Ready to discover your perfect skincare routine? Our beauty
@@ -326,7 +328,10 @@ export default function AboutUs() {
               with personalized recommendations.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button onClick={() => navigate("/products")} className="bg-white text-amber-600 font-bold py-4 px-8 rounded-xl hover:bg-amber-50 transition-all duration-300 hover:scale-105 shadow-lg">
+              <button
+                onClick={() => navigate("/products")}
+                className="bg-white text-amber-600 font-bold py-4 px-8 rounded-xl hover:bg-amber-50 transition-all duration-300 hover:scale-105 shadow-lg"
+              >
                 Shop Our Products
               </button>
               {/* <button className="bg-white/20 backdrop-blur-sm text-white font-bold py-4 px-8 rounded-xl border-2 border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105">
@@ -336,7 +341,7 @@ export default function AboutUs() {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

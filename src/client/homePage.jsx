@@ -224,7 +224,7 @@ export default function Homepage({ addToCart }) {
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
-                Why Choose Lumineé?
+                Why Choose Crystal Beauty Clear?
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                 We're not just another beauty brand. We're your partners in
@@ -350,7 +350,7 @@ export default function Homepage({ addToCart }) {
         </div>
       </div> */}
 
-        <CardCarousel addToCart={addToCart}/>
+        <CardCarousel addToCart={addToCart} />
 
         {/* Testimonials Section */}
         {/* <div className="py-16 lg:py-20">
@@ -361,7 +361,7 @@ export default function Homepage({ addToCart }) {
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                 Real results from real people. Join thousands who've transformed
-                their skin with Lumineé.
+                their skin with Crystal Beauty Clear.
               </p>
             </div>
 
@@ -469,7 +469,7 @@ export default function Homepage({ addToCart }) {
                 {signupSuccess ? (
                   <div className="bg-green-50 border border-green-200 rounded-2xl p-6 mb-6">
                     <div className="text-green-600 font-semibold text-lg">
-                      🎉 Welcome to the Lumineé family!
+                      🎉 Welcome to the Crystal Beauty Clear family!
                     </div>
                     <p className="text-green-600">
                       Check your email for a special welcome offer.
@@ -518,7 +518,8 @@ export default function Homepage({ addToCart }) {
               </h2>
               <p className="text-xl lg:text-2xl text-amber-100 mb-8 leading-relaxed">
                 Join over 1 million customers who've discovered their best skin
-                with Lumineé. Your journey to radiant skin starts here.
+                with Crystal Beauty Clear. Your journey to radiant skin starts
+                here.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

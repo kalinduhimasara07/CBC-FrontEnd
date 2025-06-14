@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { X, ChevronDown, ChevronUp, Filter, Search } from "lucide-react";
 
-export default function LumineeFilterSidebar({ onFilterChange }) {
+export default function CBCFilterSidebar({ onFilterChange }) {
   const [isOpen, setIsOpen] = useState(true);
   const [expandedSections, setExpandedSections] = useState({
     category: false,
@@ -16,7 +16,7 @@ export default function LumineeFilterSidebar({ onFilterChange }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [priceInputs, setPriceInputs] = useState({
     min: 0,
-    max: 50000
+    max: 50000,
   });
 
   const toggleSection = (section) => {
@@ -40,24 +40,24 @@ export default function LumineeFilterSidebar({ onFilterChange }) {
     updatedPriceRange[type] = value;
 
     setSelectedFilters({ ...selectedFilters, priceRange: updatedPriceRange });
-    
+
     // Update price inputs to match slider
     if (type === 0) {
-      setPriceInputs(prev => ({ ...prev, min: value }));
+      setPriceInputs((prev) => ({ ...prev, min: value }));
     } else {
-      setPriceInputs(prev => ({ ...prev, max: value }));
+      setPriceInputs((prev) => ({ ...prev, max: value }));
     }
   };
 
   const handlePriceInputChange = (type, value) => {
     const numValue = parseInt(value) || 0;
-    
-    if (type === 'min') {
-      setPriceInputs(prev => ({ ...prev, min: numValue }));
+
+    if (type === "min") {
+      setPriceInputs((prev) => ({ ...prev, min: numValue }));
       const updatedPriceRange = [numValue, selectedFilters.priceRange[1]];
       setSelectedFilters({ ...selectedFilters, priceRange: updatedPriceRange });
     } else {
-      setPriceInputs(prev => ({ ...prev, max: numValue }));
+      setPriceInputs((prev) => ({ ...prev, max: numValue }));
       const updatedPriceRange = [selectedFilters.priceRange[0], numValue];
       setSelectedFilters({ ...selectedFilters, priceRange: updatedPriceRange });
     }
@@ -72,7 +72,7 @@ export default function LumineeFilterSidebar({ onFilterChange }) {
     setSelectedFilters(defaultFilters);
     setSearchQuery("");
     setPriceInputs({ min: 0, max: 50000 });
-    
+
     // Automatically apply filters after clearing
     onFilterChange({
       categories: [],
@@ -123,7 +123,7 @@ export default function LumineeFilterSidebar({ onFilterChange }) {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold" style={{ color: "#e17100" }}>
-              Lumineé
+              Crystal Beauty Clear
             </h1>
             <p className="text-sm text-gray-600 mt-1">Product Filters</p>
           </div>
@@ -226,7 +226,9 @@ export default function LumineeFilterSidebar({ onFilterChange }) {
                     min="0"
                     max="50000"
                     value={priceInputs.min}
-                    onChange={(e) => handlePriceInputChange('min', e.target.value)}
+                    onChange={(e) =>
+                      handlePriceInputChange("min", e.target.value)
+                    }
                     className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:ring-1 focus:border-transparent"
                     style={{ focusRingColor: "#e17100" }}
                   />
@@ -240,7 +242,9 @@ export default function LumineeFilterSidebar({ onFilterChange }) {
                     min="0"
                     max="50000"
                     value={priceInputs.max}
-                    onChange={(e) => handlePriceInputChange('max', e.target.value)}
+                    onChange={(e) =>
+                      handlePriceInputChange("max", e.target.value)
+                    }
                     className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:ring-1 focus:border-transparent"
                     style={{ focusRingColor: "#e17100" }}
                   />
@@ -252,7 +256,7 @@ export default function LumineeFilterSidebar({ onFilterChange }) {
                 <span>${selectedFilters.priceRange[0]}</span>
                 <span>${selectedFilters.priceRange[1]}</span>
               </div>
-              
+
               {/* Range Sliders */}
               <div className="space-y-3">
                 <div>

@@ -6,9 +6,9 @@ import Signup from "./pages/signup";
 import Login from "./pages/login";
 import AdminPage from "./pages/admin/adminPage";
 import { Toaster } from "react-hot-toast";
-import LumineeFAQ from "./client/faq";
+import CBCFAQ from "./client/faq";
 import ScrollToTop from "./utils/scrolltotop";
-import LumineePrivacyPolicy from "./client/privacyPolicy";
+import CBCPrivacyPolicy from "./client/privacyPolicy";
 import TermsOfService from "./client/termsOfServices";
 import ReturnPolicy from "./client/returnPolicy";
 import SkincareGuide from "./client/skincareGuide";
@@ -26,8 +26,8 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/admin/*" element={<AdminPage />} />
             <Route path="/*" element={<HomePage />} />
-            <Route path="/faq" element={<LumineeFAQ />} />
-            <Route path="/privacy" element={<LumineePrivacyPolicy />} />
+            <Route path="/faq" element={<CBCFAQ />} />
+            <Route path="/privacy" element={<CBCPrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/return" element={<ReturnPolicy />} />
             <Route path="/skincare" element={<SkincareGuide />} />

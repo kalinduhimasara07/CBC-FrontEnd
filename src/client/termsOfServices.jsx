@@ -10,18 +10,20 @@ const TermsOfService = () => {
         <div className="max-w-4xl mx-auto px-6 py-12">
           {/* Header */}
           <div className="text-center mb-16">
-          <h1 className="text-6xl font-light text-orange-600 mb-4 tracking-tight">
-            Lumineé
-          </h1>
-          <p className="text-xl text-orange-800/70 font-light tracking-wider mb-8">
-            Tearms of Services
-          </p>
-          <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-orange-600 to-transparent mx-auto mb-4"></div>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Please read these Terms of Service carefully before using Lumineé. By accessing or using our services, 
-    you agree to be bound by these terms. If you do not agree with any part, please do not use our services.
-          </p>
-        </div>
+            <h1 className="text-6xl font-light text-orange-600 mb-4 tracking-tight">
+              Crystal Beauty Clear
+            </h1>
+            <p className="text-xl text-orange-800/70 font-light tracking-wider mb-8">
+              Tearms of Services
+            </p>
+            <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-orange-600 to-transparent mx-auto mb-4"></div>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Please read these Terms of Service carefully before using Crystal
+              Beauty Clear. By accessing or using our services, you agree to be
+              bound by these terms. If you do not agree with any part, please do
+              not use our services.
+            </p>
+          </div>
 
           {/* Content */}
           <div className="bg-white rounded-xl shadow-lg p-8 space-y-8">
@@ -34,12 +36,12 @@ const TermsOfService = () => {
                 1. Introduction
               </h3>
               <p className="text-gray-700 leading-relaxed">
-                Welcome to Lumineé, your premier destination for luxury cosmetic
-                products. These Terms of Service ("Terms") govern your use of
-                our website, mobile application, and services. By accessing or
-                using Lumineé's platform, you agree to be bound by these Terms.
-                If you do not agree with any part of these terms, please do not
-                use our services.
+                Welcome to Crystal Beauty Clear, your premier destination for
+                luxury cosmetic products. These Terms of Service ("Terms")
+                govern your use of our website, mobile application, and
+                services. By accessing or using Crystal Beauty Clear's platform,
+                you agree to be bound by these Terms. If you do not agree with
+                any part of these terms, please do not use our services.
               </p>
             </section>
 
@@ -108,7 +110,7 @@ const TermsOfService = () => {
                 4. Orders & Payment
               </h3>
               <div className="text-gray-700 space-y-3">
-                <p>When placing an order with Lumineé:</p>
+                <p>When placing an order with Crystal Beauty Clear:</p>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>
                     All orders are subject to acceptance and product
@@ -190,10 +192,11 @@ const TermsOfService = () => {
               </h3>
               <p className="text-gray-700 leading-relaxed">
                 All content on our platform, including text, images, logos,
-                product names, and designs, are the property of Lumineé or our
-                licensors. You may not reproduce, distribute, or create
-                derivative works without our express written permission. The
-                Lumineé name and logo are registered trademarks.
+                product names, and designs, are the property of Crystal Beauty
+                Clear or our licensors. You may not reproduce, distribute, or
+                create derivative works without our express written permission.
+                The Crystal Beauty Clear name and logo are registered
+                trademarks.
               </p>
             </section>
 
@@ -244,11 +247,11 @@ const TermsOfService = () => {
                 10. Limitation of Liability
               </h3>
               <p className="text-gray-700 leading-relaxed">
-                To the fullest extent permitted by law, Lumineé shall not be
-                liable for any indirect, incidental, special, or consequential
-                damages arising from your use of our products or services. Our
-                total liability shall not exceed the amount you paid for the
-                specific product or service in question.
+                To the fullest extent permitted by law, Crystal Beauty Clear
+                shall not be liable for any indirect, incidental, special, or
+                consequential damages arising from your use of our products or
+                services. Our total liability shall not exceed the amount you
+                paid for the specific product or service in question.
               </p>
             </section>
 
@@ -301,10 +304,10 @@ const TermsOfService = () => {
                 </p>
                 <div className="mt-4 space-y-1">
                   <p>
-                    <strong>Email:</strong> legal@luminee.com
+                    <strong>Email:</strong> legal@cbc.com
                   </p>
                   <p>
-                    <strong>Phone:</strong> 1-800-LUMINEE
+                    <strong>Phone:</strong> 0110123123
                   </p>
                   <p>
                     <strong>Address:</strong> [Your Business Address]
@@ -320,7 +323,7 @@ const TermsOfService = () => {
             {/* Footer */}
             <div className="text-center pt-8 border-t border-gray-200">
               <p className="text-gray-600">
-                © 2025 Lumineé. All rights reserved. |
+                © 2025 Crystal Beauty Clear. All rights reserved. |
                 <span className="ml-2" style={{ color: "#e17100" }}>
                   Illuminate Your Natural Beauty
                 </span>

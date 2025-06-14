@@ -79,7 +79,7 @@ const AdminHomePage = () => {
         console.error("Error fetching orders:", err);
       });
 
-      axios
+    axios
       .get(import.meta.env.VITE_BACKEND_URL + "/api/product", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -92,7 +92,7 @@ const AdminHomePage = () => {
         console.error("Error fetching orders:", err);
       });
 
-      axios
+    axios
       .get(import.meta.env.VITE_BACKEND_URL + "/api/users", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -104,8 +104,6 @@ const AdminHomePage = () => {
       .catch((err) => {
         console.error("Error fetching users:", err);
       });
-
-
   }, []);
 
   // useEffect(() => {
@@ -116,7 +114,6 @@ const AdminHomePage = () => {
   //     return;
   //   }
 
-    
   // }, []);
 
   // useEffect(() => {
@@ -127,7 +124,6 @@ const AdminHomePage = () => {
   //     return;
   //   }
 
-    
   // }, []);
 
   const stats = [
@@ -192,7 +188,7 @@ const AdminHomePage = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <h1 className="text-2xl font-bold" style={{ color: "#e17100" }}>
-                Lumineé Admin
+                Crystal Beauty Clear Admin
               </h1>
             </div>
             <div className="flex items-center space-x-4">
@@ -203,30 +199,24 @@ const AdminHomePage = () => {
                 <User size={16} className="text-white" />
               </div> */}
               {!token ? (
-              <div
-                className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-amber-600 rounded-full cursor-pointer flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-md hover:scale-105 transition-transform"
-                
-              >
-                <User className="w-4 h-4 md:w-5 md:h-5" />
-                {/* <img src={user?.img} alt="" /> */}
-              </div>
-            ) : (
-              <div
-                className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-amber-600 rounded-full cursor-pointer flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-md hover:scale-105 transition-transform"
-                
-              >
-                {/* <User className="w-4 h-4 md:w-5 md:h-5" /> */}
-                {user?.img ? (
-                  <img
-                    src={user.img}
-                    alt="U"
-                    className="w-full h-full object-cover rounded-full"
-                  />
-                ) : (
+                <div className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-amber-600 rounded-full cursor-pointer flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-md hover:scale-105 transition-transform">
                   <User className="w-4 h-4 md:w-5 md:h-5" />
-                )}
-              </div>
-            )}
+                  {/* <img src={user?.img} alt="" /> */}
+                </div>
+              ) : (
+                <div className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-amber-600 rounded-full cursor-pointer flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-md hover:scale-105 transition-transform">
+                  {/* <User className="w-4 h-4 md:w-5 md:h-5" /> */}
+                  {user?.img ? (
+                    <img
+                      src={user.img}
+                      alt="U"
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  ) : (
+                    <User className="w-4 h-4 md:w-5 md:h-5" />
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

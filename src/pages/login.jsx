@@ -25,8 +25,8 @@ export default function Login() {
           const isNewUser = res.data.message === "Account created successfully";
           toast.success(
             isNewUser
-              ? "Welcome to Lumineé! Your account was created 🎉"
-              : "Welcome back to Lumineé! 🎉",
+              ? "Welcome to Crystal Beauty Clear! Your account was created 🎉"
+              : "Welcome back to Crystal Beauty Clear! 🎉",
             {
               duration: 6000,
               position: "top-right",
@@ -73,7 +73,7 @@ export default function Login() {
         import.meta.env.VITE_BACKEND_URL + "/api/users/login",
         { email, password }
       );
-      toast.success("Welcome back to Lumineé!", {
+      toast.success("Welcome back to Crystal Beauty Clear!", {
         icon: "🎉",
         duration: 6000,
         position: "top-right",
@@ -128,7 +128,7 @@ export default function Login() {
           <div className="w-full max-w-md backdrop-blur-md rounded-2xl shadow-2xl flex flex-col items-center justify-center gap-6 bg-white/30 p-10 border border-white/20">
             {/* Title */}
             <h1 className="text-5xl font-bold text-[#e17100] tracking-wide text-center drop-shadow-md">
-              Lumineé
+              Crystal Beauty Clear
             </h1>
             <p className="text-md text-gray-700 font-medium -mt-4 mb-2">
               Beauty begins with confidence ✨

@@ -19,16 +19,17 @@ export default function ReturnPolicy() {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-6xl font-light text-orange-600 mb-4 tracking-tight">
-            Lumineé
+            Crystal Beauty Clear
           </h1>
           <p className="text-xl text-orange-800/70 font-light tracking-wider mb-8">
             Return Policy
           </p>
           <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-orange-600 to-transparent mx-auto mb-4"></div>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            We want you to love your Lumineé experience. If you're not completely satisfied with your purchase, 
-    you may return eligible items within 14 days of delivery for a full refund or exchange, 
-    subject to the terms outlined below.
+            We want you to love your Crystal Beauty Clear experience. If you're
+            not completely satisfied with your purchase, you may return eligible
+            items within 14 days of delivery for a full refund or exchange,
+            subject to the terms outlined below.
           </p>
         </div>
 
@@ -43,8 +44,8 @@ export default function ReturnPolicy() {
               Easy Returns & Exchanges
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              We want you to love your Lumineé products. If you're not
-              completely satisfied, we're here to help with our hassle-free
+              We want you to love your Crystal Beauty Clear products. If you're
+              not completely satisfied, we're here to help with our hassle-free
               return policy.
             </p>
           </div>
@@ -203,8 +204,8 @@ export default function ReturnPolicy() {
                     <div>
                       <h5 className="font-medium text-gray-900">Contact Us</h5>
                       <p className="text-sm text-gray-600">
-                        Email us at returns@luminee.com or call our customer
-                        service team
+                        Email us at returns@cbc.com or call our customer service
+                        team
                       </p>
                     </div>
                   </div>
@@ -321,11 +322,11 @@ export default function ReturnPolicy() {
                 </h4>
                 <p className="text-sm text-gray-600 mb-3">Get help via email</p>
                 <a
-                  href="mailto:returns@luminee.com"
+                  href="mailto:returns@cbc.com"
                   className="text-sm font-medium hover:underline"
                   style={{ color: "#e17100" }}
                 >
-                  returns@luminee.com
+                  returns@cbc.com
                 </a>
               </div>
               <div className="text-center">
@@ -339,11 +340,11 @@ export default function ReturnPolicy() {
                   Mon-Fri, 9AM-6PM EST
                 </p>
                 <a
-                  href="tel:1-800-LUMINEE"
+                  href="tel:0110123123"
                   className="text-sm font-medium hover:underline"
                   style={{ color: "#e17100" }}
                 >
-                  1-800-LUMINEE
+                  0110123123
                 </a>
               </div>
             </div>

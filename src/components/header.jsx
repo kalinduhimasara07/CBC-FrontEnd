@@ -104,7 +104,7 @@ export default function Header({ cartItemCount }) {
             onClick={() => handleNavigation("/")}
             className="text-xl md:text-3xl font-extrabold text-amber-600 cursor-pointer tracking-wide"
           >
-            Lumineé
+            Crystal Beauty Clear
           </span>
         </div>
 

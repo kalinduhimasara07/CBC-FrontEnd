@@ -199,7 +199,7 @@ export default function SkincareGuide() {
               </button>
               <div>
                 <h1 className="text-2xl font-bold" style={{ color: "#e17100" }}>
-                  Lumineé
+                  Crystal Beauty Clear
                 </h1>
                 <p className="text-sm text-gray-600">Complete Skincare Guide</p>
               </div>
