@@ -18,6 +18,7 @@ import SiteReviewsPage from "../client/addReviewPage";
 import WriteReviewPage from "../client/writeReviewPage";
 import { getCart } from "../utils/cart";
 import { use, useEffect, useState } from "react";
+import ForgotPassword from "../client/forgetPassword";
 
 export default function HomePage() {
   const [cartItemCount, setCartItemCount] = useState(getCart().length);
@@ -46,6 +47,7 @@ export default function HomePage() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/review" element={<SiteReviewsPage />} />
           <Route path="/writereview" element={<WriteReviewPage />} />
+          <Route path="/forget-password" element={<ForgotPassword />} />
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       </div>

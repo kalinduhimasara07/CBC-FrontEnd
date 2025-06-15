@@ -240,6 +240,13 @@ export default function Login() {
               </div>
             )}
 
+            {/* forgot password */}
+            <p className="text-lg text-gray-500 text-center max-w-sm leading-relaxed">
+              <span className="underline cursor-pointer hover:text-[#e17100]">
+                <Link to="/forget-password">Forget your password?</Link>
+              </span>
+            </p>
+
             {/* Footer */}
             <p className="text-sm text-gray-700 text-center font-medium">
               Don&apos;t have an account?{" "}
