@@ -20,7 +20,6 @@ export default function Checkout() {
   const [step, setStep] = useState(1); // 1: Shipping, 2: Payment, 3: Review
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const token = localStorage.getItem("token");
-  const [showSecondButton, setShowSecondButton] = useState(false);
   const navigate = useNavigate();
 
   // console.log("Checkout location:", location);
@@ -173,7 +172,6 @@ export default function Checkout() {
       )
       .then((res) => {
         // console.log("Order placed successfully:", res.data);
-        setShowSecondButton(true);
         toast.success("Order placed successfully!", {
           duration: 3000,
           style: {
@@ -181,6 +179,8 @@ export default function Checkout() {
             fontSize: "20px",
           },
         });
+        ClearCart();
+        navigate("/orders");
       })
       .catch((err) => {
         console.error("Order failed:", err);
@@ -233,7 +233,6 @@ export default function Checkout() {
       setCart(getCart());
     }
   }, []);
-  
 
   if (token == null) {
     console.log("token is null");
@@ -403,8 +402,6 @@ export default function Checkout() {
                     required
                   />
                 </div>
-
-                
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
                   <div>
@@ -696,7 +693,7 @@ export default function Checkout() {
                     ← Back to Payment
                   </button>
                 </div>
-                <div className="flex justify-center">
+                {/* <div className="flex justify-center">
                   {showSecondButton && (
                     <button
                       onClick={() => {
@@ -708,7 +705,7 @@ export default function Checkout() {
                       View Your Order
                     </button>
                   )}
-                </div>
+                </div> */}
                 {/* Order Items */}
                 <div className="mb-6">
                   <h3 className="text-lg font-semibold text-gray-800 mb-4">
