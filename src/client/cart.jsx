@@ -103,7 +103,7 @@ export default function Cart({ addToCart }) {
                             AddToCart(item, -1);
                             setCart(getCart());
                           }}
-                          className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-1 px-2 sm:py-2 sm:px-4 rounded-l text-sm sm:text-base"
+                          className="bg-gray-200 cursor-pointer hover:bg-gray-300 text-gray-800 font-semibold py-1 px-2 sm:py-2 sm:px-4 rounded-l text-sm sm:text-base"
                         >
                           -
                         </button>
@@ -115,7 +115,7 @@ export default function Cart({ addToCart }) {
                             AddToCart(item, 1);
                             setCart(getCart());
                           }}
-                          className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-1 px-2 sm:py-2 sm:px-4 rounded-r text-sm sm:text-base"
+                          className="bg-gray-200 cursor-pointer hover:bg-gray-300 text-gray-800 font-semibold py-1 px-2 sm:py-2 sm:px-4 rounded-r text-sm sm:text-base"
                         >
                           +
                         </button>
@@ -190,12 +190,12 @@ export default function Cart({ addToCart }) {
                 onClick={() => {
                   navigate("/checkout", { state: { cart: cart } });
                 }}
-                className="w-full bg-[#e17100] hover:bg-[#c5610a] text-white font-semibold py-2 lg:py-3 px-4 rounded-lg transition-colors text-sm lg:text-base"
+                className="w-full cursor-pointer bg-[#e17100] hover:bg-[#c5610a] text-white font-semibold py-2 lg:py-3 px-4 rounded-lg transition-colors text-sm lg:text-base"
               >
                 Proceed to Checkout
               </button>
 
-              <button className="w-full mt-2 lg:mt-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 lg:py-3 px-4 rounded-lg transition-colors text-sm lg:text-base">
+              <button className="w-full cursor-pointer mt-2 lg:mt-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 lg:py-3 px-4 rounded-lg transition-colors text-sm lg:text-base">
                 Continue Shopping
               </button>
             </div>

@@ -142,7 +142,7 @@ export default function ProfilePage() {
                     alt=""
                     className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white shadow-md object-cover"
                   />
-                  {console.log(formData.img)}
+
                   <input
                     type="file"
                     accept="image/*"

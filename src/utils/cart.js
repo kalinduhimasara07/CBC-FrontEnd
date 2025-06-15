@@ -44,3 +44,8 @@ export function RemoveFromCart(productId) {
   });
   localStorage.setItem("cart", JSON.stringify(newCart));
 }
+
+
+export function ClearCart() {
+  localStorage.setItem("cart", JSON.stringify([]));
+}

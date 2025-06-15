@@ -43,7 +43,7 @@ export default function HomePage() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/orders" element={<AllOrdersView />} />
+          <Route path="/orders" element={<AllOrdersView addToCart={addToCart}/>} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/review" element={<SiteReviewsPage />} />
           <Route path="/writereview" element={<WriteReviewPage />} />

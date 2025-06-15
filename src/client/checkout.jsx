@@ -12,7 +12,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
 import FloatingNotice from "../components/floatingNotice";
 import axios from "axios";
-import { getCart } from "../utils/cart";
+import { ClearCart, getCart } from "../utils/cart";
 
 export default function Checkout() {
   const location = useLocation();
@@ -462,7 +462,7 @@ export default function Checkout() {
 
                 <button
                   type="submit"
-                  className="w-full bg-[#e17100] hover:bg-[#c5610a] text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+                  className="w-full cursor-pointer bg-[#e17100] hover:bg-[#c5610a] text-white font-semibold py-3 px-4 rounded-lg transition-colors"
                 >
                   Continue to Payment
                 </button>
@@ -701,6 +701,7 @@ export default function Checkout() {
                     <button
                       onClick={() => {
                         navigate("/orders");
+                        ClearCart();
                       }}
                       className="ml-4 bg-green-500 text-white px-4 py-2 rounded-3xl cursor-pointer hover:bg-green-600 transition-colors"
                     >
@@ -735,7 +736,7 @@ export default function Checkout() {
                           </div>
                         </div>
                         <span className="font-semibold text-gray-800">
-                          ${(item.price * item.qty).toFixed(2)}
+                          LKR {(item.price * item.qty).toFixed(2)}
                         </span>
                       </div>
                     ))}
@@ -767,10 +768,10 @@ export default function Checkout() {
 
                 <button
                   type="submit"
-                  className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center"
+                  className="w-full cursor-pointer bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center"
                 >
                   <FaLock className="mr-2" />
-                  Place Order - ${grandTotal.toFixed(2)}
+                  Place Order - LKR {grandTotal.toFixed(2)}
                 </button>
               </form>
             )}

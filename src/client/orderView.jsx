@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 
 // Mock orders data - replace with actual API call
 
-export default function AllOrdersView() {
+export default function AllOrdersView({ addToCart }) {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -47,6 +47,7 @@ export default function AllOrdersView() {
       .then((res) => {
         setOrders(res.data);
         setLoading(false);
+        addToCart();
       })
       .catch((err) => {
         console.error("Error fetching orders:", err);
