@@ -9,7 +9,7 @@ import { div, s } from "framer-motion/client";
 // Loading Component
 function Loading() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 flex items-center justify-center">
+    <div className="min-h-screen w-full bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 flex items-center justify-center">
       <div className="text-center space-y-4">
         <div className="w-16 h-16 border-4 border-amber-200 border-t-amber-600 rounded-full animate-spin mx-auto"></div>
         <p className="text-amber-600 font-medium text-lg">
@@ -393,7 +393,7 @@ export default function ProductOverViewPage({ addToCart }) {
   if (status === "loading") return <Loading />;
   if (status === "error")
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 flex items-center justify-center">
+      <div className="min-h-screen w-full bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 flex items-center justify-center">
         <div className="text-center space-y-4">
           <svg
             className="w-16 h-16 text-red-400 mx-auto"
@@ -479,7 +479,10 @@ export default function ProductOverViewPage({ addToCart }) {
                       Stock Available
                     </p>
                     <p className="text-xl font-bold text-gray-800">
-                      {product.stock} units
+                      {product.stock == null || product.stock == 0
+                        ? "0"
+                        : product.stock}{" "}
+                      units
                     </p>
                   </div>
                   <div className="bg-gray-50 rounded-xl p-4">
@@ -535,7 +538,9 @@ export default function ProductOverViewPage({ addToCart }) {
                 <div className="space-y-4">
                   <button
                     onClick={() => handleAddToCart(product)}
-                    disabled={product.stock === 0}
+                    disabled={
+                      product.stock === 0 || product.isAvailable == false
+                    }
                     className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:from-gray-300 disabled:to-gray-400 text-white font-bold py-4 px-8 rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:cursor-not-allowed disabled:transform-none"
                   >
                     Add to Cart • LKR {(product.price * quantity).toFixed(2)}
@@ -543,7 +548,9 @@ export default function ProductOverViewPage({ addToCart }) {
 
                   <button
                     onClick={() => handleBuyNow(product)}
-                    disabled={product.stock === 0}
+                    disabled={
+                      product.stock === 0 || product.isAvailable == false
+                    }
                     className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 disabled:from-gray-300 disabled:to-gray-400 text-white font-bold py-4 px-8 rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:cursor-not-allowed disabled:transform-none"
                   >
                     Buy Now • LKR{(product.price * quantity).toFixed(2)}
