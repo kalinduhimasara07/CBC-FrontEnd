@@ -155,7 +155,7 @@ export default function Login() {
             <button
               onClick={handleLogin}
               disabled={isLoading}
-              className={`w-[300px] h-[50px] rounded-2xl font-bold shadow-lg transition duration-300 ${
+              className={`w-[300px] h-[50px] cursor-pointer rounded-2xl font-bold shadow-lg transition duration-300 ${
                 isLoading
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                   : "bg-[#e17100] hover:bg-[#c96100] text-white"

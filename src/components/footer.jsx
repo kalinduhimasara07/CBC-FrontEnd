@@ -98,14 +98,7 @@ export default function Footer() {
                     Gift Sets
                   </a>
                 </li>
-                <li>
-                  <a
-                    href="#"
-                    className="hover:text-amber-400 transition-colors"
-                  >
-                    Best Sellers
-                  </a>
-                </li>
+                
               </ul>
             </div>
 
@@ -229,14 +222,7 @@ export default function Footer() {
                     Reviews
                   </a>
                 </li>
-                <li>
-                  <a
-                    href="#"
-                    className="hover:text-amber-400 transition-colors"
-                  >
-                    Affiliate Program
-                  </a>
-                </li>
+                
               </ul>
             </div>
           </div>

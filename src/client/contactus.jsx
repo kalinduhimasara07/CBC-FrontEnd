@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Footer from "../components/footer";
 
+
 export default function ContactUsPage() {
   const [formData, setFormData] = useState({
     name: "",
@@ -43,7 +44,7 @@ export default function ContactUsPage() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 flex items-center justify-center px-4">
+      <div className="min-h-screen w-full bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 flex items-center justify-center px-4">
         <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 max-w-md w-full border border-white/50 text-center">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg
@@ -202,7 +203,7 @@ export default function ContactUsPage() {
                         value={formData.phone}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-amber-500 focus:outline-none transition-colors bg-white/70 backdrop-blur-sm"
-                        placeholder="+1 (555) 123-4567"
+                        placeholder="+94 77 1231234"
                       />
                     </div>
                     <div>
@@ -239,6 +240,7 @@ export default function ContactUsPage() {
                   {/* Submit Button */}
                   <button
                     type="submit"
+                    onClick={handleSubmit}
                     disabled={isSubmitting}
                     className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:from-gray-300 disabled:to-gray-400 text-white font-bold py-4 px-8 rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:cursor-not-allowed disabled:transform-none"
                   >
@@ -285,7 +287,7 @@ export default function ContactUsPage() {
                         Get help with orders, returns, and product questions
                       </p>
                       <p className="text-amber-600 font-semibold">
-                        +1 (800) 555-GLOW
+                        +94 11 2212312
                       </p>
                       <p className="text-sm text-gray-500">
                         Mon-Fri: 9AM-8PM EST
@@ -320,7 +322,7 @@ export default function ContactUsPage() {
                         Detailed inquiries and skin consultations
                       </p>
                       <p className="text-blue-600 font-semibold">
-                        hello@cbc.com
+                        crystalbeautyclearofficial@gmail.com
                       </p>
                       <p className="text-sm text-gray-500">
                         Response within 24 hours
@@ -361,10 +363,10 @@ export default function ContactUsPage() {
                         Experience our products with personalized consultations
                       </p>
                       <p className="text-green-600 font-semibold">
-                        123 Beauty Boulevard
+                        123 Highlevel Road
                       </p>
                       <p className="text-green-600 font-semibold">
-                        New York, NY 10001
+                        Nugegoda.
                       </p>
                       <p className="text-sm text-gray-500">Daily: 10AM-9PM</p>
                     </div>

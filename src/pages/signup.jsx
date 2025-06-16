@@ -178,7 +178,7 @@ export default function Signup() {
             <button
               onClick={handleSignup}
               disabled={isSignupLoading}
-              className={`w-[300px] h-[50px] rounded-2xl font-semibold shadow-xl transition duration-300 ${
+              className={`w-[300px] h-[50px] cursor-pointer rounded-2xl font-semibold shadow-xl transition duration-300 ${
                 isSignupLoading
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                   : "bg-[#e17100] hover:bg-[#c96100] text-white"
@@ -224,7 +224,7 @@ export default function Signup() {
             <button
               onClick={googleLogin}
               disabled={isGoogleLoading}
-              className={`w-[300px] h-[50px] flex items-center justify-center gap-3 rounded-2xl font-semibold shadow-md transition duration-300 border ${
+              className={`w-[300px] h-[50px] cursor-pointer flex items-center justify-center gap-3 rounded-2xl font-semibold shadow-md transition duration-300 border ${
                 isGoogleLoading
                   ? "bg-gray-200 text-gray-500 border-gray-300 cursor-not-allowed"
                   : "bg-white text-[#333] hover:shadow-lg border-gray-300"

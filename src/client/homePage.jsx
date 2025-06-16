@@ -531,9 +531,6 @@ export default function Homepage({ addToCart }) {
                 >
                   Shop All Products
                 </button>
-                <button className="bg-white/20 backdrop-blur-sm text-white font-bold py-4 px-8 rounded-2xl border-2 border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105 text-lg">
-                  Book Consultation
-                </button>
               </div>
 
               <div className="mt-8 text-amber-100">

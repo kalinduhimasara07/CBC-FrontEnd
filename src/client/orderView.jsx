@@ -368,6 +368,7 @@ export default function AllOrdersView({ addToCart }) {
                             fontFamily: "Arial, sans-serif",
                             display: "flex",
                             flexDirection: "column",
+                            boxSizing: "border-box",
                           },
                         }}
                       >
@@ -400,9 +401,10 @@ export default function AllOrdersView({ addToCart }) {
                               overflowY: "auto",
                               flexGrow: 1,
                               paddingRight: "10px",
+                              display: "flex",
+                              flexDirection: "column",
                             }}
                           >
-                            {/* Top Section: Order Details (left) + Totals (right) */}
                             <div
                               style={{
                                 display: "flex",
@@ -418,6 +420,7 @@ export default function AllOrdersView({ addToCart }) {
                                   flex: 2,
                                   minWidth: "300px",
                                   lineHeight: "1.6",
+                                  marginBottom: "15px",
                                 }}
                               >
                                 <p>
@@ -463,6 +466,7 @@ export default function AllOrdersView({ addToCart }) {
                                   height: "fit-content",
                                   minWidth: "250px",
                                   boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                                  marginBottom: "15px",
                                 }}
                               >
                                 <h3 style={{ marginBottom: "15px" }}>
@@ -504,6 +508,7 @@ export default function AllOrdersView({ addToCart }) {
                                       borderRadius: "12px",
                                       padding: "15px",
                                       backgroundColor: "#fafafa",
+                                      flexWrap: "wrap",
                                     }}
                                   >
                                     <img
