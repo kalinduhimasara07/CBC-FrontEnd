@@ -30,12 +30,12 @@ Visit our live website at: [www.crystalbeautyclear.me](http://www.crystalbeautyc
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/crystalbeautyclear.git
+   git clone https://github.com/kalinduhimasara07/CBC-FrontEnd.git
 
 
 2. Navigate into the project directory:
    ```bash
-   cd crystalbeautyclear
+   cd CBC-FrontEnd
 
 
 3. Install dependencies:
