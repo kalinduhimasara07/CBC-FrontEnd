@@ -31,3 +31,40 @@ Visit our live website at: [www.crystalbeautyclear.me](http://www.crystalbeautyc
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/crystalbeautyclear.git
+
+
+2. Navigate into the project directory:
+   ```bash
+   cd crystalbeautyclear
+
+
+3. Install dependencies:
+   ```bash
+   npm install
+
+3. Start the development server:
+   ```bash
+   npm run dev
+
+### Usage
+
+- Visit the homepage to view available products and browse by category.
+- Add items to your cart and proceed to checkout.
+- Manage your user profile and orders.
+
+
+## Admin Access
+### To access the admin panel:
+
+- Email: kalindu@gmail.com
+- Password: 123abcd
+
+
+## Deployment
+
+For deploying this project, the frontend is hosted on Vercel and the backend is hosted through your preferred server environment (for instance, Heroku or similar).
+
+## Contributing
+
+Feel free to fork this repository, contribute to the code, and submit pull requests. Ensure that you follow the coding standards and best practices to maintain the project quality.
+
