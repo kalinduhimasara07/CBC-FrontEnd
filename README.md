@@ -1,12 +1,33 @@
-# React + Vite
+# Crystal Beauty Clear - E-commerce Site
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the repository for **Crystal Beauty Clear**, your ultimate destination for high-quality beauty products online. We provide a wide range of cosmetics designed to enhance your natural beauty and make you feel confident. 
 
-Currently, two official plugins are available:
+Visit our live website at: [www.crystalbeautyclear.me](http://www.crystalbeautyclear.me)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Wide Product Selection**: Choose from a variety of cosmetics including skincare, makeup, and beauty tools.
+- **User-friendly Interface**: Seamless navigation for an easy shopping experience.
+- **Secure and Reliable Hosting**: Hosted on Vercel for fast and secure access.
+  
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend**: React, Vite, Tailwind CSS
+- **Backend**: Express.js
+- **Database**: MongoDB
+- **Domain**: Namecheap
+- **Hosting**: Vercel
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (for backend and development server)
+- npm (or yarn for package management)
+- MongoDB (or other database setup)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/crystalbeautyclear.git
